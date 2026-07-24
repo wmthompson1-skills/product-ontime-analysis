@@ -1,7 +1,7 @@
 {
   "schema_version": 33,
   "milestone": "receivable_payment_added",
-  "synced_at": "2026-07-24T03:43:45.802285+00:00",
+  "synced_at": "2026-07-24T04:50:19.046786+00:00",
   "source": "sqlite:hf-space-inventory-sqlgen/app_schema/manufacturing.db",
   "description": "Canonical structural graph exported from SQLite in the fixed 6-slot composite-key scheme: table + column + concept nodes, has_column edges (table -> column), and references edges (child column -> parent column) built from declared foreign keys, all with unified abbreviated unique_ids. Covers the business ERP tables (schema_* metadata tables excluded \u2014 the graph models the domain, not its own bookkeeping); the semantic ``resolves_to`` layer is active and node-guarded \u2014 each SME-curated elevation is an edge from a column node to the CONCEPT node it expresses under a business perspective (M2 re-point), carrying the binary weight gate and the raw priority_weight. Concept nodes are perspective-agnostic and carry the M3 payload (concept_type, domain, description as the definition, and the synonyms/tags arrays, emitted from schema_concepts); perspective is never stored on the node \u2014 it lives only on the resolves_to edge. M4 adds metrics: a metric concept carries a dialect-agnostic computation_template, and the resolves_to edges that bind its template {variable} placeholders to physical columns carry variable_name. A concept may exist without a resolves_to edge (an orphan glossary term) until a real ERP column is onboarded.",
   "key_scheme": {
@@ -113,18 +113,18 @@
     "edge_collection": "manufacturing_graph_edge"
   },
   "counts": {
-    "nodes_total": 456,
-    "edges_total": 556,
+    "nodes_total": 460,
+    "edges_total": 560,
     "nodes_by_type": {
       "table": 34,
       "column": 340,
-      "concept": 48,
+      "concept": 52,
       "binding": 34
     },
     "edges_by_type": {
       "has_column": 340,
       "references": 77,
-      "resolves_to": 51,
+      "resolves_to": 55,
       "binds_table": 88
     }
   },
@@ -5987,6 +5987,70 @@
       "default_value": null,
       "primary_key": false,
       "foreign_key": true
+    },
+    {
+      "_id": "manufacturing_graph_node/ARCashReceiptAmount:entity:semantic:canonical:none:none",
+      "_key": "ARCashReceiptAmount:entity:semantic:canonical:none:none",
+      "node_type": "concept",
+      "node_family": "semantic",
+      "perspective": "canonical",
+      "concept_name": "ARCashReceiptAmount",
+      "concept_type": "",
+      "domain": "finance",
+      "synonyms": [],
+      "tags": [],
+      "computation_template": null,
+      "predicate": "none",
+      "unique_id": "none",
+      "description": "Dollar amount of cash received in a single payment installment against an accounts-receivable invoice"
+    },
+    {
+      "_id": "manufacturing_graph_node/ARInstallmentSequence:entity:semantic:canonical:none:none",
+      "_key": "ARInstallmentSequence:entity:semantic:canonical:none:none",
+      "node_type": "concept",
+      "node_family": "semantic",
+      "perspective": "canonical",
+      "concept_name": "ARInstallmentSequence",
+      "concept_type": "",
+      "domain": "finance",
+      "synonyms": [],
+      "tags": [],
+      "computation_template": null,
+      "predicate": "none",
+      "unique_id": "none",
+      "description": "Ordinal position of this payment within a multi-installment payment schedule for an AR invoice (1 = first installment)"
+    },
+    {
+      "_id": "manufacturing_graph_node/ARInvoiceReference:entity:semantic:canonical:none:none",
+      "_key": "ARInvoiceReference:entity:semantic:canonical:none:none",
+      "node_type": "concept",
+      "node_family": "semantic",
+      "perspective": "canonical",
+      "concept_name": "ARInvoiceReference",
+      "concept_type": "",
+      "domain": "finance",
+      "synonyms": [],
+      "tags": [],
+      "computation_template": null,
+      "predicate": "none",
+      "unique_id": "none",
+      "description": "FK link that identifies which AR invoice a cash-receipt installment is applied against (receivable_payment.invoice_id -> receivable)"
+    },
+    {
+      "_id": "manufacturing_graph_node/ARPaymentDate:entity:semantic:canonical:none:none",
+      "_key": "ARPaymentDate:entity:semantic:canonical:none:none",
+      "node_type": "concept",
+      "node_family": "semantic",
+      "perspective": "canonical",
+      "concept_name": "ARPaymentDate",
+      "concept_type": "",
+      "domain": "finance",
+      "synonyms": [],
+      "tags": [],
+      "computation_template": null,
+      "predicate": "none",
+      "unique_id": "none",
+      "description": "Date on which a cash payment was received and applied to an AR invoice installment (temporal cash-settlement marker)"
     },
     {
       "_id": "manufacturing_graph_node/AllocatedQuantity:entity:semantic:canonical:none:none",
@@ -12413,6 +12477,62 @@
       "priority_weight": 2,
       "field_component": 2,
       "variable_name": "required_date"
+    },
+    {
+      "_id": "manufacturing_graph_edge/receivable_payment:amount:semantic:Receivables:resolves_to:REC_RES_REC_AMO_F1F660A0",
+      "_key": "receivable_payment:amount:semantic:Receivables:resolves_to:REC_RES_REC_AMO_F1F660A0",
+      "_from": "manufacturing_graph_node/receivable_payment:amount:structural:system:none:none",
+      "_to": "manufacturing_graph_node/ARCashReceiptAmount:entity:semantic:canonical:none:none",
+      "edge_family": "semantic",
+      "edge_type": "resolves_to",
+      "perspective": "Receivables",
+      "unique_id": "REC_RES_REC_AMO_F1F660A0",
+      "weight": 1,
+      "priority_weight": 3,
+      "field_component": 1,
+      "variable_name": null
+    },
+    {
+      "_id": "manufacturing_graph_edge/receivable_payment:installment_no:semantic:Receivables:resolves_to:REC_RES_REC_INS_554ED282",
+      "_key": "receivable_payment:installment_no:semantic:Receivables:resolves_to:REC_RES_REC_INS_554ED282",
+      "_from": "manufacturing_graph_node/receivable_payment:installment_no:structural:system:none:none",
+      "_to": "manufacturing_graph_node/ARInstallmentSequence:entity:semantic:canonical:none:none",
+      "edge_family": "semantic",
+      "edge_type": "resolves_to",
+      "perspective": "Receivables",
+      "unique_id": "REC_RES_REC_INS_554ED282",
+      "weight": 1,
+      "priority_weight": 3,
+      "field_component": 1,
+      "variable_name": null
+    },
+    {
+      "_id": "manufacturing_graph_edge/receivable_payment:invoice_id:semantic:Receivables:resolves_to:REC_RES_REC_INV_24531FF7",
+      "_key": "receivable_payment:invoice_id:semantic:Receivables:resolves_to:REC_RES_REC_INV_24531FF7",
+      "_from": "manufacturing_graph_node/receivable_payment:invoice_id:structural:system:none:none",
+      "_to": "manufacturing_graph_node/ARInvoiceReference:entity:semantic:canonical:none:none",
+      "edge_family": "semantic",
+      "edge_type": "resolves_to",
+      "perspective": "Receivables",
+      "unique_id": "REC_RES_REC_INV_24531FF7",
+      "weight": 1,
+      "priority_weight": 3,
+      "field_component": 1,
+      "variable_name": null
+    },
+    {
+      "_id": "manufacturing_graph_edge/receivable_payment:payment_date:semantic:Receivables:resolves_to:REC_RES_REC_PAY_18D39A40",
+      "_key": "receivable_payment:payment_date:semantic:Receivables:resolves_to:REC_RES_REC_PAY_18D39A40",
+      "_from": "manufacturing_graph_node/receivable_payment:payment_date:structural:system:none:none",
+      "_to": "manufacturing_graph_node/ARPaymentDate:entity:semantic:canonical:none:none",
+      "edge_family": "semantic",
+      "edge_type": "resolves_to",
+      "perspective": "Receivables",
+      "unique_id": "REC_RES_REC_PAY_18D39A40",
+      "weight": 1,
+      "priority_weight": 3,
+      "field_component": 1,
+      "variable_name": null
     },
     {
       "_id": "manufacturing_graph_edge/receiving:receipt_date:semantic:Receivables:resolves_to:REC_RES_REC_REC_1C0C8B26",

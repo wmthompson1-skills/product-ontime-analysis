@@ -100,6 +100,30 @@ NEW_CONCEPTS = {
         "Requirement read through the manufacturing lens: as-built actuals on a "
         "WORK_ORDER component (batch basis); component_type='WORK_ORDER'",
     ),
+    # --- Receivable_Payment (AR cash-receipt layer). Four concepts anchor the
+    # key columns of receivable_payment so the table surfaces in the Semantic
+    # Graph (not just the Schema Browser). Receivables perspective; finance
+    # domain. Pattern mirrors the AP payables elevations (batch 4).
+    "ARInvoiceReference": (
+        "classification", "finance",
+        "FK link that identifies which AR invoice a cash-receipt installment "
+        "is applied against (receivable_payment.invoice_id -> receivable)",
+    ),
+    "ARCashReceiptAmount": (
+        "metric", "finance",
+        "Dollar amount of cash received in a single payment installment "
+        "against an accounts-receivable invoice",
+    ),
+    "ARPaymentDate": (
+        "state", "finance",
+        "Date on which a cash payment was received and applied to an AR "
+        "invoice installment (temporal cash-settlement marker)",
+    ),
+    "ARInstallmentSequence": (
+        "classification", "finance",
+        "Ordinal position of this payment within a multi-installment payment "
+        "schedule for an AR invoice (1 = first installment)",
+    ),
     # --- General_Ledger (job-costing ledger) vocabulary. Mirrors the five
     # SKOS anchors of the Job-Costing Ledger Concept Scheme; each concept
     # anchors one governed ledger query intent (ledger_* in schema_intents).
@@ -345,6 +369,25 @@ ELEVATIONS = [
     ("General_Ledger", "FinishedGoodsProductionFlow",
      "gl_finished_goods_inventory", "event_type", 3,
      "event_type = 'FG_COMPLETION' — finished goods completed into the FG bucket"),
+    # --- batch 10: AR cash-receipt layer (receivable_payment). The Receivables
+    # perspective covers AR invoicing at the receivable grain; batch 10 extends
+    # coverage to the cash-receipt grain so payment columns surface in the
+    # Semantic Graph. ARCashReceiptAmount follows the batch-6 named-measure
+    # pattern; ARInvoiceReference / ARInstallmentSequence follow the batch-1/4
+    # bounded-categorical pattern; ARPaymentDate follows the batch-5 value-
+    # condition / temporal-marker pattern.
+    ("Receivables", "ARInvoiceReference",
+     "receivable_payment", "invoice_id", 3,
+     "AR invoice this payment installment is applied against (FK to receivable)"),
+    ("Receivables", "ARCashReceiptAmount",
+     "receivable_payment", "amount", 3,
+     "Dollar amount of cash received in this payment installment"),
+    ("Receivables", "ARPaymentDate",
+     "receivable_payment", "payment_date", 3,
+     "Date the cash payment was received and applied to the AR invoice"),
+    ("Receivables", "ARInstallmentSequence",
+     "receivable_payment", "installment_no", 3,
+     "Ordinal position of this installment within the payment schedule (1-based)"),
 ]
 
 # --- M4: METRIC computation templates -------------------------------------
