@@ -178,6 +178,17 @@ if [ -f hf-space-inventory-sqlgen/tests/test_receivable_tables.py ]; then
   }
 fi
 
+if [ -f hf-space-inventory-sqlgen/tests/test_schema_browser_receivable_payment.py ]; then
+  # Gate: sql_graph_nodes contains receivable_payment rows (Schema Browser source
+  # of truth) AND graph_metadata.json is in parity with sql_graph_nodes/edges.
+  # A future migration ordering change cannot silently drop receivable_payment
+  # from the graph without this gate catching it first.
+  python hf-space-inventory-sqlgen/tests/test_schema_browser_receivable_payment.py || {
+    echo "post-merge: Schema Browser receivable_payment graph-presence gate failed"
+    exit 1
+  }
+fi
+
 if [ -f hf-space-inventory-sqlgen/tests/test_gl_schema_registry.py ]; then
   python hf-space-inventory-sqlgen/tests/test_gl_schema_registry.py || {
     echo "post-merge: GL schema registry + reconciliation tests failed"
