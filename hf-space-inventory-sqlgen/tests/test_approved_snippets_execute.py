@@ -109,11 +109,9 @@ def test_every_approved_snippet_executes() -> None:
                 failures.append(f"{key}: SQL file is empty")
                 continue
             try:
-                # Temporal-contract snippets carry NULL-guarded named params
-                # (:start_date / :end_date / :supplier_id / :as_of_date /
-                # :job_id). Binding them all to NULL reproduces the full
-                # unfiltered population; snippets that don't reference these
-                # keys ignore the extra dict entries.
+                # Temporal-contract snippets carry NULL-guarded named params.
+                # Binding them all to NULL reproduces the full unfiltered
+                # population; snippets that don't reference a key ignore it.
                 conn.execute(
                     sql,
                     {
@@ -122,6 +120,7 @@ def test_every_approved_snippet_executes() -> None:
                         "supplier_id": None,
                         "as_of_date": None,
                         "job_id": None,
+                        "invoice_number": None,
                     },
                 ).fetchall()
                 executed += 1

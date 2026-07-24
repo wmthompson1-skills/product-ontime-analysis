@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-19T03:58:13.786597+00:00",
+  "last_updated": "2026-07-24T05:47:35.613992+00:00",
   "approved_snippets": {
     "inventory_reorderpoint_20260703_000001": {
       "concept_anchor": "REORDERPOINT",
@@ -1479,7 +1479,7 @@
       "concept_anchor": "ARAGING",
       "logic_type": "DIRECT",
       "file_path": "app_schema/ground_truth/sql_snippets/receivables_araging_20260724_000001.sql",
-      "sme_justification": "AR aging report (Open + Disputed invoices only) bucketed by days past due_date — Current / 1-30 / 31-60 / >60 days — relative to a data-derived as-of date (MAX payment_date from Paid invoices). After collect_june2026_ar, all pre-July-2026 invoices are Paid and return zero rows here, confirming the cash-to-cash cycle closed correctly.",
+      "sme_justification": "AR aging report (Open + Disputed invoices only) bucketed by days past due_date \u2014 Current / 1-30 / 31-60 / >60 days \u2014 relative to a data-derived as-of date (MAX payment_date from Paid invoices). After collect_june2026_ar, all pre-July-2026 invoices are Paid and return zero rows here, confirming the cash-to-cash cycle closed correctly.",
       "validation_status": "APPROVED",
       "created_at": "2026-07-24T00:00:01Z",
       "approved_at": "2026-07-24T00:00:01Z",
@@ -1499,6 +1499,39 @@
         "dialect": "sqlite",
         "signed_off_by": "ar_aging_governed_view",
         "signed_off_at": "2026-07-24T00:00:01Z"
+      }
+    },
+    "receivables_cashreceipts_20260724_000002": {
+      "binding_key": "receivables_cashreceipts_20260724_000002",
+      "category": "receivables",
+      "perspective": "Receivables",
+      "concept_anchor": "ARCASHRECEIPTS",
+      "logic_type": "DIRECT",
+      "file_path": "app_schema/ground_truth/sql_snippets/receivables_cashreceipts_20260724_000002.sql",
+      "sme_justification": "Cash receipts by invoice \u2014 every receivable_payment installment joined to its invoice header with running cumulative-paid and remaining-balance, so partial collections are visible line by line. Answers 'what payments came in this month?' and 'show cash receipts against invoice X'.",
+      "validation_status": "APPROVED",
+      "created_at": "2026-07-24T05:47:35.613992+00:00",
+      "approved_at": "2026-07-24T05:47:35.613992+00:00",
+      "approved_by": "cash_receipts_governed_view",
+      "structural_fingerprint": {
+        "base_tables": [
+          "receivable",
+          "receivable_payment"
+        ],
+        "join_edges": [
+          {
+            "table_a": "receivable",
+            "column_a": "invoice_id",
+            "table_b": "receivable_payment",
+            "column_b": "invoice_id",
+            "join_type": "INNER"
+          }
+        ],
+        "unresolved_joins": [],
+        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+        "dialect": "sqlite",
+        "signed_off_by": "cash_receipts_governed_view",
+        "signed_off_at": "2026-07-24T05:47:35.613992+00:00"
       }
     }
   }

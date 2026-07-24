@@ -195,6 +195,11 @@ STEPS = [
     # wire the AR aging governed view (receivables_araging_20260724_000001)
     # to Receivables intent 19 (order_revenue_recognition) at query_index 3.
     ("migrations/add_ar_aging_palette_wiring.py", []),
+    # wire the cash receipts governed view
+    # (receivables_cashreceipts_20260724_000002) to the new ar_cash_receipts
+    # intent (Receivables) at query_index 4, so NLQ questions about AR
+    # payments route to governed SQL over receivable_payment
+    ("migrations/add_cash_receipts_palette_wiring.py", []),
     # index every APPROVED reviewer-manifest snippet (incl. the governed
     # ledger queries) into ground_truth_table_usage so a fresh DB's Ground
     # Truth mosaic sees their table usage without waiting for an app boot

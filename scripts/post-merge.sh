@@ -178,6 +178,17 @@ if [ -f hf-space-inventory-sqlgen/tests/test_receivable_tables.py ]; then
   }
 fi
 
+if [ -f hf-space-inventory-sqlgen/tests/test_cash_receipts_routing.py ]; then
+  # Gate: cash receipts governed view (receivable_payment ⋈ receivable) —
+  # manifest APPROVED + v2 fingerprint, SolderEngine serves it, ar_cash_receipts
+  # intent/palette wiring present, and the NLQ dispatcher routes AR-payment
+  # questions to it (never OUT_OF_SCOPE, never swallowed by the "invoice" route).
+  python hf-space-inventory-sqlgen/tests/test_cash_receipts_routing.py || {
+    echo "post-merge: cash receipts governed-view + routing gate failed"
+    exit 1
+  }
+fi
+
 if [ -f hf-space-inventory-sqlgen/tests/test_bootstrap_steps_ordering.py ]; then
   # Gate: bootstrap_db.py STEPS ordering — collect_june2026_ar.py must run
   # AFTER add_receivable_tables.py (receivable_payment depends on the

@@ -126,6 +126,31 @@ MOCK_ROUTES = {
         "concepts": ["ARInvoiceReference"],
         "perspective": "Receivables"
     },
+    # Cash-receipt routes point at ar_cash_receipts (governed SQL over
+    # receivable_payment ⋈ receivable). They MUST come BEFORE the "invoice"
+    # keyword: "show me cash receipts against invoice AR-123" contains both
+    # and must resolve to cash receipts. The generic "payment" keyword is
+    # deliberately last of the four so the more specific spellings win.
+    "cash receipt": {
+        "intent": "ar_cash_receipts",
+        "concepts": ["ARCashReceiptAmount", "ARPaymentDate"],
+        "perspective": "Receivables"
+    },
+    "installment": {
+        "intent": "ar_cash_receipts",
+        "concepts": ["ARInstallmentSequence", "ARPaymentDate"],
+        "perspective": "Receivables"
+    },
+    "customer payment": {
+        "intent": "ar_cash_receipts",
+        "concepts": ["ARCashReceiptAmount", "ARPaymentDate"],
+        "perspective": "Receivables"
+    },
+    "payment": {
+        "intent": "ar_cash_receipts",
+        "concepts": ["ARCashReceiptAmount", "ARPaymentDate"],
+        "perspective": "Receivables"
+    },
     "invoice": {
         "intent": "order_revenue_recognition",
         "concepts": ["ARInvoiceReference"],
@@ -144,21 +169,6 @@ MOCK_ROUTES = {
     "unpaid": {
         "intent": "order_revenue_recognition",
         "concepts": ["ARInvoiceReference"],
-        "perspective": "Receivables"
-    },
-    "cash receipt": {
-        "intent": "order_revenue_recognition",
-        "concepts": ["ARCashReceiptAmount", "ARPaymentDate"],
-        "perspective": "Receivables"
-    },
-    "installment": {
-        "intent": "order_revenue_recognition",
-        "concepts": ["ARInstallmentSequence", "ARPaymentDate"],
-        "perspective": "Receivables"
-    },
-    "customer payment": {
-        "intent": "order_revenue_recognition",
-        "concepts": ["ARCashReceiptAmount", "ARPaymentDate"],
         "perspective": "Receivables"
     },
     "revenue": {

@@ -1,19 +1,19 @@
 SQLite (SQL) <-> ArangoDB (AQL) parity report
-generated: 2026-07-24T05:45:30+00:00
+generated: 2026-07-24T05:59:35+00:00
 db: /home/runner/workspace/hf-space-inventory-sqlgen/app_schema/manufacturing.db
 arango_node_collection: manufacturing_graph_node
 arango_edge_collection: manufacturing_graph_edge
 
 collection        SQLite    ArangoDB    Match
 ---------------------------------------------
-nodes                460         445 MISMATCH
-edges                560         544 MISMATCH
+nodes                461         445 MISMATCH
+edges                562         544 MISMATCH
 
 differences:
-  - nodes: count mismatch — SQLite=460 ArangoDB=445
-  - nodes: 15 _key(s) in SQLite but not ArangoDB, e.g. ['ARCashReceiptAmount:entity:semantic:canonical:none:none', 'ARInstallmentSequence:entity:semantic:canonical:none:none', 'ARInvoiceReference:entity:semantic:canonical:none:none', 'ARPaymentDate:entity:semantic:canonical:none:none', 'customer_order_line:shipped_date:structural:system:none:none']
-  - edges: count mismatch — SQLite=560 ArangoDB=544
-  - edges: 20 _key(s) in SQLite but not ArangoDB, e.g. ['customer_order_line:shipped_date:structural:system:has_column:SYS_HAS_CUS_SHI_001', 'customer_order_line:shipped_qty:structural:system:has_column:SYS_HAS_CUS_SHI_002', 'receivable_payment:amount:semantic:Receivables:resolves_to:REC_RES_REC_AMO_F1F660A0', 'receivable_payment:amount:structural:system:has_column:SYS_HAS_REC_AMO_003', 'receivable_payment:created_at:structural:system:has_column:SYS_HAS_REC_CRE_003']
+  - nodes: count mismatch — SQLite=461 ArangoDB=445
+  - nodes: 16 _key(s) in SQLite but not ArangoDB, e.g. ['ARCashReceiptAmount:entity:semantic:canonical:none:none', 'ARInstallmentSequence:entity:semantic:canonical:none:none', 'ARInvoiceReference:entity:semantic:canonical:none:none', 'ARPaymentDate:entity:semantic:canonical:none:none', 'customer_order_line:shipped_date:structural:system:none:none']
+  - edges: count mismatch — SQLite=562 ArangoDB=544
+  - edges: 22 _key(s) in SQLite but not ArangoDB, e.g. ['customer_order_line:shipped_date:structural:system:has_column:SYS_HAS_CUS_SHI_001', 'customer_order_line:shipped_qty:structural:system:has_column:SYS_HAS_CUS_SHI_002', 'receivable_payment:amount:semantic:Receivables:resolves_to:REC_RES_REC_AMO_F1F660A0', 'receivable_payment:amount:structural:system:has_column:SYS_HAS_REC_AMO_003', 'receivable_payment:created_at:structural:system:has_column:SYS_HAS_REC_CRE_003']
   - edges: 4 _key(s) in ArangoDB but not SQLite, e.g. ['receiving:created_at:structural:system:has_column:SYS_HAS_REC_CRE_003', 'receiving:inspection_status:structural:system:has_column:SYS_HAS_REC_INS_001', 'receiving_line:created_at:structural:system:has_column:SYS_HAS_REC_CRE_004', 'receiving_line:inspection_status:structural:system:has_column:SYS_HAS_REC_INS_002']
 
 [sql_aql_parity] FAIL — the SQLite graph tables do not match the live ArangoDB graph

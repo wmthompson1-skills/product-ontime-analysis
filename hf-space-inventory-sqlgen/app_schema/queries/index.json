@@ -50,8 +50,8 @@
             },
             "select_counts": {
               "product_defects": 1,
-              "corrective_actions": 2,
               "non_conformant_materials": 3,
+              "corrective_actions": 2,
               "quality_incidents": 1,
               "employee": 1
             }
@@ -82,8 +82,8 @@
               "daily_deliveries": 1
             },
             "select_counts": {
-              "suppliers": 1,
-              "daily_deliveries": 1
+              "daily_deliveries": 1,
+              "suppliers": 1
             }
           },
           {
@@ -93,8 +93,8 @@
               "daily_deliveries": 1
             },
             "select_counts": {
-              "suppliers": 1,
-              "daily_deliveries": 1
+              "daily_deliveries": 1,
+              "suppliers": 1
             }
           },
           {
@@ -105,8 +105,8 @@
               "product_lines": 1
             },
             "select_counts": {
-              "suppliers": 1,
               "daily_deliveries": 1,
+              "suppliers": 1,
               "product_lines": 1
             }
           },
@@ -117,8 +117,8 @@
               "payables": 2
             },
             "select_counts": {
-              "suppliers": 1,
-              "payables": 2
+              "payables": 2,
+              "suppliers": 1
             }
           },
           {
@@ -128,8 +128,8 @@
               "payables": 2
             },
             "select_counts": {
-              "suppliers": 1,
-              "payables": 2
+              "payables": 2,
+              "suppliers": 1
             }
           },
           {
@@ -270,7 +270,7 @@
             }
           },
           {
-            "query_name": "AR Aging Report",
+            "query_name": "unnamed",
             "tables": {
               "receivable": 2
             },
@@ -385,6 +385,8 @@
     "purchase_order",
     "quality_costs",
     "quality_incidents",
+    "receivable",
+    "receivable_payment",
     "receiving",
     "receiving_line",
     "sales",
@@ -406,6 +408,7 @@
     "daily_deliveries": 7,
     "customer_order_line": 7,
     "product_lines": 5,
+    "receivable": 5,
     "shop_resource": 5,
     "operation": 5,
     "gl_finished_goods_inventory": 4,
@@ -427,6 +430,7 @@
     "quality_costs": 1,
     "quality_incidents": 1,
     "employee": 1,
-    "certification": 1
+    "certification": 1,
+    "receivable_payment": 1
   }
 }
