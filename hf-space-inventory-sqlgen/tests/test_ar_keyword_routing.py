@@ -1,9 +1,11 @@
 """test_ar_keyword_routing.py
 
 Guards the Receivables (AR) block of the MOCK_ROUTES keyword→intent dispatch
-table in production_dispatcher.py, added so natural-language AR questions
-reach the order_revenue_recognition intent (whose primary_binding_key serves
-the SME-approved AR aging governed view).
+table in production_dispatcher.py.  The AR block covers two intents:
+
+  - order_revenue_recognition — AR aging / invoice / overdue / unpaid queries
+  - ar_cash_receipts — cash receipt / installment / customer payment queries
+    (added alongside the receivables_cashreceipts_20260724_000002 governed view)
 
 Each test calls extract_via_mock() directly with a natural-language query and
 asserts the expected intent and (optionally) the expected primary concept.
@@ -11,11 +13,11 @@ SolderEngine is replaced with a MagicMock so no database or manifest file is
 needed — the tests are pure routing logic, isolated from SQL assembly.
 
 Coverage:
-  - AR keywords route to order_revenue_recognition (aging, receivable,
-    invoice, past due, overdue, unpaid, cash receipt, installment, revenue)
+  - Aging/invoice/overdue/unpaid keywords → order_revenue_recognition
+  - Cash receipt/installment/customer payment keywords → ar_cash_receipts
   - Priority order: AR keywords win over the generic "customer" catch-all
     ("which customers have unpaid invoices" must NOT route to
-    defect_customer_impact) and "customer payment" beats "customer"
+    defect_customer_impact); "customer payment" routes to ar_cash_receipts
   - Concept payloads match the canonical AR concept nodes
   - Pre-existing routes are unaffected (customer/defect, cost, supplier,
     inventory)
