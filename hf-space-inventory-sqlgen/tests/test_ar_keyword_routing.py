@@ -32,6 +32,7 @@ sys.path.insert(0, HF_DIR)
 from production_dispatcher import ProductionDispatcher, MOCK_ROUTES  # noqa: E402
 
 AR_INTENT = "order_revenue_recognition"
+AR_RECEIPTS_INTENT = "ar_cash_receipts"  # distinct intent added for cash-receipt queries
 
 
 def _dispatcher() -> ProductionDispatcher:
@@ -88,14 +89,14 @@ def test_unpaid_routes_to_receivables_intent():
 
 def test_cash_receipt_routes_with_payment_concepts():
     intent, concepts = _route("List the cash receipts for June")
-    assert intent == AR_INTENT
+    assert intent == AR_RECEIPTS_INTENT, f"Expected {AR_RECEIPTS_INTENT}, got {intent}"
     assert "ARCashReceiptAmount" in concepts
     assert "ARPaymentDate" in concepts
 
 
 def test_installment_routes_with_installment_concepts():
     intent, concepts = _route("Show the installment schedule")
-    assert intent == AR_INTENT
+    assert intent == AR_RECEIPTS_INTENT, f"Expected {AR_RECEIPTS_INTENT}, got {intent}"
     assert "ARInstallmentSequence" in concepts
 
 
@@ -119,8 +120,8 @@ def test_unpaid_invoices_beats_customer_catch_all():
 
 def test_customer_payment_beats_customer_catch_all():
     intent, concepts = _route("Were any customer payments received this week?")
-    assert intent == AR_INTENT, (
-        f"Expected {AR_INTENT} ('customer payment' must beat 'customer'), got {intent}"
+    assert intent == AR_RECEIPTS_INTENT, (
+        f"Expected {AR_RECEIPTS_INTENT} ('customer payment' routes to cash receipts), got {intent}"
     )
     assert "ARCashReceiptAmount" in concepts
 
