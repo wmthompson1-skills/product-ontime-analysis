@@ -47,6 +47,7 @@
 - [Filter date column binding](filter-date-column-binding.md) — date facet binds to each query's PHYSICAL column (per query), not the output alias; noun (received_date) vs adjective (receipt_date) differs real-source vs twin.
 - [Proxy Host header & mount redirects](proxy-host-header-redirects.md) — pass-through proxy must preserve original Host; slashless mount paths 307 to an absolute URL built from Host, poisoning browsers with localhost.
 - [Selector query registration](selector-query-registration.md) — palette `-- Query:` alone is invisible to Selector v1.0; needs a schema_intent_queries row, and mid-file inserts shift query_index (bump displaced rows first).
+- [Intent IDs unstable across fresh bootstraps](intent-id-instability.md) — never hardcode intent_id in migrations; resolve by UNIQUE intent_name. Payables side (intent 18) still has this bug on fresh clones.
 - [Outside-service op key linkage](outside-service-op-key-linkage.md) — service POs join ops by (wo_id, service_id); key drift = silent rollup-vs-op-actuals gap; run post-commit cascades unconditionally.
 - [Ground-truth view registration](ground-truth-view-registration.md) — new APPROVED view = snippet + manifest + fingerprint backfill + graph re-freeze (SCHEMA_VERSION bump); skipping the export fails the binds_table gate.
 - [Shared selector pane design](selector-pane-design.md) — tags = the 15 schema_perspectives (Define Relationship vocabulary), never intent categories; concrete 5-dropdown chain Table→Column→Concept→Intent→Query; surface coverage gaps honestly.

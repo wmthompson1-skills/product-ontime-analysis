@@ -1238,7 +1238,7 @@ def get_saved_queries(category_id: str) -> List[Dict[str, str]]:
         
         for line in lines:
             if line.startswith('-- Query:'):
-                if current_query["sql"].strip():
+                if current_query["name"] and current_query["sql"].strip():
                     queries.append(current_query)
                 current_query = {"name": line.replace('-- Query:', '').strip(), "description": "", "sql": "", "binding_key": ""}
             elif line.startswith('-- Description:'):
@@ -1248,7 +1248,9 @@ def get_saved_queries(category_id: str) -> List[Dict[str, str]]:
             elif not line.startswith('-- ') and line.strip():
                 current_query["sql"] += line + "\n"
         
-        if current_query["sql"].strip():
+        # Name-guarded like the in-loop append: header text before the first
+        # '-- Query:' marker must never surface as a nameless palette entry.
+        if current_query["name"] and current_query["sql"].strip():
             queries.append(current_query)
         
         return queries

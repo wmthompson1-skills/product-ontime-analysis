@@ -105,6 +105,67 @@ MOCK_ROUTES = {
         "concepts": ["GLFGProduced"],
         "perspective": "General_Ledger"
     },
+    # Receivables (AR) routes — MUST come before the generic "cost" and
+    # "customer" catch-alls: "which customers have unpaid invoices" would
+    # otherwise be swallowed by "customer" → defect_customer_impact.
+    # NOTE: "invoice" also substring-matches "uninvoiced" — if payables
+    # routes are ever added, their "uninvoiced" / "receipt" keywords must
+    # be inserted BEFORE this block.
+    "ar aging": {
+        "intent": "order_revenue_recognition",
+        "concepts": ["ARInvoiceReference"],
+        "perspective": "Receivables"
+    },
+    "aging": {
+        "intent": "order_revenue_recognition",
+        "concepts": ["ARInvoiceReference"],
+        "perspective": "Receivables"
+    },
+    "receivable": {
+        "intent": "order_revenue_recognition",
+        "concepts": ["ARInvoiceReference"],
+        "perspective": "Receivables"
+    },
+    "invoice": {
+        "intent": "order_revenue_recognition",
+        "concepts": ["ARInvoiceReference"],
+        "perspective": "Receivables"
+    },
+    "past due": {
+        "intent": "order_revenue_recognition",
+        "concepts": ["ARInvoiceReference"],
+        "perspective": "Receivables"
+    },
+    "overdue": {
+        "intent": "order_revenue_recognition",
+        "concepts": ["ARInvoiceReference"],
+        "perspective": "Receivables"
+    },
+    "unpaid": {
+        "intent": "order_revenue_recognition",
+        "concepts": ["ARInvoiceReference"],
+        "perspective": "Receivables"
+    },
+    "cash receipt": {
+        "intent": "order_revenue_recognition",
+        "concepts": ["ARCashReceiptAmount", "ARPaymentDate"],
+        "perspective": "Receivables"
+    },
+    "installment": {
+        "intent": "order_revenue_recognition",
+        "concepts": ["ARInstallmentSequence", "ARPaymentDate"],
+        "perspective": "Receivables"
+    },
+    "customer payment": {
+        "intent": "order_revenue_recognition",
+        "concepts": ["ARCashReceiptAmount", "ARPaymentDate"],
+        "perspective": "Receivables"
+    },
+    "revenue": {
+        "intent": "order_revenue_recognition",
+        "concepts": ["OrderAccountingState"],
+        "perspective": "Receivables"
+    },
     "cost": {
         "intent": "defect_cost_analysis",
         "concepts": ["DefectSeverityCost"],
