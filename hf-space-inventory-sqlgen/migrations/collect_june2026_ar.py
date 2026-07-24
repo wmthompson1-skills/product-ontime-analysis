@@ -27,16 +27,16 @@ What this migration does (deterministic, idempotent, fail-closed):
    (source_table='receivable_payment', source_id=payment_id). Idempotent via
    the (source_table, source_id, event_type) key in gl_events.
 
-4. STATUS UPDATE — marks all five invoices status='Paid',
+4. STATUS UPDATE — marks all collected invoices status='Paid',
    payment_date='2026-07-21', guarded by: all 3 installments present AND
    SUM(installments) == amount_dollars ± 0.01. Only transitions Open/Disputed
    -> Paid; already-Paid invoices are skipped.
 
-5. FAIL-CLOSED VERIFY — checks:
-   - receivable_payment row count == 15 (5 invoices × 3 installments)
+5. FAIL-CLOSED VERIFY — checks (all N-invoice-agnostic — no hardcoded count):
+   - receivable_payment row count == N invoices × 3 installments
    - SUM(installments) == amount_dollars per invoice (±$0.01)
-   - all 5 June invoices are now Paid with payment_date='2026-07-21'
-   - gl_events gained exactly 15 CASH_RECEIPT rows
+   - all collected invoices are now Paid with payment_date='2026-07-21'
+   - gl_events gained exactly N × 3 CASH_RECEIPT rows
    - all CASH_RECEIPT amounts are positive
 
 Out of scope (deliberate):
@@ -194,7 +194,7 @@ def run():
     )
     print(f"  CASH_RECEIPT events posted this run: {total_posted}")
 
-    # Phase 4 — mark all five invoices Paid (guarded)
+    # Phase 4 — mark all collected invoices Paid (guarded)
     print("\nPhase 4 — mark invoices Paid (guarded transition) ...")
     marked_paid = 0
     for invoice_id, invoice_number, amount_dollars, _status in invoices:

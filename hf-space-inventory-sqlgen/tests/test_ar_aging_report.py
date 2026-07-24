@@ -2,7 +2,7 @@
 
 Locks the invariants of:
   - receivables_araging_20260724_000001.sql (the approved AR aging snippet)
-  - migrations/collect_june2026_ar.py (marks all 5 pre-July-2026 open invoices Paid)
+  - migrations/collect_june2026_ar.py (marks all pre-July-2026 open invoices Paid; N-invoice-agnostic)
   - migrations/add_ar_aging_palette_wiring.py (intent 19 query_index 3)
 
 Checks:

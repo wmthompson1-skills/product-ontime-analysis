@@ -3,9 +3,9 @@
 -- as-of date (MAX(payment_date) from Paid invoices — the most recent
 -- collection event in the system).
 --
--- After collect_june2026_ar runs, all 5 pre-July-2026 invoices are Paid and
--- this query returns zero rows for that cohort, confirming the cash-to-cash
--- cycle closed correctly.
+-- After collect_june2026_ar runs, all pre-July-2026 Open/Disputed invoices are
+-- Paid and this query returns zero rows for that cohort, confirming the
+-- cash-to-cash cycle closed correctly.
 --
 -- Aging buckets (days past due_date as of as_of_date):
 --   Current    : due_date >= as_of_date (not yet overdue)
