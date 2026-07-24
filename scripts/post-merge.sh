@@ -178,6 +178,17 @@ if [ -f hf-space-inventory-sqlgen/tests/test_receivable_tables.py ]; then
   }
 fi
 
+if [ -f hf-space-inventory-sqlgen/tests/test_bootstrap_steps_ordering.py ]; then
+  # Gate: bootstrap_db.py STEPS ordering — collect_june2026_ar.py must run
+  # AFTER add_receivable_tables.py (receivable_payment depends on the
+  # receivable table existing first). Import-only, no DB, no migrations —
+  # catches a STEPS reorder before any bootstrap runs.
+  python hf-space-inventory-sqlgen/tests/test_bootstrap_steps_ordering.py || {
+    echo "post-merge: bootstrap_db.py STEPS ordering gate failed"
+    exit 1
+  }
+fi
+
 if [ -f hf-space-inventory-sqlgen/tests/test_schema_browser_receivable_payment.py ]; then
   # Gate: sql_graph_nodes contains receivable_payment rows (Schema Browser source
   # of truth) AND graph_metadata.json is in parity with sql_graph_nodes/edges.
