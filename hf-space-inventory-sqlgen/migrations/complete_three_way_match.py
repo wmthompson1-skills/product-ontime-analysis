@@ -319,6 +319,13 @@ def verify(cur):
     print("  verify: all three-way match invariants hold")
 
 
+def _po_exists(cur, po_id: str) -> bool:
+    """True when the PO is still present in purchase_order."""
+    return cur.execute(
+        "SELECT 1 FROM purchase_order WHERE po_id=?", (po_id,)
+    ).fetchone() is not None
+
+
 def run():
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
@@ -327,8 +334,19 @@ def run():
 
     n = 0
     for po_id in FULL_RECEIPT_POS:
+        if not _po_exists(cur, po_id):
+            # The prune step selected different survivors on a second bootstrap
+            # run. This PO (and its cascade) was already removed — there are no
+            # Closed PO lines left for the verify gate to flag.  Warn and skip.
+            print(f"  WARNING: PO {po_id} not found in purchase_order "
+                  "(pruned on a previous run?) — skipping full-receipt backfill")
+            continue
         n += insert_receipt_lines(cur, po_id, receipt_date_for(cur, po_id, as_of))
     for po_id, fractions in PARTIAL_RECEIPTS.items():
+        if not _po_exists(cur, po_id):
+            print(f"  WARNING: PO {po_id} not found in purchase_order "
+                  "(pruned on a previous run?) — skipping partial-receipt backfill")
+            continue
         n += insert_receipt_lines(cur, po_id, receipt_date_for(cur, po_id, as_of),
                                   fractions)
     print(f"  receipts: {n} new receipt line(s)")

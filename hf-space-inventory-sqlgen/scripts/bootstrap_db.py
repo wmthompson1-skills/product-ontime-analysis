@@ -6,6 +6,27 @@ thing deterministically:
 
     cd hf-space-inventory-sqlgen && python scripts/bootstrap_db.py
 
+WARNING — second run on an existing DB is NOT safe:
+    Running this script a second time on a fully-bootstrapped DB can silently
+    corrupt PO references.  Here is why:
+
+      1. seed_erp_synthetic.py uses INSERT OR IGNORE, so rows that were
+         pruned in the first run are re-inserted, inflating the PO count back
+         to the seeded total (~202 POs).
+      2. prune_erp_to_demo_scale.py sees the inflated count, runs the trim
+         again, and may select a DIFFERENT set of 15 survivors — POs that
+         complete_three_way_match.py needs (e.g. PO-000003) can disappear.
+      3. complete_three_way_match.py then fails (or warns/skips) because its
+         hard-coded FULL_RECEIPT_POS / PARTIAL_RECEIPTS lists reference POs
+         that no longer exist.
+
+    If you need to recover from a partial failure:
+        rm hf-space-inventory-sqlgen/app_schema/manufacturing.db
+        cd hf-space-inventory-sqlgen && python scripts/bootstrap_db.py
+
+    Each individual migration IS idempotent and safe to re-run in isolation
+    once the DB is at the correct chain state for that step.
+
 Partial bootstrap: pass --stop-after <migration_name> (path as listed in
 STEPS or just the basename) to stop the chain right after that step
 completes. Useful for exercising deliberate mid-chain states, e.g. the
