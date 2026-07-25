@@ -3,10 +3,12 @@
 Ontop POC toolchain setup (Python port of poc/ontop-ontology-poc/setup.sh).
 =============================================================================
 
-Downloads the pinned, checksum-verified Ontop CLI + SQLite JDBC driver into
-``poc/ontop-ontology-poc/tools/``. All artifacts land under ``tools/`` and are
-gitignored. Re-runnable / idempotent: nothing is re-downloaded if it is already
-present.
+Downloads the pinned, checksum-verified Ontop CLI + SQLite JDBC driver (used by
+automated CI parity checks) + DuckDB JDBC driver (used for manual ``ontop query``
+runs against ``Utilities/SQLMesh/db.db``) into ``poc/ontop-ontology-poc/tools/``.
+
+All artifacts land under ``tools/`` and are gitignored.
+Re-runnable / idempotent: nothing is re-downloaded if it is already present.
 
 Lives in ``replit_integrations/`` so it can be shared alongside the other
 integration tools, but it points back into the POC folder for everything it
@@ -25,9 +27,18 @@ import zipfile
 ONTOP_VERSION = "5.5.0"
 SQLITE_JDBC_VERSION = "3.49.1.0"
 
+# DuckDB JDBC — used for manual `ontop query` runs against Utilities/SQLMesh/db.db.
+# The automated CI parity checks export a SQLite snapshot from the DuckDB source and
+# use the SQLite JDBC driver instead, so there is no runtime DuckDB JDBC dependency in CI.
+# NOTE: This JDBC version (1.1.3) is the latest stable release available on Maven Central.
+# If the installed Python duckdb library is a newer major version, manually verify that the
+# JDBC driver can open DuckDB files produced by that version before using it for manual runs.
+DUCKDB_JDBC_VERSION = "1.1.3"
+
 # SHA-256 checksums of the pinned downloads (reproducibility guard).
 ONTOP_ZIP_SHA256 = "430dff312e68e8ad41d26e6113160ca2365c28c4fe911926193000a33299458f"
 SQLITE_JDBC_SHA256 = "5c8609d2ca341deb8c6f71778974b5ba4995c7d32d7c7c89d9392a3e72c39291"
+DUCKDB_JDBC_SHA256 = "7bdfe781bb101e2e807397c460c1840955b40aecbaacf2a5e6fc490d80e4f7cd"
 
 INTEGRATIONS_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.abspath(os.path.join(INTEGRATIONS_DIR, ".."))
@@ -43,6 +54,10 @@ ONTOP_URL = (
 SQLITE_JDBC_URL = (
     "https://repo1.maven.org/maven2/org/xerial/sqlite-jdbc/"
     f"{SQLITE_JDBC_VERSION}/sqlite-jdbc-{SQLITE_JDBC_VERSION}.jar"
+)
+DUCKDB_JDBC_URL = (
+    "https://repo1.maven.org/maven2/org/duckdb/duckdb_jdbc/"
+    f"{DUCKDB_JDBC_VERSION}/duckdb_jdbc-{DUCKDB_JDBC_VERSION}.jar"
 )
 
 
@@ -97,17 +112,26 @@ def ensure_toolchain():
     else:
         print(f"Ontop CLI {ONTOP_VERSION} already present.")
 
-    jdbc_jar = os.path.join(
-        ONTOP_DIR, "jdbc", f"sqlite-jdbc-{SQLITE_JDBC_VERSION}.jar"
-    )
-    if not os.path.isfile(jdbc_jar):
+    jdbc_dir = os.path.join(ONTOP_DIR, "jdbc")
+    os.makedirs(jdbc_dir, exist_ok=True)
+
+    sqlite_jar = os.path.join(jdbc_dir, f"sqlite-jdbc-{SQLITE_JDBC_VERSION}.jar")
+    if not os.path.isfile(sqlite_jar):
         print(f"Downloading sqlite-jdbc {SQLITE_JDBC_VERSION}...")
-        os.makedirs(os.path.dirname(jdbc_jar), exist_ok=True)
-        _download(SQLITE_JDBC_URL, jdbc_jar)
+        _download(SQLITE_JDBC_URL, sqlite_jar)
         print("Verifying checksum...")
-        _verify(jdbc_jar, SQLITE_JDBC_SHA256)
+        _verify(sqlite_jar, SQLITE_JDBC_SHA256)
     else:
         print(f"sqlite-jdbc {SQLITE_JDBC_VERSION} already present.")
+
+    duckdb_jar = os.path.join(jdbc_dir, f"duckdb_jdbc-{DUCKDB_JDBC_VERSION}.jar")
+    if not os.path.isfile(duckdb_jar):
+        print(f"Downloading duckdb-jdbc {DUCKDB_JDBC_VERSION} (for manual DuckDB runs)...")
+        _download(DUCKDB_JDBC_URL, duckdb_jar)
+        print("Verifying checksum...")
+        _verify(duckdb_jar, DUCKDB_JDBC_SHA256)
+    else:
+        print(f"duckdb-jdbc {DUCKDB_JDBC_VERSION} already present.")
 
     return ONTOP_BIN
 

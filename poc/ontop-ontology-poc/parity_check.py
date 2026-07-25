@@ -4,15 +4,15 @@ Parity check: virtual SPARQL graph (Ontop) vs the governed SQL semantic layer.
 =============================================================================
 
 Proves that the on-time delivery rate answered through the standards-based
-virtual knowledge graph (Ontop rewriting SPARQL -> SQL over manufacturing.db)
-matches, to floating-point tolerance, the number produced by SolderEngine's
-assembled SQL for the same metric.
+virtual knowledge graph (Ontop rewriting SPARQL -> SQL over the DuckDB
+SQLMesh snapshot) matches, to floating-point tolerance, the number produced
+by SolderEngine's assembled SQL for the same metric.
 
 Read-only by design:
-  * The live database is WAL-mode and is opened ONLY to take a read-only
-    backup snapshot. Nothing ever writes to the live file.
-  * Ontop and SolderEngine both run against the SAME snapshot, so the two
-    engines provably see identical data.
+  * DuckDB db.db is opened ONLY read-only to export a SQLite snapshot.
+    Nothing ever writes to the DuckDB source file.
+  * Ontop and SolderEngine both run against the SAME SQLite snapshot, so the
+    two engines provably see identical data.
 
 Exit code 0 on parity, 1 on mismatch or error.
 """
@@ -24,7 +24,14 @@ import sys
 
 POC_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.abspath(os.path.join(POC_DIR, "..", ".."))
-LIVE_DB = os.path.join(REPO_ROOT, "hf-space-inventory-sqlgen", "app_schema", "manufacturing.db")
+
+# DuckDB source populated by `sqlmesh run` — the single source of truth in CI.
+DUCKDB_DB = os.path.join(REPO_ROOT, "Utilities", "SQLMesh", "db.db")
+
+# Backward-compat alias: scripts that reference pc.LIVE_DB now resolve to the
+# DuckDB db.db path so their existence check stays meaningful.
+LIVE_DB = DUCKDB_DB
+
 HF_DIR = os.path.join(REPO_ROOT, "hf-space-inventory-sqlgen")
 
 ONTOP = os.path.join(POC_DIR, "tools", "ontop-cli-5.5.0", "ontop")
@@ -42,30 +49,77 @@ NEUTRAL_RATING = 3.0  # deterministic My MRP default for a no-receipt supplier
 ORPHAN_ID = "S-ORPHAN-PARITY"
 ORPHAN_NAME = "__ORPHAN_NO_RECEIPTS__"
 
+# ERP tables exported to the SQLite snapshot (used by Ontop + SolderEngine).
+_ERP_TABLES = [
+    "customer_order", "customer_order_line", "gl_events",
+    "gl_finished_goods_inventory", "gl_job_cost_detail",
+    "gl_raw_materials_inventory", "gl_wip_inventory", "inventory_transaction",
+    "operation", "part", "payable_line", "payables", "po_line",
+    "purchase_order", "receiving", "receiving_line", "shop_resource",
+    "suppliers", "work_order",
+]
+
+# Semantic-layer metadata tables SolderEngine needs (mfg_metadata schema).
+_META_TABLES = [
+    "schema_concepts", "schema_intents", "ground_truth_table_usage",
+    "schema_concept_fields", "schema_intent_concepts",
+    "schema_perspective_concepts", "sql_graph_nodes", "sql_graph_edges",
+    "sql_graph_authored_edges",
+]
+
 
 def make_snapshot():
-    """Read-only backup of the live WAL-mode DB into a plain snapshot file."""
+    """Export mfg_data + mfg_metadata tables from DuckDB db.db into a plain
+    SQLite snapshot. Both Ontop (via SQLite JDBC) and SolderEngine read the
+    snapshot; the DuckDB source file is never opened for writing.
+
+    Returns the path to the SQLite snapshot.
+    """
+    try:
+        import duckdb as _duckdb
+    except ImportError:
+        raise SystemExit(
+            "duckdb Python package is required. "
+            "Install it: uv pip install duckdb"
+        )
+    try:
+        import pandas as _pd
+    except ImportError:
+        raise SystemExit(
+            "pandas Python package is required. "
+            "Install it: uv pip install pandas"
+        )
+
     os.makedirs(TOOLS_TMP, exist_ok=True)
     snap = os.path.join(TOOLS_TMP, "manufacturing_snapshot.db")
     for ext in ("", "-wal", "-shm"):
         p = snap + ext
         if os.path.exists(p):
             os.remove(p)
+
+    src = _duckdb.connect(DUCKDB_DB, read_only=True)
+    dst = sqlite3.connect(snap)
     try:
-        src = sqlite3.connect(f"file:{LIVE_DB}?mode=ro", uri=True)
-    except sqlite3.OperationalError as exc:
-        # Fail closed: never fall back to a writable connection on the live DB.
-        raise SystemExit(
-            f"Refusing to run: could not open the live database read-only ({exc})."
-        )
-    try:
-        dst = sqlite3.connect(snap)
-        try:
-            src.backup(dst)
-        finally:
-            dst.close()
+        for table in _ERP_TABLES:
+            try:
+                df = src.execute(f'SELECT * FROM mfg_data."{table}"').df()
+                df.to_sql(table, dst, if_exists="replace", index=False)
+            except Exception as exc:
+                raise SystemExit(
+                    f"Failed to export mfg_data.{table} from DuckDB: {exc}"
+                )
+        for table in _META_TABLES:
+            try:
+                df = src.execute(f'SELECT * FROM mfg_metadata."{table}"').df()
+                df.to_sql(table, dst, if_exists="replace", index=False)
+            except Exception:
+                # authored_edges may be empty; that is fine.
+                pass
+        dst.commit()
     finally:
+        dst.close()
         src.close()
+
     return snap
 
 
@@ -175,7 +229,7 @@ def sparql_supplier_view(props, tag):
 
 def inject_orphan(snap):
     """Insert a no-receipt supplier into the THROWAWAY snapshot only (never the
-    live DB) to empirically prove the link is optional."""
+    DuckDB source) to empirically prove the link is optional."""
     conn = sqlite3.connect(snap)
     try:
         conn.execute(
@@ -256,10 +310,13 @@ def main():
             "Ontop CLI not found. Run: python3 replit_integrations/ontop_poc_setup.py "
             "first to download the toolchain."
         )
-    if not os.path.exists(LIVE_DB):
-        raise SystemExit(f"Live database not found at {LIVE_DB}")
+    if not os.path.exists(DUCKDB_DB):
+        raise SystemExit(
+            f"DuckDB snapshot not found at {DUCKDB_DB}. "
+            "Run: cd Utilities/SQLMesh && sqlmesh run"
+        )
 
-    print("Building read-only snapshot of the live database...")
+    print("Exporting DuckDB snapshot to SQLite for Ontop + SolderEngine...")
     snap = make_snapshot()
     props = write_runtime_properties(snap)
 

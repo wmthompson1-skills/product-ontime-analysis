@@ -1,5 +1,5 @@
 MODEL (
-  name staging.stg_suppliers,
+  name mfg_data.suppliers,
   kind SEED (
     path '$root/seeds/suppliers.csv'
   ),
@@ -11,13 +11,12 @@ MODEL (
     address TEXT,
     performance_rating DOUBLE,
     certification_level TEXT,
-    lead_time_days INTEGER,
+    category TEXT,
     payment_terms TEXT,
+    lead_time_days INTEGER,
+    outside_service INTEGER,
+    active INTEGER,
     created_date TIMESTAMP
   ),
-  grain (supplier_id),
-  audits (
-    UNIQUE_VALUES(columns = (supplier_id)),
-    NOT_NULL(columns = (supplier_id))
-  )
+  grain (supplier_id)
 );

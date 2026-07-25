@@ -46,3 +46,6 @@ arango
 
 # Knowledge loop (MCP librarian + ingestion runner) — .docx reading
 python-docx
+
+# DuckDB: parity-check DuckDB snapshot export (Ontop CI)
+duckdb>=1.1.0

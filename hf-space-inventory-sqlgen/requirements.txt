@@ -4,3 +4,6 @@ gradio>=4.0.0
 pydantic>=2.0.0
 python-multipart>=0.0.6
 python-arango>=8.3.2
+
+# DuckDB: snapshot export from SQLMesh db.db for Ontop CI parity checks
+duckdb>=1.1.0

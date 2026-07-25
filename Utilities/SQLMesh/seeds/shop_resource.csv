@@ -1,0 +1,18 @@
+resource_id,description,resource_type,run_cost_per_hr,bur_per_hr_run,active,created_at
+MC-001,Haas VF-4 VMC 5-Axis,M,185.0,95.0,1,2026-07-05 10:36:28
+MC-002,Mazak Integrex 300 Turn-Mill,M,210.0,105.0,1,2026-07-05 10:36:28
+MC-003,DMG Mori NHX 4000 HMC,M,195.0,100.0,1,2026-07-05 10:36:28
+MC-004,Doosan Lynx 220 CNC Lathe,M,145.0,75.0,1,2026-07-05 10:36:28
+MC-005,Haas SL-40 CNC Lathe,M,140.0,72.0,1,2026-07-05 10:36:28
+MC-006,Waterjet OMAX 60120,M,120.0,60.0,1,2026-07-05 10:36:28
+MC-007,CMM Zeiss Contura G2,M,95.0,48.0,1,2026-07-05 10:36:28
+LB-001,CNC Machinist — Level III,L,65.0,32.5,1,2026-07-05 10:36:28
+LB-002,CNC Machinist — Level II,L,52.0,26.0,1,2026-07-05 10:36:28
+LB-003,Assembly Technician — Level II,L,48.0,24.0,1,2026-07-05 10:36:28
+LB-004,Quality Inspector — Level II,L,55.0,27.5,1,2026-07-05 10:36:28
+LB-005,Welder AWS D1.1,L,58.0,29.0,1,2026-07-05 10:36:28
+SV-001,Outside — Anodize,S,0.0,0.0,1,2026-07-05 10:36:28
+SV-002,Outside — Heat Treat,S,0.0,0.0,1,2026-07-05 10:36:28
+SV-003,Outside — NDT,S,0.0,0.0,1,2026-07-05 10:36:28
+SV-004,Outside — Chemical Film,S,0.0,0.0,1,2026-07-05 10:36:28
+SV-005,Outside — Painting / Prime,S,0.0,0.0,1,2026-07-05 10:36:28

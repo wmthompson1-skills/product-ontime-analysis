@@ -50,6 +50,7 @@ on:
       - 'poc/ontop-ontology-poc/**'
       - 'replit_integrations/ontop_poc_setup.py'
       - 'replit_integrations/ontop_poc_run_demo.py'
+      - 'Utilities/SQLMesh/**'
       - '.github/workflows/ontop-interop-ci.yml'
   pull_request:
     branches: ["**"]
@@ -57,6 +58,7 @@ on:
       - 'poc/ontop-ontology-poc/**'
       - 'replit_integrations/ontop_poc_setup.py'
       - 'replit_integrations/ontop_poc_run_demo.py'
+      - 'Utilities/SQLMesh/**'
       - '.github/workflows/ontop-interop-ci.yml'
   schedule:
     - cron: '0 5 * * *'   # nightly, after graph-sync (2am) and arango-smoke (4am)
@@ -99,16 +101,20 @@ jobs:
           if [ -f hf-space-inventory-sqlgen/requirements.txt ]; then
             pip install -r hf-space-inventory-sqlgen/requirements.txt
           fi
+          # SQLMesh + DuckDB for materializing mfg_data.* and mfg_metadata.* into db.db.
+          if [ -f Utilities/SQLMesh/requirements.txt ]; then
+            pip install -r Utilities/SQLMesh/requirements.txt
+          fi
 
-      - name: Verify the governed database is present
+      - name: Materialize DuckDB via SQLMesh
         run: |
-          DB="hf-space-inventory-sqlgen/app_schema/manufacturing.db"
-          if [ ! -f "$DB" ]; then
-            echo "::error title=Manufacturing DB missing::The Ontop POC checks need the governed SQLite database at $DB, but it is not present in this checkout."
-            echo "The parity checks compare SPARQL-over-the-snapshot against SolderEngine-over-the-same-snapshot, so the populated database must be available."
+          cd Utilities/SQLMesh
+          sqlmesh plan --auto-apply
+          if [ ! -f db.db ]; then
+            echo "::error title=DuckDB missing::sqlmesh plan succeeded but Utilities/SQLMesh/db.db was not created."
             exit 1
           fi
-          echo "Found governed database: $DB"
+          echo "DuckDB materialized: $(du -h db.db | cut -f1) at Utilities/SQLMesh/db.db"
 
       - name: Provision the pinned Ontop toolchain
         run: python replit_integrations/ontop_poc_setup.py

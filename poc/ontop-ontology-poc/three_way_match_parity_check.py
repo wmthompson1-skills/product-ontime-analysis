@@ -221,7 +221,7 @@ def main():
             "first to download the toolchain."
         )
     if not os.path.exists(LIVE_DB):
-        raise SystemExit(f"Live database not found at {LIVE_DB}")
+        raise SystemExit(f"DuckDB snapshot not found at {LIVE_DB}. Run: cd Utilities/SQLMesh && sqlmesh run")
 
     semantics_regression()
 

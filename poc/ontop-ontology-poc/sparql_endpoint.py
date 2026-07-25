@@ -75,7 +75,7 @@ def ensure_toolchain():
 
 def _guard_props_snapshot_only(props, snap):
     """Fail closed unless the JDBC properties point at the read-only snapshot and
-    never at the live database. This is the endpoint's read-only guarantee."""
+    never at the DuckDB source database. This is the endpoint's read-only guarantee."""
     import parity_check
 
     text = open(props).read()
@@ -83,9 +83,12 @@ def _guard_props_snapshot_only(props, snap):
         raise SystemExit(
             "Refusing to start: runtime properties do not point at the snapshot."
         )
-    if parity_check.LIVE_DB in text:
+    # DUCKDB_DB is the source file; runtime props must point at the SQLite
+    # snapshot copy, not directly at the DuckDB source.
+    if parity_check.DUCKDB_DB in text:
         raise SystemExit(
-            "Refusing to start: runtime properties reference the live database."
+            "Refusing to start: runtime properties reference the DuckDB source "
+            "database directly. Use the SQLite snapshot copy instead."
         )
 
 

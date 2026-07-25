@@ -56,3 +56,4 @@
 - [Ontop generated-mapping quirks](ontop-generated-mapping-quirks.md) — FK alias when child col ≠ target key; SQLite DATETIME needs explicit ^^xsd:string; distinct namespace per showcase, closeMatch only.
 - [FG outflow gate scoping](fg-outflow-gate-scoping.md) — FG↔WIP tie-out gates scope to FG_COMPLETION inflows; shipments get a separate never-negative gate; new gl event type checklist.
 - [Ledger entity vocab boundary](ledger-entity-vocab-boundary.md) — entity class is :WorkOrder (grounds on work_order); "Job" survives only as costing-practice terms (:JobCompletionEvent, :forJob, scheme name); gates assert it.
+- [SQLMesh/DuckDB Ontop CI](sqlmesh-duckdb-ontop-ci.md) — make_snapshot() exports DuckDB→SQLite; OBDA keeps unqualified table names (SQLite JDBC); .properties updated to DuckDB JDBC for manual use only.
