@@ -116,6 +116,15 @@ jobs:
           fi
           echo "DuckDB materialized: $(du -h db.db | cut -f1) at Utilities/SQLMesh/db.db"
 
+      # TEMPORARY — replaced by Plan-015 (SQLMesh/DuckDB migration) once complete.
+      # manufacturing.db is gitignored and never present in a fresh checkout, so
+      # the parity check scripts fail before any Ontop step runs.  This step
+      # rebuilds the governed SQLite database deterministically from the seed
+      # chain (no ArangoDB, no API keys, no network required).
+      - name: Build governed database snapshot (temporary — replaced by Plan-015)
+        run: |
+          cd hf-space-inventory-sqlgen && python scripts/bootstrap_db.py
+
       - name: Provision the pinned Ontop toolchain
         run: python replit_integrations/ontop_poc_setup.py
 
