@@ -579,12 +579,16 @@ fi
 if [ -f scripts/check_seed_freshness.py ] \
   && [ -d Utilities/SQLMesh/seeds ]; then
   # Gate: seed CSVs in Utilities/SQLMesh/seeds/ must stay in sync with
-  # manufacturing.db (column set + row count). When a migration adds or
-  # changes a table, this gate fails with a clear diff and a one-liner refresh
-  # command.  Only checked when the DB exists (skipped on stripped checkouts).
+  # manufacturing.db (column set + row count).  Also fails when a migration
+  # adds a brand-new table that has no seed CSV at all — so the DuckDB/Ontop
+  # snapshot never silently drops a table.
+  # Only checked when the DB exists (skipped on stripped checkouts).
+  # To refresh stale seeds:          python Utilities/SQLMesh/scripts/export_seeds.py
+  # To also seed brand-new tables:   python Utilities/SQLMesh/scripts/export_seeds.py --include-new
   python scripts/check_seed_freshness.py || {
     echo "post-merge: Ontop seed CSV freshness gate failed"
-    echo "post-merge:   run: python Utilities/SQLMesh/scripts/export_seeds.py"
+    echo "post-merge:   stale seeds  → run: python Utilities/SQLMesh/scripts/export_seeds.py"
+    echo "post-merge:   missing seed → run: python Utilities/SQLMesh/scripts/export_seeds.py --include-new"
     exit 1
   }
 fi
