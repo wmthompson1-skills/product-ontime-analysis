@@ -68,6 +68,10 @@ jobs:
   ontop-interop:
     name: Ontop virtual-graph parity + live SPARQL endpoint
     runs-on: ubuntu-latest
+    # The bootstrap + parity checks are CPU/disk only (SQLite, no network).
+    # 60 minutes is a comfortable ceiling on a cold runner; the default 6-hour
+    # timeout would let a genuine hang burn silently for hours.
+    timeout-minutes: 60
     env:
       GRAPH_SYNC_ALERT_WEBHOOK: ${{ secrets.GRAPH_SYNC_ALERT_WEBHOOK }}
       ONTOP_CI_LOG: /tmp/ontop_ci.log
@@ -121,7 +125,14 @@ jobs:
       # the parity check scripts fail before any Ontop step runs.  This step
       # rebuilds the governed SQLite database deterministically from the seed
       # chain (no ArangoDB, no API keys, no network required).
+      #
+      # Timing: the full chain (~50 migrations, pure SQLite) takes 3–8 min on a
+      # warm Replit machine.  A cold GitHub Actions runner with no DB cache adds
+      # disk-provisioning overhead; 20 minutes is a conservative upper bound.
+      # The step-level timeout here surfaces a genuine hang immediately rather
+      # than waiting for the 60-minute job ceiling.
       - name: Build governed database snapshot (temporary — replaced by Plan-015)
+        timeout-minutes: 20
         run: |
           cd hf-space-inventory-sqlgen && python scripts/bootstrap_db.py
 
