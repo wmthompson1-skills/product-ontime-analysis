@@ -1,5 +1,5 @@
 SQLite <-> graph_metadata.json parity report
-generated: 2026-07-25T23:46:34+00:00
+generated: 2026-07-26T00:03:30+00:00
 db: /home/runner/workspace/hf-space-inventory-sqlgen/app_schema/manufacturing.db
 json: /home/runner/workspace/replit_integrations/graph_metadata.json
 

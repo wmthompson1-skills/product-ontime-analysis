@@ -1,5 +1,5 @@
 SQLite (SQL) <-> ArangoDB (AQL) parity report
-generated: 2026-07-25T23:46:36+00:00
+generated: 2026-07-26T00:03:31+00:00
 db: /home/runner/workspace/hf-space-inventory-sqlgen/app_schema/manufacturing.db
 arango_node_collection: manufacturing_graph_node
 arango_edge_collection: manufacturing_graph_edge
