@@ -51,6 +51,8 @@ on:
       - 'replit_integrations/ontop_poc_setup.py'
       - 'replit_integrations/ontop_poc_run_demo.py'
       - 'Utilities/SQLMesh/**'
+      - 'hf-space-inventory-sqlgen/migrations/**'
+      - 'hf-space-inventory-sqlgen/scripts/bootstrap_db.py'
       - '.github/workflows/ontop-interop-ci.yml'
   pull_request:
     branches: ["**"]
@@ -59,6 +61,8 @@ on:
       - 'replit_integrations/ontop_poc_setup.py'
       - 'replit_integrations/ontop_poc_run_demo.py'
       - 'Utilities/SQLMesh/**'
+      - 'hf-space-inventory-sqlgen/migrations/**'
+      - 'hf-space-inventory-sqlgen/scripts/bootstrap_db.py'
       - '.github/workflows/ontop-interop-ci.yml'
   schedule:
     - cron: '0 5 * * *'   # nightly, after graph-sync (2am) and arango-smoke (4am)
