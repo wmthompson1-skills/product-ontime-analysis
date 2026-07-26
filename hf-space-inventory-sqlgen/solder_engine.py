@@ -1275,9 +1275,37 @@ class SolderEngine:
         return resolved
 
     def _table_foreign_keys(self, conn, table: str):
-        """[(local_col, referenced_table, referenced_col)] from the live schema."""
+        """[(local_col, referenced_table, referenced_col)] from the live schema.
+
+        Primary source: ``PRAGMA foreign_key_list`` — present when the database
+        was created with FOREIGN KEY clauses in the DDL (as ``manufacturing.db``
+        is).  Fallback: ``sql_graph_edges`` ``references`` edges — used when the
+        database is a read-only snapshot created from DuckDB via
+        ``pandas.to_sql``, which does not preserve SQLite FK declarations.  The
+        ``_from`` / ``_to`` composite node keys encode table and column as
+        ``{table}:{col}:…``, so parsing them reproduces the PRAGMA result.
+        """
         rows = conn.execute(f'PRAGMA foreign_key_list("{table}")').fetchall()
-        return [(r["from"], r["table"], r["to"]) for r in rows]
+        fks = [(r["from"], r["table"], r["to"]) for r in rows]
+        if fks:
+            return fks
+        try:
+            edges = conn.execute(
+                "SELECT _from, _to FROM sql_graph_edges"
+                " WHERE edge_type = 'references'"
+            ).fetchall()
+            for r in edges:
+                f_key = r["_from"] if isinstance(r, sqlite3.Row) else r[0]
+                t_key = r["_to"] if isinstance(r, sqlite3.Row) else r[1]
+                f_parts = f_key.split("/")[-1].split(":")
+                t_parts = t_key.split("/")[-1].split(":")
+                if len(f_parts) < 2 or len(t_parts) < 2:
+                    continue
+                if f_parts[0].lower() == table.lower():
+                    fks.append((f_parts[1], t_parts[0], t_parts[1]))
+        except Exception:
+            pass
+        return fks
 
     def _resolve_from_join(self, conn, tables: List[str]) -> Tuple[str, List[str]]:
         """Build a FROM/JOIN clause from declared foreign keys only.

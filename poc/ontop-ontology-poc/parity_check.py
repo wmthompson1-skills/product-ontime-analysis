@@ -63,7 +63,8 @@ _ERP_TABLES = [
 _META_TABLES = [
     "schema_concepts", "schema_intents", "ground_truth_table_usage",
     "schema_concept_fields", "schema_intent_concepts",
-    "schema_perspective_concepts", "sql_graph_nodes", "sql_graph_edges",
+    "schema_perspectives", "schema_perspective_concepts",
+    "sql_graph_nodes", "sql_graph_edges",
     "sql_graph_authored_edges",
 ]
 
