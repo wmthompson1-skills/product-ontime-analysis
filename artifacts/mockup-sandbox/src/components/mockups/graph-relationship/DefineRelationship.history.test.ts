@@ -10,7 +10,7 @@
  * Run: npx vitest run src/components/mockups/graph-relationship/DefineRelationship.history.test.ts
  */
 
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 
 // Lightweight sessionStorage mock — vitest runs in Node which has no Web Storage API.
 const _store: Map<string, string> = new Map();
@@ -165,9 +165,16 @@ describe("DefineRelationship history — TTL edge cases", () => {
     sessionStorage.clear();
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it("entry exactly at TTL boundary is excluded (strict less-than)", () => {
     const ttl = 10_000;
-    const atBoundary = makeEntry({ addedAt: Date.now() - ttl });
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-01-01T00:00:00.000Z"));
+    const now = Date.now();
+    const atBoundary = makeEntry({ addedAt: now - ttl });
     saveToSession([atBoundary]);
     const restored = loadFromSession(ttl);
     expect(restored).toHaveLength(0);
@@ -175,7 +182,10 @@ describe("DefineRelationship history — TTL edge cases", () => {
 
   it("entry 1 ms before TTL is included", () => {
     const ttl = 10_000;
-    const justBefore = makeEntry({ addedAt: Date.now() - ttl + 1 });
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-01-01T00:00:00.000Z"));
+    const now = Date.now();
+    const justBefore = makeEntry({ addedAt: now - ttl + 1 });
     saveToSession([justBefore]);
     const restored = loadFromSession(ttl);
     expect(restored).toHaveLength(1);
