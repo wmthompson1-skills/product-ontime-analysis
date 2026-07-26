@@ -1,0 +1,37 @@
+id,category_id,query_name,declared_perspectives,inferred_primary,inferred_scores_json,agreed,resolved_perspective,created_at
+36,crm_customer,unnamed,Receivables · CRM,Receivables,"{""Receivables"": 0.444, ""Customer_Order"": 0.278, ""CRM"": 0.278}",1,Receivables,2026-07-08 06:04:22
+37,customer_order,unnamed,Customer_Order · Receivables,Customer_Order,"{""Manufacturing"": 0.25, ""Customer_Order"": 0.333, ""Payables"": 0.083, ""Receivables"": 0.083, ""Quality"": 0.25}",1,Customer_Order,2026-07-08 06:04:22
+38,delivery_performance_perspectives,unnamed,Payables · Receivables,Payables,"{""Payables"": 0.375, ""Receivables"": 0.25, ""Customer_Order"": 0.25, ""Quality"": 0.125}",1,Payables,2026-07-08 06:04:22
+39,equipment_reliability,unnamed,Manufacturing,Manufacturing,"{""Manufacturing"": 1.0}",1,Manufacturing,2026-07-08 06:04:22
+40,inventory_allocated_20260703_000005,ALLOCATEDQUANTITY,,UNMAPPED,{},-1,UNMAPPED,2026-07-08 06:04:22
+41,inventory_atp_20260703_000004,AVAILABLETOPROMISE,,Manufacturing,"{""Manufacturing"": 0.5, ""Payables"": 0.5}",-1,Manufacturing,2026-07-08 06:04:22
+42,inventory_eoq_20260703_000010,ECONOMICORDERQUANTITY,,Payables,"{""Payables"": 1.0}",-1,Payables,2026-07-08 06:04:22
+43,inventory_leadtime_20260703_000003,LEADTIME,,UNMAPPED,{},-1,UNMAPPED,2026-07-08 06:04:22
+44,inventory_leadtimedemand_20260703_000007,LEADTIMEDEMAND,,Manufacturing,"{""Manufacturing"": 1.0}",-1,Manufacturing,2026-07-08 06:04:22
+45,inventory_maximumstock_20260703_000009,MAXIMUMSTOCKQUANTITY,,Payables,"{""Payables"": 1.0}",-1,Payables,2026-07-08 06:04:22
+46,inventory_minimumstock_20260703_000008,MINIMUMSTOCKQUANTITY,,UNMAPPED,{},-1,UNMAPPED,2026-07-08 06:04:22
+47,inventory_onhandquantity_20260703_000002,ONHANDQUANTITY,,UNMAPPED,{},-1,UNMAPPED,2026-07-08 06:04:22
+48,inventory_reorderpoint_20260703_000001,REORDERPOINT,,UNMAPPED,{},-1,UNMAPPED,2026-07-08 06:04:22
+49,inventory_safetystock_20260703_000006,SAFETYSTOCK,,Manufacturing,"{""Manufacturing"": 1.0}",-1,Manufacturing,2026-07-08 06:04:22
+50,operations_deliveryperformanceops_20260604_000013,DELIVERYPERFORMANCEOPS,,Payables,"{""Payables"": 0.667, ""Inventory_Transactions"": 0.167, ""Quality"": 0.167}",-1,Payables,2026-07-08 06:04:22
+51,operations_equipmentstatecompliance_20260604_000010,EQUIPMENTSTATECOMPLIANCE,,Work_Orders,"{""Work_Orders"": 0.4, ""Manufacturing"": 0.2, ""Payables"": 0.2, ""Inventory_Transactions"": 0.1, ""Quality"": 0.1}",-1,Work_Orders,2026-07-08 06:04:22
+52,operations_equipmentstatemaintenance_20260604_000009,EQUIPMENTSTATEMAINTENANCE,,Work_Orders,"{""Work_Orders"": 1.0}",-1,Work_Orders,2026-07-08 06:04:22
+53,operations_equipmentstateproduction_20260604_000011,EQUIPMENTSTATEPRODUCTION,,Work_Orders,"{""Work_Orders"": 0.667, ""Manufacturing"": 0.333}",-1,Work_Orders,2026-07-08 06:04:22
+54,operations_oeeoperational_20260604_000007,OEEOPERATIONAL,,Work_Orders,"{""Work_Orders"": 1.0}",-1,Work_Orders,2026-07-08 06:04:22
+55,operations_oeestrategic_20260604_000008,OEESTRATEGIC,,Work_Orders,"{""Work_Orders"": 1.0}",-1,Work_Orders,2026-07-08 06:04:22
+56,operations_workordercostdetail_20260601_000004,ORDERLIFECYCLESTATE,,Manufacturing,"{""Manufacturing"": 1.0}",-1,Manufacturing,2026-07-08 06:04:22
+57,operations_workorderstatus_20260601_000003,ORDERLIFECYCLESTATE,,Manufacturing,"{""Manufacturing"": 1.0}",-1,Manufacturing,2026-07-08 06:04:22
+58,payables_openpobysupp_20260601_000006,DELIVERYPERFORMANCEFINANCE,,Payables,"{""Payables"": 0.75, ""Quality"": 0.25}",-1,Payables,2026-07-08 06:04:22
+59,payables_ordersreceived_20260706_000001,ORDERSRECEIVED,,Payables,"{""Payables"": 0.833, ""Inventory_Transactions"": 0.167}",-1,Payables,2026-07-08 06:04:22
+60,payables_ordersunreceived_20260706_000002,ORDERSUNRECEIVED,,Payables,"{""Payables"": 1.0}",-1,Payables,2026-07-08 06:04:22
+61,payables_partialreceiptaccrual_20260708_000004,PARTIALRECEIPTACCRUAL,,Payables,"{""Payables"": 0.8, ""Quality"": 0.1, ""Inventory_Transactions"": 0.1}",-1,Payables,2026-07-08 06:04:22
+62,payables_purchaseorderstatus_20260601_000005,ORDERACCOUNTINGSTATE,,Payables,"{""Payables"": 0.75, ""Quality"": 0.25}",-1,Payables,2026-07-08 06:04:22
+63,payables_threewaymatchcoverage_20260708_000005,THREEWAYMATCHCOVERAGE,,Payables,"{""Payables"": 0.8, ""Quality"": 0.1, ""Inventory_Transactions"": 0.1}",-1,Payables,2026-07-08 06:04:22
+64,payables_uninvoicedreceipts_20260706_000003,UNINVOICEDRECEIPTS,,Payables,"{""Payables"": 0.8, ""Inventory_Transactions"": 0.1, ""Quality"": 0.1}",-1,Payables,2026-07-08 06:04:22
+65,production_analytics,unnamed,Manufacturing · General_Ledger,Manufacturing,"{""Manufacturing"": 0.5, ""Customer_Order"": 0.25, ""General_Ledger"": 0.125, ""Quality"": 0.125}",1,Manufacturing,2026-07-08 06:04:22
+66,quality_control,unnamed,Quality,Quality,"{""Quality"": 1.0}",1,Quality,2026-07-08 06:04:22
+67,receivables,unnamed,Receivables,UNMAPPED,{},0,Receivables,2026-07-08 06:04:22
+68,sales_ordercustomerstate_20260604_000012,ORDERCUSTOMERSTATE,,Manufacturing,"{""Manufacturing"": 1.0}",-1,Manufacturing,2026-07-08 06:04:22
+69,supplier_performance,unnamed,Payables · Quality,Payables,"{""Payables"": 0.702, ""Receivables"": 0.024, ""Customer_Order"": 0.06, ""Manufacturing"": 0.036, ""Inventory_Transactions"": 0.071, ""Quality"": 0.107}",1,Payables,2026-07-08 06:04:22
+70,suppliers_outsideservicesuppliers_20260601_000002,DELIVERYPERFORMANCESUPPLIER,,Payables,"{""Payables"": 0.5, ""Quality"": 0.5}",-1,Payables,2026-07-08 06:04:22
+71,suppliers_supplierscorecard_20260601_000001,DELIVERYPERFORMANCESUPPLIER,,Payables,"{""Payables"": 0.5, ""Quality"": 0.5}",-1,Payables,2026-07-08 06:04:22

@@ -1,0 +1,12 @@
+service_id,description,default_vendor,base_charge,created_at
+SVC-ANODIZE,Anodize Type II / Type III,,85.0,2026-07-05 10:36:28
+SVC-CHEM-FILM,Chemical Film Alodine 1200,,35.0,2026-07-05 10:36:28
+SVC-HT-SOLN,Heat Treat Solution + Age,,45.0,2026-07-05 10:36:28
+SVC-HT-ANNEAL,Heat Treat Anneal,,30.0,2026-07-05 10:36:28
+SVC-NDT-FPI,NDT Fluorescent Penetrant Inspection,,65.0,2026-07-05 10:36:28
+SVC-NDT-XRAY,NDT X-Ray Radiography,,110.0,2026-07-05 10:36:28
+SVC-PAINT,Prime + Topcoat MIL-PRF-85285,,95.0,2026-07-05 10:36:28
+SVC-WELD-TIG,TIG Weld Aerospace Grade,,125.0,2026-07-05 10:36:28
+HEAT-TREAT,"Stress Relief Heat Treatment, AMS 2759",S-009,120.0,2026-07-05 10:36:34
+ANODIZE-II,"Anodize Type II, MIL-A-8625",S-008,55.0,2026-07-05 10:36:34
+NDT-UT,"Ultrasonic NDT Inspection, ASNT Level II",S-010,95.0,2026-07-05 10:36:34

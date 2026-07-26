@@ -1,0 +1,4 @@
+masking_type,masking_mode,status
+deterministic_hash,1,active
+change to null,2,active
+obfuscate binary text,3,active

@@ -1,0 +1,301 @@
+employee_id,employee_name,job_title,department,hourly_rate,buyer_code,home_resource_id,hire_date,active,created_at
+EMP-001,James Smith,CNC Machinist,Machining,42.0,,LB-001,2015-04-04,1,2026-07-05 10:36:29
+EMP-002,Maria Smith,Quality Inspector,Quality,44.0,,LB-004,2015-07-02,1,2026-07-05 10:36:29
+EMP-003,Robert Smith,Quality Inspector,Quality,40.75,,LB-004,2015-09-29,1,2026-07-05 10:36:29
+EMP-004,Linda Smith,CNC Machinist,Machining,42.75,,LB-002,2015-12-27,1,2026-07-05 10:36:29
+EMP-005,Michael Smith,Assembly Technician,Assembly,44.75,,LB-003,2016-03-25,1,2026-07-05 10:36:29
+EMP-006,Patricia Smith,Assembly Technician,Assembly,41.5,,LB-003,2016-06-22,1,2026-07-05 10:36:29
+EMP-007,David Smith,Quality Inspector,Quality,43.5,,LB-004,2016-09-19,1,2026-07-05 10:36:29
+EMP-008,Jennifer Smith,Welder,Welding,40.25,,LB-005,2016-12-17,1,2026-07-05 10:36:29
+EMP-009,William Smith,Quality Inspector,Quality,42.25,,LB-004,2017-03-16,1,2026-07-05 10:36:29
+EMP-010,Elizabeth Smith,Quality Inspector,Quality,44.25,,LB-004,2017-06-13,1,2026-07-05 10:36:29
+EMP-011,Richard Smith,CNC Machinist,Machining,41.0,,MC-001,2017-09-10,1,2026-07-05 10:36:29
+EMP-012,Barbara Smith,Quality Inspector,Quality,43.0,,LB-004,2017-12-08,1,2026-07-05 10:36:29
+EMP-013,Joseph Smith,CNC Machinist,Machining,45.0,,MC-002,2018-03-07,1,2026-07-05 10:36:29
+EMP-014,Susan Smith,Welder,Welding,41.75,,LB-005,2018-06-04,1,2026-07-05 10:36:29
+EMP-015,Thomas Smith,Quality Inspector,Quality,43.75,,LB-004,2018-09-01,1,2026-07-05 10:36:29
+EMP-016,Jessica Smith,CNC Machinist,Machining,40.5,,MC-003,2018-11-29,1,2026-07-05 10:36:29
+EMP-017,Carlos Smith,CNC Machinist,Machining,42.5,,MC-004,2019-02-26,1,2026-07-05 10:36:29
+EMP-018,Sarah Smith,CNC Machinist,Machining,44.5,,MC-005,2019-05-26,1,2026-07-05 10:36:29
+EMP-019,Daniel Smith,Quality Inspector,Quality,41.25,,LB-004,2019-08-23,1,2026-07-05 10:36:29
+EMP-020,Karen Smith,Quality Inspector,Quality,43.25,,LB-004,2019-11-20,1,2026-07-05 10:36:29
+EMP-021,Matthew Smith,CNC Machinist,Machining,40.0,,MC-006,2020-02-17,1,2026-07-05 10:36:29
+EMP-022,Nancy Smith,Quality Inspector,Quality,42.0,,MC-007,2020-05-16,1,2026-07-05 10:36:29
+EMP-023,Anthony Smith,CNC Machinist,Machining,44.0,,LB-001,2020-08-13,1,2026-07-05 10:36:29
+EMP-024,Lisa Smith,CNC Machinist,Machining,40.75,,LB-002,2020-11-10,1,2026-07-05 10:36:29
+EMP-025,Mark Smith,Assembly Technician,Assembly,42.75,,LB-003,2021-02-07,1,2026-07-05 10:36:29
+EMP-026,James Johnson,Quality Inspector,Quality,44.75,,LB-004,2021-05-07,1,2026-07-05 10:36:29
+EMP-027,Maria Johnson,Welder,Welding,41.5,,LB-005,2021-08-04,1,2026-07-05 10:36:29
+EMP-028,Robert Johnson,CNC Machinist,Machining,43.5,,MC-001,2021-11-01,1,2026-07-05 10:36:29
+EMP-029,Linda Johnson,CNC Machinist,Machining,40.25,,MC-002,2022-01-29,1,2026-07-05 10:36:29
+EMP-030,Michael Johnson,CNC Machinist,Machining,42.25,,MC-003,2022-04-28,1,2026-07-05 10:36:29
+EMP-031,Patricia Johnson,CNC Machinist,Machining,44.25,,MC-004,2022-07-26,1,2026-07-05 10:36:29
+EMP-032,David Johnson,CNC Machinist,Machining,41.0,,MC-005,2022-10-23,1,2026-07-05 10:36:29
+EMP-033,Jennifer Johnson,CNC Machinist,Machining,43.0,,MC-006,2023-01-20,1,2026-07-05 10:36:29
+EMP-034,William Johnson,Quality Inspector,Quality,45.0,,MC-007,2023-04-19,1,2026-07-05 10:36:29
+EMP-035,Elizabeth Johnson,CNC Machinist,Machining,41.75,,LB-001,2023-07-17,1,2026-07-05 10:36:29
+EMP-036,Richard Johnson,CNC Machinist,Machining,43.75,,LB-002,2023-10-14,1,2026-07-05 10:36:29
+EMP-037,Barbara Johnson,Assembly Technician,Assembly,40.5,,LB-003,2015-01-18,1,2026-07-05 10:36:29
+EMP-038,Joseph Johnson,Quality Inspector,Quality,42.5,,LB-004,2015-04-17,1,2026-07-05 10:36:29
+EMP-039,Susan Johnson,Welder,Welding,44.5,,LB-005,2015-07-15,1,2026-07-05 10:36:29
+EMP-040,Thomas Johnson,CNC Machinist,Machining,41.25,,MC-001,2015-10-12,1,2026-07-05 10:36:29
+EMP-041,Jessica Johnson,CNC Machinist,Machining,43.25,,MC-002,2016-01-09,1,2026-07-05 10:36:29
+EMP-042,Carlos Johnson,CNC Machinist,Machining,40.0,,MC-003,2016-04-07,1,2026-07-05 10:36:29
+EMP-043,Sarah Johnson,CNC Machinist,Machining,42.0,,MC-004,2016-07-05,1,2026-07-05 10:36:29
+EMP-044,Daniel Johnson,CNC Machinist,Machining,44.0,,MC-005,2016-10-02,1,2026-07-05 10:36:29
+EMP-045,Karen Johnson,CNC Machinist,Machining,40.75,,MC-006,2016-12-30,1,2026-07-05 10:36:29
+EMP-046,Matthew Johnson,Quality Inspector,Quality,42.75,,MC-007,2017-03-29,1,2026-07-05 10:36:29
+EMP-047,Nancy Johnson,CNC Machinist,Machining,44.75,,LB-001,2017-06-26,1,2026-07-05 10:36:29
+EMP-048,Anthony Johnson,CNC Machinist,Machining,41.5,,LB-002,2017-09-23,1,2026-07-05 10:36:29
+EMP-049,Lisa Johnson,Assembly Technician,Assembly,43.5,,LB-003,2017-12-21,1,2026-07-05 10:36:29
+EMP-050,Mark Johnson,Quality Inspector,Quality,40.25,,LB-004,2018-03-20,1,2026-07-05 10:36:29
+EMP-051,James Williams,Welder,Welding,42.25,,LB-005,2018-06-17,1,2026-07-05 10:36:29
+EMP-052,Maria Williams,CNC Machinist,Machining,44.25,,MC-001,2018-09-14,1,2026-07-05 10:36:29
+EMP-053,Robert Williams,CNC Machinist,Machining,41.0,,MC-002,2018-12-12,1,2026-07-05 10:36:29
+EMP-054,Linda Williams,CNC Machinist,Machining,43.0,,MC-003,2019-03-11,1,2026-07-05 10:36:29
+EMP-055,Michael Williams,CNC Machinist,Machining,45.0,,MC-004,2019-06-08,1,2026-07-05 10:36:29
+EMP-056,Patricia Williams,CNC Machinist,Machining,41.75,,MC-005,2019-09-05,1,2026-07-05 10:36:29
+EMP-057,David Williams,CNC Machinist,Machining,43.75,,MC-006,2019-12-03,1,2026-07-05 10:36:29
+EMP-058,Jennifer Williams,Quality Inspector,Quality,40.5,,MC-007,2020-03-01,1,2026-07-05 10:36:29
+EMP-059,William Williams,CNC Machinist,Machining,42.5,,LB-001,2020-05-29,1,2026-07-05 10:36:29
+EMP-060,Elizabeth Williams,CNC Machinist,Machining,44.5,,LB-002,2020-08-26,1,2026-07-05 10:36:29
+EMP-061,Richard Williams,Assembly Technician,Assembly,41.25,,LB-003,2020-11-23,1,2026-07-05 10:36:29
+EMP-062,Barbara Williams,Quality Inspector,Quality,43.25,,LB-004,2021-02-20,1,2026-07-05 10:36:29
+EMP-063,Joseph Williams,Welder,Welding,40.0,,LB-005,2021-05-20,1,2026-07-05 10:36:29
+EMP-064,Susan Williams,CNC Machinist,Machining,42.0,,MC-001,2021-08-17,1,2026-07-05 10:36:29
+EMP-065,Thomas Williams,CNC Machinist,Machining,44.0,,MC-002,2021-11-14,1,2026-07-05 10:36:29
+EMP-066,Jessica Williams,CNC Machinist,Machining,40.75,,MC-003,2022-02-11,1,2026-07-05 10:36:29
+EMP-067,Carlos Williams,CNC Machinist,Machining,42.75,,MC-004,2022-05-11,1,2026-07-05 10:36:29
+EMP-068,Sarah Williams,CNC Machinist,Machining,44.75,,MC-005,2022-08-08,1,2026-07-05 10:36:29
+EMP-069,Daniel Williams,CNC Machinist,Machining,41.5,,MC-006,2022-11-05,1,2026-07-05 10:36:29
+EMP-070,Karen Williams,Quality Inspector,Quality,43.5,,MC-007,2023-02-02,1,2026-07-05 10:36:29
+EMP-071,Matthew Williams,CNC Machinist,Machining,40.25,,LB-001,2023-05-02,1,2026-07-05 10:36:29
+EMP-072,Nancy Williams,CNC Machinist,Machining,42.25,,LB-002,2023-07-30,1,2026-07-05 10:36:29
+EMP-073,Anthony Williams,Assembly Technician,Assembly,44.25,,LB-003,2023-10-27,1,2026-07-05 10:36:29
+EMP-074,Lisa Williams,Quality Inspector,Quality,41.0,,LB-004,2015-01-31,1,2026-07-05 10:36:29
+EMP-075,Mark Williams,Welder,Welding,43.0,,LB-005,2015-04-30,1,2026-07-05 10:36:29
+EMP-076,James Brown,CNC Machinist,Machining,45.0,,MC-001,2015-07-28,1,2026-07-05 10:36:29
+EMP-077,Maria Brown,CNC Machinist,Machining,41.75,,MC-002,2015-10-25,1,2026-07-05 10:36:29
+EMP-078,Robert Brown,CNC Machinist,Machining,43.75,,MC-003,2016-01-22,1,2026-07-05 10:36:29
+EMP-079,Linda Brown,CNC Machinist,Machining,40.5,,MC-004,2016-04-20,1,2026-07-05 10:36:29
+EMP-080,Michael Brown,CNC Machinist,Machining,42.5,,MC-005,2016-07-18,1,2026-07-05 10:36:29
+EMP-081,Patricia Brown,CNC Machinist,Machining,44.5,,MC-006,2016-10-15,1,2026-07-05 10:36:29
+EMP-082,David Brown,Quality Inspector,Quality,41.25,,MC-007,2017-01-12,1,2026-07-05 10:36:29
+EMP-083,Jennifer Brown,CNC Machinist,Machining,43.25,,LB-001,2017-04-11,1,2026-07-05 10:36:29
+EMP-084,William Brown,CNC Machinist,Machining,40.0,,LB-002,2017-07-09,1,2026-07-05 10:36:29
+EMP-085,Elizabeth Brown,Assembly Technician,Assembly,42.0,,LB-003,2017-10-06,1,2026-07-05 10:36:29
+EMP-086,Richard Brown,Quality Inspector,Quality,44.0,,LB-004,2018-01-03,1,2026-07-05 10:36:29
+EMP-087,Barbara Brown,Welder,Welding,40.75,,LB-005,2018-04-02,1,2026-07-05 10:36:29
+EMP-088,Joseph Brown,CNC Machinist,Machining,42.75,,MC-001,2018-06-30,1,2026-07-05 10:36:29
+EMP-089,Susan Brown,CNC Machinist,Machining,44.75,,MC-002,2018-09-27,1,2026-07-05 10:36:29
+EMP-090,Thomas Brown,CNC Machinist,Machining,41.5,,MC-003,2018-12-25,1,2026-07-05 10:36:29
+EMP-091,Jessica Brown,CNC Machinist,Machining,43.5,,MC-004,2019-03-24,1,2026-07-05 10:36:29
+EMP-092,Carlos Brown,CNC Machinist,Machining,40.25,,MC-005,2019-06-21,1,2026-07-05 10:36:29
+EMP-093,Sarah Brown,CNC Machinist,Machining,42.25,,MC-006,2019-09-18,1,2026-07-05 10:36:29
+EMP-094,Daniel Brown,Quality Inspector,Quality,44.25,,MC-007,2019-12-16,1,2026-07-05 10:36:29
+EMP-095,Karen Brown,CNC Machinist,Machining,41.0,,LB-001,2020-03-14,1,2026-07-05 10:36:29
+EMP-096,Matthew Brown,CNC Machinist,Machining,43.0,,LB-002,2020-06-11,1,2026-07-05 10:36:29
+EMP-097,Nancy Brown,Assembly Technician,Assembly,45.0,,LB-003,2020-09-08,1,2026-07-05 10:36:29
+EMP-098,Anthony Brown,Quality Inspector,Quality,41.75,,LB-004,2020-12-06,1,2026-07-05 10:36:29
+EMP-099,Lisa Brown,Welder,Welding,43.75,,LB-005,2021-03-05,1,2026-07-05 10:36:29
+EMP-100,Mark Brown,CNC Machinist,Machining,40.5,,MC-001,2021-06-02,1,2026-07-05 10:36:29
+EMP-101,James Jones,CNC Machinist,Machining,42.5,,MC-002,2021-08-30,1,2026-07-05 10:36:29
+EMP-102,Maria Jones,CNC Machinist,Machining,44.5,,MC-003,2021-11-27,1,2026-07-05 10:36:29
+EMP-103,Robert Jones,CNC Machinist,Machining,41.25,,MC-004,2022-02-24,1,2026-07-05 10:36:29
+EMP-104,Linda Jones,CNC Machinist,Machining,43.25,,MC-005,2022-05-24,1,2026-07-05 10:36:29
+EMP-105,Michael Jones,CNC Machinist,Machining,40.0,,MC-006,2022-08-21,1,2026-07-05 10:36:29
+EMP-106,Patricia Jones,Quality Inspector,Quality,42.0,,MC-007,2022-11-18,1,2026-07-05 10:36:29
+EMP-107,David Jones,CNC Machinist,Machining,44.0,,LB-001,2023-02-15,1,2026-07-05 10:36:29
+EMP-108,Jennifer Jones,CNC Machinist,Machining,40.75,,LB-002,2023-05-15,1,2026-07-05 10:36:29
+EMP-109,William Jones,Assembly Technician,Assembly,42.75,,LB-003,2023-08-12,1,2026-07-05 10:36:29
+EMP-110,Elizabeth Jones,Quality Inspector,Quality,44.75,,LB-004,2023-11-09,1,2026-07-05 10:36:29
+EMP-111,Richard Jones,Welder,Welding,41.5,,LB-005,2015-02-13,1,2026-07-05 10:36:29
+EMP-112,Barbara Jones,CNC Machinist,Machining,43.5,,MC-001,2015-05-13,1,2026-07-05 10:36:29
+EMP-113,Joseph Jones,CNC Machinist,Machining,40.25,,MC-002,2015-08-10,1,2026-07-05 10:36:29
+EMP-114,Susan Jones,CNC Machinist,Machining,42.25,,MC-003,2015-11-07,1,2026-07-05 10:36:29
+EMP-115,Thomas Jones,CNC Machinist,Machining,44.25,,MC-004,2016-02-04,1,2026-07-05 10:36:29
+EMP-116,Jessica Jones,CNC Machinist,Machining,41.0,,MC-005,2016-05-03,1,2026-07-05 10:36:29
+EMP-117,Carlos Jones,CNC Machinist,Machining,43.0,,MC-006,2016-07-31,1,2026-07-05 10:36:29
+EMP-118,Sarah Jones,Quality Inspector,Quality,45.0,,MC-007,2016-10-28,1,2026-07-05 10:36:29
+EMP-119,Daniel Jones,CNC Machinist,Machining,41.75,,LB-001,2017-01-25,1,2026-07-05 10:36:29
+EMP-120,Karen Jones,CNC Machinist,Machining,43.75,,LB-002,2017-04-24,1,2026-07-05 10:36:29
+EMP-121,Matthew Jones,Assembly Technician,Assembly,40.5,,LB-003,2017-07-22,1,2026-07-05 10:36:29
+EMP-122,Nancy Jones,Quality Inspector,Quality,42.5,,LB-004,2017-10-19,1,2026-07-05 10:36:29
+EMP-123,Anthony Jones,Welder,Welding,44.5,,LB-005,2018-01-16,1,2026-07-05 10:36:29
+EMP-124,Lisa Jones,CNC Machinist,Machining,41.25,,MC-001,2018-04-15,1,2026-07-05 10:36:29
+EMP-125,Mark Jones,CNC Machinist,Machining,43.25,,MC-002,2018-07-13,1,2026-07-05 10:36:29
+EMP-126,James Garcia,CNC Machinist,Machining,40.0,,MC-003,2018-10-10,1,2026-07-05 10:36:29
+EMP-127,Maria Garcia,CNC Machinist,Machining,42.0,,MC-004,2019-01-07,1,2026-07-05 10:36:29
+EMP-128,Robert Garcia,CNC Machinist,Machining,44.0,,MC-005,2019-04-06,1,2026-07-05 10:36:29
+EMP-129,Linda Garcia,CNC Machinist,Machining,40.75,,MC-006,2019-07-04,1,2026-07-05 10:36:29
+EMP-130,Michael Garcia,Quality Inspector,Quality,42.75,,MC-007,2019-10-01,1,2026-07-05 10:36:29
+EMP-131,Patricia Garcia,CNC Machinist,Machining,44.75,,LB-001,2019-12-29,1,2026-07-05 10:36:29
+EMP-132,David Garcia,CNC Machinist,Machining,41.5,,LB-002,2020-03-27,1,2026-07-05 10:36:29
+EMP-133,Jennifer Garcia,Assembly Technician,Assembly,43.5,,LB-003,2020-06-24,1,2026-07-05 10:36:29
+EMP-134,William Garcia,Quality Inspector,Quality,40.25,,LB-004,2020-09-21,1,2026-07-05 10:36:29
+EMP-135,Elizabeth Garcia,Welder,Welding,42.25,,LB-005,2020-12-19,1,2026-07-05 10:36:29
+EMP-136,Richard Garcia,CNC Machinist,Machining,44.25,,MC-001,2021-03-18,1,2026-07-05 10:36:29
+EMP-137,Barbara Garcia,CNC Machinist,Machining,41.0,,MC-002,2021-06-15,1,2026-07-05 10:36:29
+EMP-138,Joseph Garcia,CNC Machinist,Machining,43.0,,MC-003,2021-09-12,1,2026-07-05 10:36:29
+EMP-139,Susan Garcia,CNC Machinist,Machining,45.0,,MC-004,2021-12-10,1,2026-07-05 10:36:29
+EMP-140,Thomas Garcia,CNC Machinist,Machining,41.75,,MC-005,2022-03-09,1,2026-07-05 10:36:29
+EMP-141,Jessica Garcia,CNC Machinist,Machining,43.75,,MC-006,2022-06-06,1,2026-07-05 10:36:29
+EMP-142,Carlos Garcia,Quality Inspector,Quality,40.5,,MC-007,2022-09-03,1,2026-07-05 10:36:29
+EMP-143,Sarah Garcia,CNC Machinist,Machining,42.5,,LB-001,2022-12-01,1,2026-07-05 10:36:29
+EMP-144,Daniel Garcia,CNC Machinist,Machining,44.5,,LB-002,2023-02-28,1,2026-07-05 10:36:29
+EMP-145,Karen Garcia,Assembly Technician,Assembly,41.25,,LB-003,2023-05-28,1,2026-07-05 10:36:29
+EMP-146,Matthew Garcia,Quality Inspector,Quality,43.25,,LB-004,2023-08-25,1,2026-07-05 10:36:29
+EMP-147,Nancy Garcia,Welder,Welding,40.0,,LB-005,2023-11-22,1,2026-07-05 10:36:29
+EMP-148,Anthony Garcia,CNC Machinist,Machining,42.0,,MC-001,2015-02-26,1,2026-07-05 10:36:29
+EMP-149,Lisa Garcia,CNC Machinist,Machining,44.0,,MC-002,2015-05-26,1,2026-07-05 10:36:29
+EMP-150,Mark Garcia,CNC Machinist,Machining,40.75,,MC-003,2015-08-23,1,2026-07-05 10:36:29
+EMP-151,James Miller,CNC Machinist,Machining,42.75,,MC-004,2015-11-20,1,2026-07-05 10:36:29
+EMP-152,Maria Miller,CNC Machinist,Machining,44.75,,MC-005,2016-02-17,1,2026-07-05 10:36:29
+EMP-153,Robert Miller,CNC Machinist,Machining,41.5,,MC-006,2016-05-16,1,2026-07-05 10:36:29
+EMP-154,Linda Miller,Quality Inspector,Quality,43.5,,MC-007,2016-08-13,1,2026-07-05 10:36:29
+EMP-155,Michael Miller,CNC Machinist,Machining,40.25,,LB-001,2016-11-10,1,2026-07-05 10:36:29
+EMP-156,Patricia Miller,CNC Machinist,Machining,42.25,,LB-002,2017-02-07,1,2026-07-05 10:36:29
+EMP-157,David Miller,Assembly Technician,Assembly,44.25,,LB-003,2017-05-07,1,2026-07-05 10:36:29
+EMP-158,Jennifer Miller,Quality Inspector,Quality,41.0,,LB-004,2017-08-04,1,2026-07-05 10:36:29
+EMP-159,William Miller,Welder,Welding,43.0,,LB-005,2017-11-01,1,2026-07-05 10:36:29
+EMP-160,Elizabeth Miller,CNC Machinist,Machining,45.0,,MC-001,2018-01-29,1,2026-07-05 10:36:29
+EMP-161,Richard Miller,CNC Machinist,Machining,41.75,,MC-002,2018-04-28,1,2026-07-05 10:36:29
+EMP-162,Barbara Miller,CNC Machinist,Machining,43.75,,MC-003,2018-07-26,1,2026-07-05 10:36:29
+EMP-163,Joseph Miller,CNC Machinist,Machining,40.5,,MC-004,2018-10-23,1,2026-07-05 10:36:29
+EMP-164,Susan Miller,CNC Machinist,Machining,42.5,,MC-005,2019-01-20,1,2026-07-05 10:36:29
+EMP-165,Thomas Miller,CNC Machinist,Machining,44.5,,MC-006,2019-04-19,1,2026-07-05 10:36:29
+EMP-166,Jessica Miller,Quality Inspector,Quality,41.25,,MC-007,2019-07-17,1,2026-07-05 10:36:29
+EMP-167,Carlos Miller,CNC Machinist,Machining,43.25,,LB-001,2019-10-14,1,2026-07-05 10:36:29
+EMP-168,Sarah Miller,CNC Machinist,Machining,40.0,,LB-002,2020-01-11,1,2026-07-05 10:36:29
+EMP-169,Daniel Miller,Assembly Technician,Assembly,42.0,,LB-003,2020-04-09,1,2026-07-05 10:36:29
+EMP-170,Karen Miller,Quality Inspector,Quality,44.0,,LB-004,2020-07-07,1,2026-07-05 10:36:29
+EMP-171,Matthew Miller,Welder,Welding,40.75,,LB-005,2020-10-04,1,2026-07-05 10:36:29
+EMP-172,Nancy Miller,CNC Machinist,Machining,42.75,,MC-001,2021-01-01,1,2026-07-05 10:36:29
+EMP-173,Anthony Miller,CNC Machinist,Machining,44.75,,MC-002,2021-03-31,1,2026-07-05 10:36:29
+EMP-174,Lisa Miller,CNC Machinist,Machining,41.5,,MC-003,2021-06-28,1,2026-07-05 10:36:29
+EMP-175,Mark Miller,CNC Machinist,Machining,43.5,,MC-004,2021-09-25,1,2026-07-05 10:36:29
+EMP-176,James Davis,CNC Machinist,Machining,40.25,,MC-005,2021-12-23,1,2026-07-05 10:36:29
+EMP-177,Maria Davis,CNC Machinist,Machining,42.25,,MC-006,2022-03-22,1,2026-07-05 10:36:29
+EMP-178,Robert Davis,Quality Inspector,Quality,44.25,,MC-007,2022-06-19,1,2026-07-05 10:36:29
+EMP-179,Linda Davis,CNC Machinist,Machining,41.0,,LB-001,2022-09-16,1,2026-07-05 10:36:29
+EMP-180,Michael Davis,CNC Machinist,Machining,43.0,,LB-002,2022-12-14,1,2026-07-05 10:36:29
+EMP-181,Patricia Davis,Assembly Technician,Assembly,45.0,,LB-003,2023-03-13,1,2026-07-05 10:36:29
+EMP-182,David Davis,Quality Inspector,Quality,41.75,,LB-004,2023-06-10,1,2026-07-05 10:36:29
+EMP-183,Jennifer Davis,Welder,Welding,43.75,,LB-005,2023-09-07,1,2026-07-05 10:36:29
+EMP-184,William Davis,CNC Machinist,Machining,40.5,,MC-001,2023-12-05,1,2026-07-05 10:36:29
+EMP-185,Elizabeth Davis,CNC Machinist,Machining,42.5,,MC-002,2015-03-11,1,2026-07-05 10:36:29
+EMP-186,Richard Davis,CNC Machinist,Machining,44.5,,MC-003,2015-06-08,1,2026-07-05 10:36:29
+EMP-187,Barbara Davis,CNC Machinist,Machining,41.25,,MC-004,2015-09-05,1,2026-07-05 10:36:29
+EMP-188,Joseph Davis,CNC Machinist,Machining,43.25,,MC-005,2015-12-03,1,2026-07-05 10:36:29
+EMP-189,Susan Davis,CNC Machinist,Machining,40.0,,MC-006,2016-03-01,1,2026-07-05 10:36:29
+EMP-190,Thomas Davis,Quality Inspector,Quality,42.0,,MC-007,2016-05-29,1,2026-07-05 10:36:29
+EMP-191,Jessica Davis,CNC Machinist,Machining,44.0,,LB-001,2016-08-26,1,2026-07-05 10:36:29
+EMP-192,Carlos Davis,CNC Machinist,Machining,40.75,,LB-002,2016-11-23,1,2026-07-05 10:36:29
+EMP-193,Sarah Davis,Assembly Technician,Assembly,42.75,,LB-003,2017-02-20,1,2026-07-05 10:36:29
+EMP-194,Daniel Davis,Quality Inspector,Quality,44.75,,LB-004,2017-05-20,1,2026-07-05 10:36:29
+EMP-195,Karen Davis,Welder,Welding,41.5,,LB-005,2017-08-17,1,2026-07-05 10:36:29
+EMP-196,Matthew Davis,CNC Machinist,Machining,43.5,,MC-001,2017-11-14,1,2026-07-05 10:36:29
+EMP-197,Nancy Davis,CNC Machinist,Machining,40.25,,MC-002,2018-02-11,1,2026-07-05 10:36:29
+EMP-198,Anthony Davis,CNC Machinist,Machining,42.25,,MC-003,2018-05-11,1,2026-07-05 10:36:29
+EMP-199,Lisa Davis,CNC Machinist,Machining,44.25,,MC-004,2018-08-08,1,2026-07-05 10:36:29
+EMP-200,Mark Davis,CNC Machinist,Machining,41.0,,MC-005,2018-11-05,1,2026-07-05 10:36:29
+EMP-201,James Rodriguez,CNC Machinist,Machining,43.0,,MC-006,2019-02-02,1,2026-07-05 10:36:29
+EMP-202,Maria Rodriguez,Quality Inspector,Quality,45.0,,MC-007,2019-05-02,1,2026-07-05 10:36:29
+EMP-203,Robert Rodriguez,CNC Machinist,Machining,41.75,,LB-001,2019-07-30,1,2026-07-05 10:36:29
+EMP-204,Linda Rodriguez,CNC Machinist,Machining,43.75,,LB-002,2019-10-27,1,2026-07-05 10:36:29
+EMP-205,Michael Rodriguez,Assembly Technician,Assembly,40.5,,LB-003,2020-01-24,1,2026-07-05 10:36:29
+EMP-206,Patricia Rodriguez,Quality Inspector,Quality,42.5,,LB-004,2020-04-22,1,2026-07-05 10:36:29
+EMP-207,David Rodriguez,Welder,Welding,44.5,,LB-005,2020-07-20,1,2026-07-05 10:36:29
+EMP-208,Jennifer Rodriguez,CNC Machinist,Machining,41.25,,MC-001,2020-10-17,1,2026-07-05 10:36:29
+EMP-209,William Rodriguez,CNC Machinist,Machining,43.25,,MC-002,2021-01-14,1,2026-07-05 10:36:29
+EMP-210,Elizabeth Rodriguez,CNC Machinist,Machining,40.0,,MC-003,2021-04-13,1,2026-07-05 10:36:29
+EMP-211,Richard Rodriguez,CNC Machinist,Machining,42.0,,MC-004,2021-07-11,1,2026-07-05 10:36:29
+EMP-212,Barbara Rodriguez,CNC Machinist,Machining,44.0,,MC-005,2021-10-08,1,2026-07-05 10:36:29
+EMP-213,Joseph Rodriguez,CNC Machinist,Machining,40.75,,MC-006,2022-01-05,1,2026-07-05 10:36:29
+EMP-214,Susan Rodriguez,Quality Inspector,Quality,42.75,,MC-007,2022-04-04,1,2026-07-05 10:36:29
+EMP-215,Thomas Rodriguez,CNC Machinist,Machining,44.75,,LB-001,2022-07-02,1,2026-07-05 10:36:29
+EMP-216,Jessica Rodriguez,CNC Machinist,Machining,41.5,,LB-002,2022-09-29,1,2026-07-05 10:36:29
+EMP-217,Carlos Rodriguez,Assembly Technician,Assembly,43.5,,LB-003,2022-12-27,1,2026-07-05 10:36:29
+EMP-218,Sarah Rodriguez,Quality Inspector,Quality,40.25,,LB-004,2023-03-26,1,2026-07-05 10:36:29
+EMP-219,Daniel Rodriguez,Welder,Welding,42.25,,LB-005,2023-06-23,1,2026-07-05 10:36:29
+EMP-220,Karen Rodriguez,CNC Machinist,Machining,44.25,,MC-001,2023-09-20,1,2026-07-05 10:36:29
+EMP-221,Matthew Rodriguez,CNC Machinist,Machining,41.0,,MC-002,2023-12-18,1,2026-07-05 10:36:29
+EMP-222,Nancy Rodriguez,CNC Machinist,Machining,43.0,,MC-003,2015-03-24,1,2026-07-05 10:36:29
+EMP-223,Anthony Rodriguez,CNC Machinist,Machining,45.0,,MC-004,2015-06-21,1,2026-07-05 10:36:29
+EMP-224,Lisa Rodriguez,CNC Machinist,Machining,41.75,,MC-005,2015-09-18,1,2026-07-05 10:36:29
+EMP-225,Mark Rodriguez,CNC Machinist,Machining,43.75,,MC-006,2015-12-16,1,2026-07-05 10:36:29
+EMP-226,James Martinez,Quality Inspector,Quality,40.5,,MC-007,2016-03-14,1,2026-07-05 10:36:29
+EMP-227,Maria Martinez,CNC Machinist,Machining,42.5,,LB-001,2016-06-11,1,2026-07-05 10:36:29
+EMP-228,Robert Martinez,CNC Machinist,Machining,44.5,,LB-002,2016-09-08,1,2026-07-05 10:36:29
+EMP-229,Linda Martinez,Assembly Technician,Assembly,41.25,,LB-003,2016-12-06,1,2026-07-05 10:36:29
+EMP-230,Michael Martinez,Quality Inspector,Quality,43.25,,LB-004,2017-03-05,1,2026-07-05 10:36:29
+EMP-231,Patricia Martinez,Welder,Welding,40.0,,LB-005,2017-06-02,1,2026-07-05 10:36:29
+EMP-232,David Martinez,CNC Machinist,Machining,42.0,,MC-001,2017-08-30,1,2026-07-05 10:36:29
+EMP-233,Jennifer Martinez,CNC Machinist,Machining,44.0,,MC-002,2017-11-27,1,2026-07-05 10:36:29
+EMP-234,William Martinez,CNC Machinist,Machining,40.75,,MC-003,2018-02-24,1,2026-07-05 10:36:29
+EMP-235,Elizabeth Martinez,CNC Machinist,Machining,42.75,,MC-004,2018-05-24,1,2026-07-05 10:36:29
+EMP-236,Richard Martinez,CNC Machinist,Machining,44.75,,MC-005,2018-08-21,1,2026-07-05 10:36:29
+EMP-237,Barbara Martinez,CNC Machinist,Machining,41.5,,MC-006,2018-11-18,1,2026-07-05 10:36:29
+EMP-238,Joseph Martinez,Quality Inspector,Quality,43.5,,MC-007,2019-02-15,1,2026-07-05 10:36:29
+EMP-239,Susan Martinez,CNC Machinist,Machining,40.25,,LB-001,2019-05-15,1,2026-07-05 10:36:29
+EMP-240,Thomas Martinez,CNC Machinist,Machining,42.25,,LB-002,2019-08-12,1,2026-07-05 10:36:29
+EMP-241,Jessica Martinez,Assembly Technician,Assembly,44.25,,LB-003,2019-11-09,1,2026-07-05 10:36:29
+EMP-242,Carlos Martinez,Quality Inspector,Quality,41.0,,LB-004,2020-02-06,1,2026-07-05 10:36:29
+EMP-243,Sarah Martinez,Welder,Welding,43.0,,LB-005,2020-05-05,1,2026-07-05 10:36:29
+EMP-244,Daniel Martinez,CNC Machinist,Machining,45.0,,MC-001,2020-08-02,1,2026-07-05 10:36:29
+EMP-245,Karen Martinez,CNC Machinist,Machining,41.75,,MC-002,2020-10-30,1,2026-07-05 10:36:29
+EMP-246,Matthew Martinez,CNC Machinist,Machining,43.75,,MC-003,2021-01-27,1,2026-07-05 10:36:29
+EMP-247,Nancy Martinez,CNC Machinist,Machining,40.5,,MC-004,2021-04-26,1,2026-07-05 10:36:29
+EMP-248,Anthony Martinez,CNC Machinist,Machining,42.5,,MC-005,2021-07-24,1,2026-07-05 10:36:29
+EMP-249,Lisa Martinez,CNC Machinist,Machining,44.5,,MC-006,2021-10-21,1,2026-07-05 10:36:29
+EMP-250,Mark Martinez,Quality Inspector,Quality,41.25,,MC-007,2022-01-18,1,2026-07-05 10:36:29
+EMP-251,James Hernandez,CNC Machinist,Machining,43.25,,LB-001,2022-04-17,1,2026-07-05 10:36:29
+EMP-252,Maria Hernandez,CNC Machinist,Machining,40.0,,LB-002,2022-07-15,1,2026-07-05 10:36:29
+EMP-253,Robert Hernandez,Assembly Technician,Assembly,42.0,,LB-003,2022-10-12,1,2026-07-05 10:36:29
+EMP-254,Linda Hernandez,Quality Inspector,Quality,44.0,,LB-004,2023-01-09,1,2026-07-05 10:36:29
+EMP-255,Michael Hernandez,Welder,Welding,40.75,,LB-005,2023-04-08,1,2026-07-05 10:36:29
+EMP-256,Patricia Hernandez,CNC Machinist,Machining,42.75,,MC-001,2023-07-06,1,2026-07-05 10:36:29
+EMP-257,David Hernandez,CNC Machinist,Machining,44.75,,MC-002,2023-10-03,1,2026-07-05 10:36:29
+EMP-258,Jennifer Hernandez,CNC Machinist,Machining,41.5,,MC-003,2015-01-07,1,2026-07-05 10:36:29
+EMP-259,William Hernandez,CNC Machinist,Machining,43.5,,MC-004,2015-04-06,1,2026-07-05 10:36:29
+EMP-260,Elizabeth Hernandez,CNC Machinist,Machining,40.25,,MC-005,2015-07-04,1,2026-07-05 10:36:29
+EMP-261,Richard Hernandez,CNC Machinist,Machining,42.25,,MC-006,2015-10-01,1,2026-07-05 10:36:29
+EMP-262,Barbara Hernandez,Quality Inspector,Quality,44.25,,MC-007,2015-12-29,1,2026-07-05 10:36:29
+EMP-263,Joseph Hernandez,CNC Machinist,Machining,41.0,,LB-001,2016-03-27,1,2026-07-05 10:36:29
+EMP-264,Susan Hernandez,CNC Machinist,Machining,43.0,,LB-002,2016-06-24,1,2026-07-05 10:36:29
+EMP-265,Thomas Hernandez,Assembly Technician,Assembly,45.0,,LB-003,2016-09-21,1,2026-07-05 10:36:29
+EMP-266,Jessica Hernandez,Quality Inspector,Quality,41.75,,LB-004,2016-12-19,1,2026-07-05 10:36:29
+EMP-267,Carlos Hernandez,Welder,Welding,43.75,,LB-005,2017-03-18,1,2026-07-05 10:36:29
+EMP-268,Sarah Hernandez,CNC Machinist,Machining,40.5,,MC-001,2017-06-15,1,2026-07-05 10:36:29
+EMP-269,Daniel Hernandez,CNC Machinist,Machining,42.5,,MC-002,2017-09-12,1,2026-07-05 10:36:29
+EMP-270,Karen Hernandez,CNC Machinist,Machining,44.5,,MC-003,2017-12-10,1,2026-07-05 10:36:29
+EMP-271,Matthew Hernandez,CNC Machinist,Machining,41.25,,MC-004,2018-03-09,1,2026-07-05 10:36:29
+EMP-272,Nancy Hernandez,CNC Machinist,Machining,43.25,,MC-005,2018-06-06,1,2026-07-05 10:36:29
+EMP-273,Anthony Hernandez,CNC Machinist,Machining,40.0,,MC-006,2018-09-03,1,2026-07-05 10:36:29
+EMP-274,Lisa Hernandez,Quality Inspector,Quality,42.0,,MC-007,2018-12-01,1,2026-07-05 10:36:29
+EMP-275,Mark Hernandez,CNC Machinist,Machining,44.0,,LB-001,2019-02-28,1,2026-07-05 10:36:29
+EMP-276,James Lopez,CNC Machinist,Machining,40.75,,LB-002,2019-05-28,1,2026-07-05 10:36:29
+EMP-277,Maria Lopez,Assembly Technician,Assembly,42.75,,LB-003,2019-08-25,1,2026-07-05 10:36:29
+EMP-278,Robert Lopez,Quality Inspector,Quality,44.75,,LB-004,2019-11-22,1,2026-07-05 10:36:29
+EMP-279,Linda Lopez,Welder,Welding,41.5,,LB-005,2020-02-19,1,2026-07-05 10:36:29
+EMP-280,Michael Lopez,CNC Machinist,Machining,43.5,,MC-001,2020-05-18,1,2026-07-05 10:36:29
+EMP-281,Patricia Lopez,CNC Machinist,Machining,40.25,,MC-002,2020-08-15,1,2026-07-05 10:36:29
+EMP-282,David Lopez,CNC Machinist,Machining,42.25,,MC-003,2020-11-12,1,2026-07-05 10:36:29
+EMP-283,Jennifer Lopez,CNC Machinist,Machining,44.25,,MC-004,2021-02-09,1,2026-07-05 10:36:29
+EMP-284,William Lopez,CNC Machinist,Machining,41.0,,MC-005,2021-05-09,1,2026-07-05 10:36:29
+EMP-285,Elizabeth Lopez,CNC Machinist,Machining,43.0,,MC-006,2021-08-06,1,2026-07-05 10:36:29
+EMP-286,Richard Lopez,Quality Inspector,Quality,45.0,,MC-007,2021-11-03,1,2026-07-05 10:36:29
+EMP-287,Barbara Lopez,CNC Machinist,Machining,41.75,,LB-001,2022-01-31,1,2026-07-05 10:36:29
+EMP-288,Joseph Lopez,CNC Machinist,Machining,43.75,,LB-002,2022-04-30,1,2026-07-05 10:36:29
+EMP-289,Susan Lopez,Assembly Technician,Assembly,40.5,,LB-003,2022-07-28,1,2026-07-05 10:36:29
+EMP-290,Thomas Lopez,Quality Inspector,Quality,42.5,,LB-004,2022-10-25,1,2026-07-05 10:36:29
+EMP-291,Jessica Lopez,Buyer,Purchasing,45.5,BUYER-1,,2023-01-22,1,2026-07-05 10:36:29
+EMP-292,Carlos Lopez,Buyer,Purchasing,46.25,BUYER-2,,2023-04-21,1,2026-07-05 10:36:29
+EMP-293,Sarah Lopez,Buyer,Purchasing,47.0,BUYER-3,,2023-07-19,1,2026-07-05 10:36:29
+EMP-294,Daniel Lopez,Buyer,Purchasing,47.75,BUYER-4,,2023-10-16,1,2026-07-05 10:36:29
+EMP-295,Karen Lopez,Buyer,Purchasing,44.25,BUYER-5,,2015-01-20,1,2026-07-05 10:36:29
+EMP-296,Matthew Lopez,Buyer,Purchasing,45.0,BUYER-6,,2015-04-19,1,2026-07-05 10:36:29
+EMP-297,Nancy Lopez,Buyer,Purchasing,45.75,BUYER-7,,2015-07-17,1,2026-07-05 10:36:29
+EMP-298,Anthony Lopez,Buyer,Purchasing,46.5,BUYER-8,,2015-10-14,1,2026-07-05 10:36:29
+EMP-299,Lisa Lopez,Buyer,Purchasing,47.25,BUYER-9,,2016-01-11,1,2026-07-05 10:36:29
+EMP-300,Mark Lopez,Buyer,Purchasing,48.0,BUYER-10,,2016-04-09,1,2026-07-05 10:36:29

@@ -1,0 +1,15 @@
+dag_no,table_name,column_name,parent_table,parent_column,masking_rule,masking_type,field_length,masking_mode,pre_stage_server,status
+1.1,vendor,id,,,"hash_sha256(column_name,length)",deterministic_hash,30,1,sql-lab-2,static
+1.2,part,pref_vendor,vendor,id,"hash_sha256(column_name,length)",deterministic_hash,30,1,sql-lab-2,static
+1.3,work_order,part_id,part,id,"hash_sha256(column_name,length)",deterministic_hash,30,1,sql-lab-2,static
+2.0,user_def_fields,,,,"hash_sha256(column_name,length)",deterministic_hash,0,1,sql-lab-2,active
+3.1,vendor,addr_1,,,set_null(column_name),change to null,0,2,sql-lab-2,active
+3.2,vendor,addr_2,,,set_null(column_name),change to null,0,2,sql-lab-2,active
+3.3,vendor,addr_3,,,set_null(column_name),change to null,0,2,sql-lab-2,active
+3.4,vendor,city,,,set_null(column_name),change to null,0,2,sql-lab-2,active
+3.5,vendor,state,,,set_null(column_name),change to null,0,2,sql-lab-2,active
+3.6,vendor,zipcode,,,set_null(column_name),change to null,0,2,sql-lab-2,active
+4.1,customer_order,contact_first_name,,,set_null(column_name),change to null,0,2,sql-lab-2,active
+4.2,customer_order,contact_last_name,,,set_null(column_name),change to null,0,2,sql-lab-2,active
+5.1,oper_type_binary,bits,,,obfuscate_0x(column_name),obfuscate binary text,0,3,sql-lab-2,active
+5.2,operation_binary,bits,,,obfuscate_0x(column_name),obfuscate binary text,0,3,sql-lab-2,active

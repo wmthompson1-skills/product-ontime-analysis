@@ -1,0 +1,17 @@
+operation_type_id,description,category,resource_id,active
+CNC,CNC Milling,Machining,MC-001,1
+TURN,CNC Turning / Lathe,Machining,MC-005,1
+WJET,Waterjet Cutting,Machining,MC-006,1
+DEBURR,Deburr / Finishing,Finishing,DRILL-PRESS,1
+WELD,Welding,Fabrication,WELD-A,1
+ASSY,Assembly,Assembly,ASSEM-LINE-1,1
+INSPECT,In-Process Inspection / CMM,Quality,INSPECT-CMM,1
+FINSP,Final Inspection,Quality,LB-004,1
+NDT,Non-Destructive Test,Quality,SV-003,1
+REVIEW,Engineering / Planning Review,Engineering,,1
+ANOD,Anodize,Outside Finishing,SV-001,1
+CHEM,Chemical Film,Outside Finishing,SV-004,1
+HTRT,Heat Treat,Outside Process,SV-002,1
+PLATE,Plating,Outside Finishing,OUTSIDE,1
+PAINT,Paint / Prime,Outside Finishing,SV-005,1
+PARTMARK,Part Marking / Etch,Finishing,DRILL-PRESS,1

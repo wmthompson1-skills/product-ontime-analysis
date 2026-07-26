@@ -1,0 +1,22 @@
+id,intent_id,query_category,query_file,query_index,query_name,created_at
+1,1,quality_control,quality_control.sql,0,Defects by severity with cost rollup,2026-07-05 10:36:28
+2,2,quality_control,quality_control.sql,1,Weekly defect rate trend,2026-07-05 10:36:28
+3,3,quality_control,quality_control.sql,2,Customer escape risk analysis,2026-07-05 10:36:28
+4,4,supplier_performance,supplier_performance.sql,0,Supplier delivery scorecard,2026-07-05 10:36:28
+5,5,supplier_performance,supplier_performance.sql,1,Late delivery penalty calculation,2026-07-05 10:36:28
+293,18,supplier_performance,supplier_performance.sql,3,Supplier AP Total Due,2026-07-06 02:51:35
+294,18,supplier_performance,supplier_performance.sql,4,AP Aging by Supplier,2026-07-06 02:51:35
+295,18,supplier_performance,supplier_performance.sql,8,Three-Way Match Exceptions,2026-07-06 02:51:35
+309,19,receivables,receivables.sql,0,Order Revenue Recognition Status,2026-07-06 02:56:59
+310,19,receivables,receivables.sql,1,Customer AR Exposure,2026-07-06 02:57:00
+311,19,receivables,receivables.sql,2,Open Order Backlog Aging,2026-07-06 02:57:00
+417,18,supplier_performance,supplier_performance.sql,5,Uninvoiced Receipts,2026-07-06 15:10:42
+691,18,supplier_performance,supplier_performance.sql,6,Partial-Receipt Accrual Exposure,2026-07-08 04:52:38
+718,18,supplier_performance,supplier_performance.sql,7,Three-Way Match Coverage,2026-07-13 05:54:10
+985,2748,job_costing_ledger,job_costing_ledger.sql,0,Inventory Balance per Bucket,2026-07-19 04:04:04
+986,2749,job_costing_ledger,job_costing_ledger.sql,1,Job Cost Summary by Cost Element,2026-07-19 04:04:04
+987,2750,job_costing_ledger,job_costing_ledger.sql,2,Job Event Trace,2026-07-19 04:04:04
+988,2751,job_costing_ledger,job_costing_ledger.sql,3,Material Issued over a Period,2026-07-19 04:04:04
+989,2752,job_costing_ledger,job_costing_ledger.sql,4,Finished Goods Produced over a Period,2026-07-19 04:04:04
+1555,19,receivables,receivables_araging_20260724_000001,3,AR Aging — Open & Disputed Invoices,2026-07-24 03:39:08
+2132,4934,receivables,receivables_cashreceipts_20260724_000002,4,Cash Receipts by Invoice,2026-07-24 06:03:38

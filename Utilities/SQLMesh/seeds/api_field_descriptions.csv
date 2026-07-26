@@ -1,0 +1,341 @@
+source_database,schema_name,table_name,column_name,display_name,description,example_value,updated_at
+manufacturing,dbo,certification,cert_id,Certification ID,Unique identifier for each certification record.,1,2026-07-26 00:19:37
+manufacturing,dbo,certification,cert_type,Certification Type,"The kind of supplier / material certification on file — e.g. Certificate of Conformance, First Article Inspection, PPAP, FAA 8130-3, or Material Test Report.",CoC,2026-07-26 00:19:37
+manufacturing,dbo,certification,created_at,Created At,Timestamp for when the certification record was created.,2026-06-01 00:48:21,2026-07-26 00:19:37
+manufacturing,dbo,certification,expiry_date,Expiry Date,The expiry date for the certification.,2027-01-17,2026-07-26 00:19:37
+manufacturing,dbo,certification,issued_date,Issued Date,The issued date for the certification.,2026-01-17,2026-07-26 00:19:37
+manufacturing,dbo,certification,part_id,Part ID,Links each certification to its related part.,PN-10060,2026-07-26 00:19:37
+manufacturing,dbo,certification,receipt_id,Receipt ID,Links each certification to its related receipt.,1,2026-07-26 00:19:37
+manufacturing,dbo,certification,status,Certification Status,"Whether a certification is currently valid: active, expired, revoked, or pending renewal.",ACTIVE,2026-07-26 00:19:37
+manufacturing,dbo,certification,supplier_id,Supplier ID,Links each certification to its related supplier.,S-006,2026-07-26 00:19:37
+manufacturing,dbo,customer_order,created_at,Created At,Timestamp for when the customer order record was created.,2026-06-06 05:16:25,2026-07-26 00:19:37
+manufacturing,dbo,customer_order,customer_name,Customer Name,Human-readable name of the customer.,Northrop Grumman,2026-07-26 00:19:37
+manufacturing,dbo,customer_order,order_date,Order Date,The order date for the customer order.,2025-11-27,2026-07-26 00:19:37
+manufacturing,dbo,customer_order,order_id,Order ID,Unique identifier for each customer order record.,CO-00001,2026-07-26 00:19:37
+manufacturing,dbo,customer_order,site_id,Site ID,Links each customer order to its related site.,SITE-2,2026-07-26 00:19:37
+manufacturing,dbo,customer_order,status,Order Status,"Where a customer order sits in its lifecycle: entered, released, in process, shipped, invoiced, or closed. At 'shipped' the order is recognized as revenue.",SHIPPED,2026-07-26 00:19:37
+manufacturing,dbo,customer_order_line,created_at,Created At,Timestamp for when the customer order line record was created.,2026-06-06 05:16:25,2026-07-26 00:19:37
+manufacturing,dbo,customer_order_line,desired_release_date,Desired Release Date,The date to start work so the item is ready by its need-by date (need-by date minus the item's lead time).,2026-05-23,2026-07-26 00:19:37
+manufacturing,dbo,customer_order_line,line_no,Line No.,Numeric line no. recorded for each customer order line.,1,2026-07-26 00:19:37
+manufacturing,dbo,customer_order_line,need_by_date,Need By Date,The date the customer needs this line's item delivered.,2026-08-21,2026-07-26 00:19:37
+manufacturing,dbo,customer_order_line,order_id,Order ID,Links each customer order line to its related order.,CO-00001,2026-07-26 00:19:37
+manufacturing,dbo,customer_order_line,order_line_id,Order Line ID,Unique identifier for each customer order line record.,1,2026-07-26 00:19:37
+manufacturing,dbo,customer_order_line,order_qty,Order Quantity,How many units the customer ordered on this line. Drives the production batch size; the per-unit engineering standard is multiplied by this quantity.,25,2026-07-26 00:19:37
+manufacturing,dbo,customer_order_line,part_id,Part ID,Links each customer order line to its related part.,P-10036,2026-07-26 00:19:37
+manufacturing,dbo,customer_order_line,site_id,Site ID,Links each customer order line to its related site.,SITE-2,2026-07-26 00:19:37
+manufacturing,dbo,customer_order_line,unit_price,Unit Price,Numeric unit price recorded for each customer order line.,3391.02,2026-07-26 00:19:37
+manufacturing,dbo,inv_trans_dist,created_at,Created At,Timestamp for when the inv trans dist record was created.,2026-06-06 05:16:25,2026-07-26 00:19:37
+manufacturing,dbo,inv_trans_dist,dist_id,Dist ID,Unique identifier for each inv trans dist record.,1,2026-07-26 00:19:37
+manufacturing,dbo,inv_trans_dist,dist_qty,Dist Quantity,Numeric dist quantity recorded for each inv trans dist.,2.3,2026-07-26 00:19:37
+manufacturing,dbo,inv_trans_dist,in_trans_id,In Trans ID,Links each inv trans dist to its related in trans.,469,2026-07-26 00:19:37
+manufacturing,dbo,inv_trans_dist,out_trans_id,Out Trans ID,Links each inv trans dist to its related out trans.,262,2026-07-26 00:19:37
+manufacturing,dbo,inventory_transaction,class,Class,"The class of each inventory transaction; one of a small set of values such as: R, I, A.",R,2026-07-26 00:19:37
+manufacturing,dbo,inventory_transaction,created_at,Created At,Timestamp for when the inventory transaction record was created.,2026-06-06 05:16:25,2026-07-26 00:19:37
+manufacturing,dbo,inventory_transaction,part_id,Part ID,Links each inventory transaction to its related part.,PN-10060,2026-07-26 00:19:37
+manufacturing,dbo,inventory_transaction,po_id,PO ID,Links each inventory transaction to its related po.,PO-M240005,2026-07-26 00:19:37
+manufacturing,dbo,inventory_transaction,quantity,Quantity,Numeric quantity recorded for each inventory transaction.,4.0,2026-07-26 00:19:37
+manufacturing,dbo,inventory_transaction,site_id,Warehouse / Site,"The stockroom or plant site where this inventory move happened. Inventory is traced at the move, so this is where the material physically went.",PLANT-1,2026-07-26 00:19:37
+manufacturing,dbo,inventory_transaction,trans_date,Trans Date,The trans date for the inventory transaction.,2026-01-17,2026-07-26 00:19:37
+manufacturing,dbo,inventory_transaction,transaction_id,Transaction ID,Unique identifier for each inventory transaction record.,1,2026-07-26 00:19:37
+manufacturing,dbo,inventory_transaction,type,Transaction Type,Direction of the stock movement: a receipt into stock (in) versus an issue out to a work order or shipment (out).,ISSUE,2026-07-26 00:19:37
+manufacturing,dbo,inventory_transaction,wo_id,Wo ID,Links each inventory transaction to its related wo.,WO-240003,2026-07-26 00:19:37
+manufacturing,dbo,payables,amount_dollars,Amount Dollars,Numeric amount dollars recorded for each payables record.,22502.95,2026-07-26 00:19:37
+manufacturing,dbo,payables,created_at,Created At,Timestamp for when the payables record was created.,2026-06-01 00:48:21,2026-07-26 00:19:37
+manufacturing,dbo,payables,due_date,Due Date,The due date for the payables record.,2026-04-02,2026-07-26 00:19:37
+manufacturing,dbo,payables,invoice_date,Invoice Date,The invoice date for the payables record.,2026-02-01,2026-07-26 00:19:37
+manufacturing,dbo,payables,invoice_id,Invoice ID,Unique identifier for each payables record.,70,2026-07-26 00:19:37
+manufacturing,dbo,payables,invoice_number,Invoice Number,The invoice number for each payables record.,INV-000070,2026-07-26 00:19:37
+manufacturing,dbo,payables,payment_date,Payment Date,The payment date for the payables record.,2026-05-14,2026-07-26 00:19:37
+manufacturing,dbo,payables,po_id,PO ID,Links each payables record to its related po.,PO-M240005,2026-07-26 00:19:37
+manufacturing,dbo,payables,status,Status,"The status of each payables record; one of a small set of values such as: Disputed, Approved, Paid, Open.",Disputed,2026-07-26 00:19:37
+manufacturing,dbo,payables,supplier_id,Supplier ID,Links each payables record to its related supplier.,S-006,2026-07-26 00:19:37
+manufacturing,dbo,payables,three_way_match_status,Three-Way Match Status,"Result of matching a supplier invoice against its purchase order and receiving record before it can be paid: matched, on hold for price / quantity variance, or unmatched.",MATCHED,2026-07-26 00:19:37
+manufacturing,dbo,labor_ticket,burden_cost,Burden Cost,Numeric burden cost recorded for each labor ticket.,107.52,2026-07-26 00:19:37
+manufacturing,dbo,labor_ticket,clock_in,Clock In,The clock in for each labor ticket record.,2026-03-09T12:00:00,2026-07-26 00:19:37
+manufacturing,dbo,labor_ticket,clock_out,Clock Out,The clock out for each labor ticket record.,2026-03-09T14:33:36,2026-07-26 00:19:37
+manufacturing,dbo,labor_ticket,created_at,Created At,Timestamp for when the labor ticket record was created.,2026-06-01 00:48:21,2026-07-26 00:19:37
+manufacturing,dbo,labor_ticket,employee_id,Employee ID,Links each labor ticket to its related employee.,EMP-010,2026-07-26 00:19:37
+manufacturing,dbo,labor_ticket,labor_cost,Labor Cost,Numeric labor cost recorded for each labor ticket.,243.2,2026-07-26 00:19:37
+manufacturing,dbo,labor_ticket,resource_id,Resource ID,Links each labor ticket to its related resource.,MC-001,2026-07-26 00:19:37
+manufacturing,dbo,labor_ticket,sequence_no,Sequence No.,Numeric sequence no. recorded for each labor ticket.,30,2026-07-26 00:19:37
+manufacturing,dbo,labor_ticket,ticket_id,Ticket ID,Unique identifier for each labor ticket record.,1,2026-07-26 00:19:37
+manufacturing,dbo,labor_ticket,total_hours,Total Hours,Numeric total hours recorded for each labor ticket.,2.56,2026-07-26 00:19:37
+manufacturing,dbo,labor_ticket,wo_id,Wo ID,Links each labor ticket to its related wo.,WO-240003,2026-07-26 00:19:37
+manufacturing,dbo,material_issue,created_at,Created At,Timestamp for when the material issue record was created.,2026-06-01 00:48:21,2026-07-26 00:19:37
+manufacturing,dbo,material_issue,issue_date,Issue Date,The issue date for the material issue.,2026-04-04,2026-07-26 00:19:37
+manufacturing,dbo,material_issue,issue_id,Issue ID,Unique identifier for each material issue record.,1,2026-07-26 00:19:37
+manufacturing,dbo,material_issue,issued_by,Issued By,"The issued by of each material issue; one of a small set of values such as: EMP-009, EMP-014, EMP-003, EMP-004, EMP-013, EMP-010.",EMP-009,2026-07-26 00:19:37
+manufacturing,dbo,material_issue,part_description,Part Description,Free-text part description for the material issue.,"Phenolic Insulation Block, MIL-I-24768, 2"" thick",2026-07-26 00:19:37
+manufacturing,dbo,material_issue,part_id,Part ID,Links each material issue to its related part.,PN-10200,2026-07-26 00:19:37
+manufacturing,dbo,material_issue,quantity,Quantity,Numeric quantity recorded for each material issue.,15.8,2026-07-26 00:19:37
+manufacturing,dbo,material_issue,total_cost,Total Cost,Numeric total cost recorded for each material issue.,832.66,2026-07-26 00:19:37
+manufacturing,dbo,material_issue,unit_cost,Unit Cost,Numeric unit cost recorded for each material issue.,52.7,2026-07-26 00:19:37
+manufacturing,dbo,material_issue,wo_id,Wo ID,Links each material issue to its related wo.,WO-240003,2026-07-26 00:19:37
+manufacturing,dbo,operation,act_atl_bur_cost,Act Atl Bur Cost,Numeric act atl bur cost recorded for each operation.,0.0,2026-07-26 00:19:37
+manufacturing,dbo,operation,act_atl_lab_cost,Act Atl Lab Cost,Numeric act atl lab cost recorded for each operation.,0.0,2026-07-26 00:19:37
+manufacturing,dbo,operation,act_atl_ser_cost,Act Atl Ser Cost,Numeric act atl ser cost recorded for each operation.,0.0,2026-07-26 00:19:37
+manufacturing,dbo,operation,act_run_hrs,Act Run Hrs,Numeric act run hrs recorded for each operation.,0.0,2026-07-26 00:19:37
+manufacturing,dbo,operation,act_setup_hrs,Act Setup Hrs,Numeric act setup hrs recorded for each operation.,0.0,2026-07-26 00:19:37
+manufacturing,dbo,operation,close_date,Close Date,The close date for the operation.,2026-03-14,2026-07-26 00:19:37
+manufacturing,dbo,operation,est_atl_bur_cost,Est Atl Bur Cost,Numeric est atl bur cost recorded for each operation.,1520.0,2026-07-26 00:19:37
+manufacturing,dbo,operation,est_atl_lab_cost,Est Atl Lab Cost,Numeric est atl lab cost recorded for each operation.,3800.0,2026-07-26 00:19:37
+manufacturing,dbo,operation,est_atl_ser_cost,Est Atl Ser Cost,Numeric est atl ser cost recorded for each operation.,0.0,2026-07-26 00:19:37
+manufacturing,dbo,operation,last_disp_date,Last Disp Date,The last disp date for the operation.,,2026-07-26 00:19:37
+manufacturing,dbo,operation,last_recv_date,Last Recv Date,The last recv date for the operation.,,2026-07-26 00:19:37
+manufacturing,dbo,operation,operation_type_id,Operation Type ID,Links each operation to its related operation type.,ASSY,2026-07-26 00:19:37
+manufacturing,dbo,operation,resource_id,Resource ID,Links each operation to its related resource.,ASSEM-LINE-2,2026-07-26 00:19:37
+manufacturing,dbo,operation,rowid_pk,Rowid Pk,Unique identifier for each operation record.,216,2026-07-26 00:19:37
+manufacturing,dbo,operation,run_hrs,Run Hrs,Numeric run hrs recorded for each operation.,4.0,2026-07-26 00:19:37
+manufacturing,dbo,operation,run_type,Run Type,The run type of each operation; one of a small set of values such as: HR.,HR,2026-07-26 00:19:37
+manufacturing,dbo,operation,sched_finish_date,Sched Finish Date,The sched finish date for the operation.,2026-03-11,2026-07-26 00:19:37
+manufacturing,dbo,operation,sched_start_date,Sched Start Date,The sched start date for the operation.,2026-03-06,2026-07-26 00:19:37
+manufacturing,dbo,operation,sequence_no,Sequence No.,Numeric sequence no. recorded for each operation.,20,2026-07-26 00:19:37
+manufacturing,dbo,operation,service_begin_date,Service Begin Date,The service begin date for the operation.,,2026-07-26 00:19:37
+manufacturing,dbo,operation,service_id,Service ID,Links each operation to its related service.,NDT-UT,2026-07-26 00:19:37
+manufacturing,dbo,operation,setup_hrs,Setup Hrs,Numeric setup hrs recorded for each operation.,1.0,2026-07-26 00:19:37
+manufacturing,dbo,operation,status,Operation Status,"Execution state of a routing step on the shop floor: queued, started / running, or complete.",COMPLETE,2026-07-26 00:19:37
+manufacturing,dbo,operation,vendor_id,Vendor ID,Links each operation to its related vendor.,S-010,2026-07-26 00:19:37
+manufacturing,dbo,operation,wo_id,Wo ID,Links each operation to its related wo.,WO-00051,2026-07-26 00:19:37
+manufacturing,dbo,operation,workorder_type,Workorder Type,"The workorder type of each operation; one of a small set of values such as: M, W.",M,2026-07-26 00:19:37
+manufacturing,dbo,part,active,Active,Yes/no flag indicating whether the part active.,1,2026-07-26 00:19:37
+manufacturing,dbo,part,cage_code,Cage Code,"The cage code of each part; one of a small set of values such as: 59012, 1HHH9, K0579, 32499, F3234, CAGE1.",59012,2026-07-26 00:19:37
+manufacturing,dbo,part,created_at,Created At,Timestamp for when the part record was created.,2026-06-03 16:34:08,2026-07-26 00:19:37
+manufacturing,dbo,part,drawing_number,Drawing Number,"The drawing number of each part; one of a small set of values such as: DWG-10010-A, DWG-10011-A, DWG-10012-A, DWG-10013-A, DWG-10014-A, DWG-10024-A.",DWG-10010-A,2026-07-26 00:19:37
+manufacturing,dbo,part,lead_time_days,Lead Time Days,Numeric lead time days recorded for each part.,45,2026-07-26 00:19:37
+manufacturing,dbo,part,material_spec,Material Spec,"The material spec of each part; one of a small set of values such as: AMS 4928, AMS 2770, ASTM A240, BMS 8-276, AMS 5663, MS35337.",AMS 4928,2026-07-26 00:19:37
+manufacturing,dbo,part,on_hand_qty,On Hand Quantity,Numeric on hand quantity recorded for each part.,61.0,2026-07-26 00:19:37
+manufacturing,dbo,part,part_class,Part Class (Make / Buy),"How a part is sourced: manufactured in-house, purchased, raw material, hardware, or outside service. Reflects engineering's make-vs-buy intent.",MAKE,2026-07-26 00:19:37
+manufacturing,dbo,part,part_description,Part Description,Free-text part description for the part.,Titanium Bulkhead Frame 6Al-4V,2026-07-26 00:19:37
+manufacturing,dbo,part,part_id,Part ID,Unique identifier for each part record.,P-10010,2026-07-26 00:19:37
+manufacturing,dbo,part,planner_code,Planner Code,The planner code of each part; one of a small set of values such as: ENGINEERING.,ENGINEERING,2026-07-26 00:19:37
+manufacturing,dbo,part,reorder_point,Reorder Point,Numeric reorder point recorded for each part.,4467.18,2026-07-26 00:19:37
+manufacturing,dbo,part,revision,Revision,The revision of each part; one of a small set of values such as: A.,A,2026-07-26 00:19:37
+manufacturing,dbo,part,unit_cost,Unit Cost,Numeric unit cost recorded for each part.,4250.0,2026-07-26 00:19:37
+manufacturing,dbo,part,unit_of_measure,Unit Of Measure,"The unit of measure of each part; one of a small set of values such as: EA, FT, LB.",EA,2026-07-26 00:19:37
+manufacturing,dbo,payable_line,amount,Amount,Numeric amount recorded for each payable line.,731.04,2026-07-26 00:19:37
+manufacturing,dbo,payable_line,created_at,Created At,Timestamp for when the payable line record was created.,2026-06-06 05:16:25,2026-07-26 00:19:37
+manufacturing,dbo,payable_line,invoice_id,Invoice ID,Links each payable line to its related invoice.,1,2026-07-26 00:19:37
+manufacturing,dbo,payable_line,line_no,Line No.,Numeric line no. recorded for each payable line.,1,2026-07-26 00:19:37
+manufacturing,dbo,payable_line,part_id,Part ID,Links each payable line to its related part.,PN-10060,2026-07-26 00:19:37
+manufacturing,dbo,payable_line,payable_line_id,Payable Line ID,Unique identifier for each payable line record.,1,2026-07-26 00:19:37
+manufacturing,dbo,payable_line,po_id,PO ID,Links each payable line to its related po.,PO-M240005,2026-07-26 00:19:37
+manufacturing,dbo,payable_line,qty,Quantity,Numeric quantity recorded for each payable line.,4.0,2026-07-26 00:19:37
+manufacturing,dbo,po_line,created_at,Created At,Timestamp for when the po line record was created.,2026-06-01 00:48:21,2026-07-26 00:19:37
+manufacturing,dbo,po_line,line_id,Line ID,Unique identifier for each po line record.,1,2026-07-26 00:19:37
+manufacturing,dbo,po_line,line_total,Line Total,Numeric line total recorded for each po line.,331.9,2026-07-26 00:19:37
+manufacturing,dbo,po_line,part_description,Part Description,Free-text part description for the po line.,"Hydraulic Actuator Seal Kit, Parker A2K",2026-07-26 00:19:37
+manufacturing,dbo,po_line,part_id,Part ID,Links each po line to its related part.,PN-10070,2026-07-26 00:19:37
+manufacturing,dbo,po_line,po_id,PO ID,Links each po line to its related po.,PO-M240001,2026-07-26 00:19:37
+manufacturing,dbo,po_line,quantity,Quantity,Numeric quantity recorded for each po line.,5.0,2026-07-26 00:19:37
+manufacturing,dbo,po_line,unit_cost,Unit Cost,Numeric unit cost recorded for each po line.,66.38,2026-07-26 00:19:37
+manufacturing,dbo,purchase_order,buyer_id,Buyer ID,Links each purchase order to its related buyer.,BUYER-1,2026-07-26 00:19:37
+manufacturing,dbo,purchase_order,created_at,Created At,Timestamp for when the purchase order record was created.,2026-06-01 00:48:21,2026-07-26 00:19:37
+manufacturing,dbo,purchase_order,po_date,PO Date,The po date for the purchase order.,2026-03-04,2026-07-26 00:19:37
+manufacturing,dbo,purchase_order,po_id,PO ID,Unique identifier for each purchase order record.,PO-000117,2026-07-26 00:19:37
+manufacturing,dbo,purchase_order,po_type,PO Type,"The po type of each purchase order; one of a small set of values such as: material, outside_service.",material,2026-07-26 00:19:37
+manufacturing,dbo,purchase_order,required_date,Required Date,The required date for the purchase order.,2026-03-28,2026-07-26 00:19:37
+manufacturing,dbo,purchase_order,service_id,Service ID,Links each purchase order to its related service.,NDT-UT,2026-07-26 00:19:37
+manufacturing,dbo,purchase_order,site_id,Site ID,Links each purchase order to its related site.,SITE-1,2026-07-26 00:19:37
+manufacturing,dbo,purchase_order,status,PO Status,"Lifecycle stage of a purchase order: open, approved, partially or fully received, or closed.",RECEIVED,2026-07-26 00:19:37
+manufacturing,dbo,purchase_order,supplier_id,Supplier ID,Links each purchase order to its related supplier.,S-002,2026-07-26 00:19:37
+manufacturing,dbo,purchase_order,total_cost,Total Cost,Numeric total cost recorded for each purchase order.,8180.62,2026-07-26 00:19:37
+manufacturing,dbo,purchase_order,wo_id,Wo ID,Links each purchase order to its related wo.,WO-240001,2026-07-26 00:19:37
+manufacturing,dbo,receiving,cert_required,Certification Required,Yes/no flag indicating whether the receiving certification required.,0,2026-07-26 00:19:37
+manufacturing,dbo,receiving,created_at,Created At,Timestamp for when the receiving record was created.,2026-06-01 00:48:21,2026-07-26 00:19:37
+manufacturing,dbo,receiving,inspection_status,Receiving Inspection Status,"Quality disposition of a received shipment: pending inspection, passed, or failed / rejected.",PASS,2026-07-26 00:19:37
+manufacturing,dbo,receiving,part_id,Part ID,Links each receiving to its related part.,PN-10060,2026-07-26 00:19:37
+manufacturing,dbo,receiving,po_id,PO ID,Links each receiving to its related po.,PO-M240005,2026-07-26 00:19:37
+manufacturing,dbo,receiving,quantity_ordered,Quantity Ordered,Numeric quantity ordered recorded for each receiving.,4.0,2026-07-26 00:19:37
+manufacturing,dbo,receiving,quantity_received,Quantity Received,Numeric quantity received recorded for each receiving.,4.0,2026-07-26 00:19:37
+manufacturing,dbo,receiving,receipt_date,Receipt Date,The receipt date for the receiving.,2026-01-17,2026-07-26 00:19:37
+manufacturing,dbo,receiving,receipt_id,Receipt ID,Unique identifier for each receiving record.,1,2026-07-26 00:19:37
+manufacturing,dbo,receiving,supplier_id,Supplier ID,Links each receiving to its related supplier.,S-006,2026-07-26 00:19:37
+manufacturing,dbo,requirement,actual_qty,Actual Quantity,Numeric actual quantity recorded for each requirement.,22.1,2026-07-26 00:19:37
+manufacturing,dbo,requirement,component_id,Component ID,Links each requirement to its related component.,WO-00051,2026-07-26 00:19:37
+manufacturing,dbo,requirement,component_type,Requirement Component Type,"Whether a resource requirement belongs to a PART (the as-designed routing standard — engineering, costed per unit) or a WORK_ORDER (as-built actuals — manufacturing, costed per batch). This is the engineering-vs-manufacturing differentiator.",PART,2026-07-26 00:19:37
+manufacturing,dbo,requirement,created_at,Created At,Timestamp for when the requirement record was created.,2026-06-12 04:42:36,2026-07-26 00:19:37
+manufacturing,dbo,requirement,extended_cost,Extended Cost,Numeric extended cost recorded for each requirement.,408.85,2026-07-26 00:19:37
+manufacturing,dbo,requirement,material_part_id,Material Part ID,Links each requirement to its related material part.,P-10015,2026-07-26 00:19:37
+manufacturing,dbo,requirement,operation_rowid,Operation Rowid,Numeric operation rowid recorded for each requirement.,216,2026-07-26 00:19:37
+manufacturing,dbo,requirement,operation_seq,Operation Seq,Numeric operation seq recorded for each requirement.,20,2026-07-26 00:19:37
+manufacturing,dbo,requirement,requirement_id,Requirement ID,Unique identifier for each requirement record.,REQ-WO-00051-20,2026-07-26 00:19:37
+manufacturing,dbo,requirement,requirement_level,Requirement Level,The requirement level of each requirement; one of a small set of values such as: WORK_ORDER.,WORK_ORDER,2026-07-26 00:19:37
+manufacturing,dbo,requirement,requirement_type,Requirement Type,The requirement type of each requirement; one of a small set of values such as: MATERIAL.,MATERIAL,2026-07-26 00:19:37
+manufacturing,dbo,requirement,std_qty,Std Quantity,Numeric std quantity recorded for each requirement.,2.21,2026-07-26 00:19:37
+manufacturing,dbo,requirement,unit_cost,Unit Cost,Numeric unit cost recorded for each requirement.,18.5,2026-07-26 00:19:37
+manufacturing,dbo,service,base_charge,Base Charge,Numeric base charge recorded for each service.,85.0,2026-07-26 00:19:37
+manufacturing,dbo,service,created_at,Created At,Timestamp for when the service record was created.,2026-06-01 00:48:21,2026-07-26 00:19:37
+manufacturing,dbo,service,default_vendor,Default Vendor,"The default vendor of each service; one of a small set of values such as: S-008, S-009, S-010, S-011.",S-008,2026-07-26 00:19:37
+manufacturing,dbo,service,description,Description,Free-text description for the service.,"Anodize Type III Hard Coat, MIL-A-8625",2026-07-26 00:19:37
+manufacturing,dbo,service,service_id,Service ID,Unique identifier for each service record.,ANODIZE-II,2026-07-26 00:19:37
+manufacturing,dbo,shop_resource,active,Active,Yes/no flag indicating whether the shop resource active.,1,2026-07-26 00:19:37
+manufacturing,dbo,shop_resource,bur_per_hr_run,Bur Per Hr Run,Numeric bur per hr run recorded for each shop resource.,42.0,2026-07-26 00:19:37
+manufacturing,dbo,shop_resource,created_at,Created At,Timestamp for when the shop resource record was created.,2026-06-01 00:48:21,2026-07-26 00:19:37
+manufacturing,dbo,shop_resource,description,Description,Free-text description for the shop resource.,"CNC Milling Cell #1, Haas VF-4",2026-07-26 00:19:37
+manufacturing,dbo,shop_resource,resource_id,Resource ID,Unique identifier for each shop resource record.,ASSEM-LINE-1,2026-07-26 00:19:37
+manufacturing,dbo,shop_resource,resource_type,Resource Type,"The resource type of each shop resource; one of a small set of values such as: M, L, S.",M,2026-07-26 00:19:37
+manufacturing,dbo,shop_resource,run_cost_per_hr,Run Cost Per Hr,Numeric run cost per hr recorded for each shop resource.,95.0,2026-07-26 00:19:37
+manufacturing,dbo,site,created_at,Created At,Timestamp for when the site record was created.,2026-06-06 05:16:25,2026-07-26 00:19:37
+manufacturing,dbo,site,region,Region,"The region of each site; one of a small set of values such as: US-Central, US-Southwest, US-Northwest.",US-Central,2026-07-26 00:19:37
+manufacturing,dbo,site,site_id,Site ID,Unique identifier for each site record.,SITE-1,2026-07-26 00:19:37
+manufacturing,dbo,site,site_name,Site Name,Human-readable name of the site.,Main Assembly Plant — Wichita KS,2026-07-26 00:19:37
+manufacturing,dbo,suppliers,active,Active,Yes/no flag indicating whether the suppliers active.,1,2026-07-26 00:19:37
+manufacturing,dbo,suppliers,address,Address,The address for each suppliers record.,,2026-07-26 00:19:37
+manufacturing,dbo,suppliers,category,Category,"The category of each suppliers; one of a small set of values such as: Raw Material, Sub-Assembly, MRO, Outside Service, material, hardware.",Raw Material,2026-07-26 00:19:37
+manufacturing,dbo,suppliers,certification_level,Certification Level,"The certification level of each suppliers; one of a small set of values such as: AS9100D, NADCAP, ISO9001, NADCAP/HT, NADCAP/CHEM, NADCAP/NDT.",AS9100D,2026-07-26 00:19:37
+manufacturing,dbo,suppliers,contact_email,Contact Email,The contact email for each suppliers record.,,2026-07-26 00:19:37
+manufacturing,dbo,suppliers,created_date,Created Date,Timestamp for when the suppliers record was created.,2026-06-01 00:48:21,2026-07-26 00:19:37
+manufacturing,dbo,suppliers,lead_time_days,Lead Time Days,Numeric lead time days recorded for each suppliers.,14,2026-07-26 00:19:37
+manufacturing,dbo,suppliers,outside_service,Outside Service,Yes/no flag indicating whether the suppliers outside service.,0,2026-07-26 00:19:37
+manufacturing,dbo,suppliers,payment_terms,Payment Terms,"The payment terms of each suppliers; one of a small set of values such as: Net 45, Net 30, Net 60, Net 15, Net30, Net45.",Net 45,2026-07-26 00:19:37
+manufacturing,dbo,suppliers,performance_rating,Performance Rating,Numeric performance rating recorded for each suppliers.,4.46,2026-07-26 00:19:37
+manufacturing,dbo,suppliers,phone,Phone,The phone for each suppliers record.,,2026-07-26 00:19:37
+manufacturing,dbo,suppliers,supplier_id,Supplier ID,Unique identifier for each suppliers record.,S-001,2026-07-26 00:19:37
+manufacturing,dbo,suppliers,supplier_name,Supplier Name,Human-readable name of the supplier.,Precision Aerospace Corp,2026-07-26 00:19:37
+manufacturing,dbo,trace,created_at,Created At,Timestamp for when the trace record was created.,2026-06-06 05:16:25,2026-07-26 00:19:37
+manufacturing,dbo,trace,expiration_date,Expiration Date,The expiration date for the trace.,2028-04-15,2026-07-26 00:19:37
+manufacturing,dbo,trace,in_qty,In Quantity,Numeric in quantity recorded for each trace.,18.0,2026-07-26 00:19:37
+manufacturing,dbo,trace,lot_id,Lot ID,Links each trace to its related lot.,LOT-WO-240003,2026-07-26 00:19:37
+manufacturing,dbo,trace,out_qty,Out Quantity,Numeric out quantity recorded for each trace.,0.0,2026-07-26 00:19:37
+manufacturing,dbo,trace,part_id,Part ID,Links each trace to its related part.,PN-10200,2026-07-26 00:19:37
+manufacturing,dbo,trace,production_date,Production Date,The production date for the trace.,2026-04-16,2026-07-26 00:19:37
+manufacturing,dbo,trace,serial_id,Serial ID,Links each trace to its related serial.,SN-WO-240003-469,2026-07-26 00:19:37
+manufacturing,dbo,trace,site_id,Site ID,Links each trace to its related site.,SITE-1,2026-07-26 00:19:37
+manufacturing,dbo,trace,trace_id,Trace ID,Unique identifier for each trace record.,1,2026-07-26 00:19:37
+manufacturing,dbo,trace_inventory_trace,created_at,Created At,Timestamp for when the trace inventory trace record was created.,2026-06-06 05:16:25,2026-07-26 00:19:37
+manufacturing,dbo,trace_inventory_trace,part_id,Part ID,Links each trace inventory trace to its related part.,PN-10200,2026-07-26 00:19:37
+manufacturing,dbo,trace_inventory_trace,qty,Quantity,Numeric quantity recorded for each trace inventory trace.,18.0,2026-07-26 00:19:37
+manufacturing,dbo,trace_inventory_trace,trace_id,Trace ID,Links each trace inventory trace to its related trace.,1,2026-07-26 00:19:37
+manufacturing,dbo,trace_inventory_trace,trace_inv_id,Trace Inv ID,Unique identifier for each trace inventory trace record.,1,2026-07-26 00:19:37
+manufacturing,dbo,trace_inventory_trace,transaction_id,Transaction ID,Links each trace inventory trace to its related transaction.,469,2026-07-26 00:19:37
+manufacturing,dbo,work_order,act_bur_cost,Act Bur Cost,Numeric act bur cost recorded for each work order.,0.0,2026-07-26 00:19:37
+manufacturing,dbo,work_order,act_lab_cost,Act Lab Cost,Numeric act lab cost recorded for each work order.,0.0,2026-07-26 00:19:37
+manufacturing,dbo,work_order,act_mat_cost,Act Mat Cost,Numeric act mat cost recorded for each work order.,0.0,2026-07-26 00:19:37
+manufacturing,dbo,work_order,act_ser_cost,Act Ser Cost,Numeric act ser cost recorded for each work order.,0.0,2026-07-26 00:19:37
+manufacturing,dbo,work_order,close_date,Close Date,The close date for the work order.,2026-04-16,2026-07-26 00:19:37
+manufacturing,dbo,work_order,created_at,Created At,Timestamp for when the work order record was created.,2026-06-01 00:48:21,2026-07-26 00:19:37
+manufacturing,dbo,work_order,desired_rls_date,Desired Release Date,The date the planner wants the job released to the floor — on or before its first step begins — so material and capacity are lined up when work starts.,2025-04-09,2026-07-26 00:19:37
+manufacturing,dbo,work_order,open_date,Open Date,The open date for the work order.,2026-03-05,2026-07-26 00:19:37
+manufacturing,dbo,work_order,outside_service,Outside Service,Yes/no flag indicating whether the work order outside service.,1,2026-07-26 00:19:37
+manufacturing,dbo,work_order,part_description,Part Description,Free-text part description for the work order.,"Titanium Hex Bolt AN3-10A, 3/8-24 UNF",2026-07-26 00:19:37
+manufacturing,dbo,work_order,part_id,Part ID,Links each work order to its related part.,PN-10010,2026-07-26 00:19:37
+manufacturing,dbo,work_order,quantity,Build Quantity,Number of units the work order releases to the floor (the lot / batch size). One unit reflects the engineering per-unit standard; greater than one is a manufacturing batch.,50,2026-07-26 00:19:37
+manufacturing,dbo,work_order,required_date,Required Date,The required date for the work order.,2026-03-27,2026-07-26 00:19:37
+manufacturing,dbo,work_order,routing_template,Routing Template,"The routing template of each work order; one of a small set of values such as: COMPOSITE, BRACKET, AIRFRAME, FASTENER, WELDMENT, MACHINED.",COMPOSITE,2026-07-26 00:19:37
+manufacturing,dbo,work_order,sched_finish_date,Scheduled Finish Date,"When the job is planned to be finished: the finish of its last routing step. Read from the operation schedule, so it reflects the planned completion of the whole job.",2025-04-21,2026-07-26 00:19:37
+manufacturing,dbo,work_order,sched_start_date,Scheduled Start Date,"When the job is planned to begin: the start of its earliest routing step. Read from the operation schedule, so it reflects when the first step is set to begin on the floor.",2025-04-09,2026-07-26 00:19:37
+manufacturing,dbo,work_order,service_date,Service Date,The date the outside-service step for this work order is due.,2026-03-10,2026-07-26 00:19:37
+manufacturing,dbo,work_order,site_id,Site ID,Links each work order to its related site.,SITE-1,2026-07-26 00:19:37
+manufacturing,dbo,work_order,status,Work Order Status,"Shop-floor lifecycle stage of the work order: open, released, in process, complete, or closed.",IN PROCESS,2026-07-26 00:19:37
+manufacturing,dbo,work_order,vendor_id,Vendor ID,The outside-service vendor that performs work for this work order.,S-010,2026-07-26 00:19:37
+manufacturing,dbo,work_order,wo_id,Wo ID,Unique identifier for each work order record.,WO-00051,2026-07-26 00:19:37
+manufacturing,dbo,work_order,workorder_type,Workorder Type,"The workorder type of each work order; one of a small set of values such as: M, W.",M,2026-07-26 00:19:37
+manufacturing,dbo,EMPLOYEE,employee_id,Employee ID,Unique identifier for each employee (e.g. EMP-001). Labor tickets reference this ID.,EMP-001,2026-07-26 00:19:37
+manufacturing,dbo,EMPLOYEE,employee_name,Employee Name,The employee's full name.,James Smith,2026-07-26 00:19:37
+manufacturing,dbo,EMPLOYEE,job_title,Job Title,"The employee's role on the floor or in the office — e.g. CNC Machinist, Welder, Assembly Technician, Quality Inspector, or Buyer.",CNC Machinist,2026-07-26 00:19:37
+manufacturing,dbo,EMPLOYEE,department,Department,"The department the employee works in — Machining, Welding, Assembly, Quality, or Purchasing.",Machining,2026-07-26 00:19:37
+manufacturing,dbo,EMPLOYEE,hourly_rate,Hourly Rate,The employee's hourly labor cost in dollars; plant workers fall in the $40.00–$45.00 band.,42.25,2026-07-26 00:19:37
+manufacturing,dbo,EMPLOYEE,buyer_code,Buyer Code,The purchasing code (BUYER-1 through BUYER-10) for employees who are buyers; empty for everyone else. Parts and purchase orders reference this code.,BUYER-3,2026-07-26 00:19:37
+manufacturing,dbo,EMPLOYEE,home_resource_id,Home Resource ID,The shop resource (machine or work center) this plant worker primarily mans; empty for office staff such as buyers.,MC-001,2026-07-26 00:19:37
+manufacturing,dbo,EMPLOYEE,hire_date,Hire Date,The date the employee was hired; always before their first labor ticket.,2018-06-11,2026-07-26 00:19:37
+manufacturing,dbo,EMPLOYEE,active,Active Flag,Whether the employee is currently active (1) or inactive (0).,1,2026-07-26 00:19:37
+manufacturing,dbo,EMPLOYEE,created_at,Created At,Timestamp when the employee record was created.,2026-07-05 00:00:00,2026-07-26 00:19:37
+manufacturing,dbo,part,buyer_code,Buyer Code,"The buyer (EMPLOYEE.buyer_code) who owns purchasing for this part, derived from the supplier the part is most purchased from; empty for in-house parts nobody buys.",BUYER-5,2026-07-26 00:19:37
+manufacturing,dbo,customer_order,completed_date,Completed Date,"The date the order was completed, projected from the order date plus the longest part lead time on the order; empty for orders that never completed (Open or Cancelled).",2026-01-01,2026-07-26 00:19:37
+manufacturing,dbo,part_location,part_location_id,Part Location ID,Unique identifier for each part-location stock record.,1,2026-07-26 00:19:37
+manufacturing,dbo,part_location,part_id,Part ID,The part held at this warehouse location.,P-10010,2026-07-26 00:19:37
+manufacturing,dbo,part_location,warehouse_id,Warehouse ID,The warehouse holding this stock.,WH-1A,2026-07-26 00:19:37
+manufacturing,dbo,part_location,location_id,Location ID,"The bin or area within the warehouse, e.g. STORES.",STORES,2026-07-26 00:19:37
+manufacturing,dbo,part_location,description,Location Part Description,The description of the part held at this location.,Titanium Bulkhead Frame 6Al-4V,2026-07-26 00:19:37
+manufacturing,dbo,part_location,qty,Quantity On Hand,The quantity of the part physically on hand at this location.,225.0,2026-07-26 00:19:37
+manufacturing,dbo,part_location,committed_qty,Committed Quantity,The portion of on-hand quantity already committed (allocated) to demand.,0.0,2026-07-26 00:19:37
+manufacturing,dbo,part_location,status,Location Status,Status of the stock record; A means active.,A,2026-07-26 00:19:37
+manufacturing,dbo,part_location,last_count_date,Last Count Date,The date this location's stock was last cycle-counted.,2025-11-12,2026-07-26 00:19:37
+manufacturing,dbo,part_location,created_at,Created At,Timestamp when the part-location record was created.,2026-07-04 21:05:36,2026-07-26 00:19:37
+manufacturing,dbo,warehouse,warehouse_id,Warehouse ID,Unique identifier for each warehouse (e.g. WH-1A).,WH-1A,2026-07-26 00:19:37
+manufacturing,dbo,warehouse,description,Warehouse Description,"Plain-language description of the warehouse — its role, plant, and city.",Main Stores — Main Assembly Plant — Wichita KS,2026-07-26 00:19:37
+manufacturing,dbo,warehouse,name,Warehouse Name,Short display name of the warehouse.,SITE-1 Main Stores,2026-07-26 00:19:37
+manufacturing,dbo,warehouse,site_id,Site ID,The manufacturing site this warehouse belongs to.,SITE-1,2026-07-26 00:19:37
+manufacturing,dbo,warehouse,region_id,Region ID,The geographic region of the warehouse.,US-Central,2026-07-26 00:19:37
+manufacturing,dbo,warehouse,independent,Independent Flag,Whether the warehouse plans independently (Y) or as part of its site (N).,Y,2026-07-26 00:19:37
+manufacturing,dbo,warehouse,mrp_exempt,MRP Exempt Flag,Whether the warehouse's stock is excluded from MRP netting (Y) or included (N).,N,2026-07-26 00:19:37
+manufacturing,dbo,warehouse,created_at,Created At,Timestamp when the warehouse record was created.,2026-07-04 21:05:36,2026-07-26 00:19:37
+manufacturing,dbo,receiving_line,receipt_line_id,Receipt Line ID,Unique identifier for each receiving line record.,1,2026-07-26 00:19:37
+manufacturing,dbo,receiving_line,receipt_id,Receipt ID,Links each receiving line to its receiving header.,1,2026-07-26 00:19:37
+manufacturing,dbo,receiving_line,line_no,Line Number,Sequential line number within the goods receipt.,1,2026-07-26 00:19:37
+manufacturing,dbo,receiving_line,po_line_id,PO Line ID,Links each receiving line to the purchase-order line it closes against.,1,2026-07-26 00:19:37
+manufacturing,dbo,receiving_line,part_id,Part ID,Links each receiving line to its related part.,PN-10010,2026-07-26 00:19:37
+manufacturing,dbo,receiving_line,quantity_ordered,Quantity Ordered,Numeric quantity ordered recorded for each receiving line.,200.0,2026-07-26 00:19:37
+manufacturing,dbo,receiving_line,quantity_received,Quantity Received,Numeric quantity received recorded for each receiving line.,200.0,2026-07-26 00:19:37
+manufacturing,dbo,receiving_line,inspection_status,Inspection Status,"Quality disposition of the received line: pending inspection, passed, or failed / rejected.",Passed,2026-07-26 00:19:37
+manufacturing,dbo,receiving_line,cert_required,Certification Required,Yes/no flag indicating whether the receiving line requires a certification.,1,2026-07-26 00:19:37
+manufacturing,dbo,receiving_line,created_at,Created At,Timestamp for when the receiving line record was created.,2026-06-01 00:48:21,2026-07-26 00:19:37
+manufacturing,dbo,payable_line,po_line_id,PO Line ID,Links each payable line to the purchase-order line it matches (line-level three-way match).,1,2026-07-26 00:19:37
+manufacturing,dbo,payable_line,receipt_line_id,Receipt Line ID,Links each payable line to the receiving line it matches (line-level three-way match).,1,2026-07-26 00:19:37
+manufacturing,dbo,part,commodity_code,Commodity Code,"Purchasing commodity category for the part, such as RAW-METAL, HARDWARE, COMPOSITE, TOOLING, SHOP-SUPPLY, or OSP-THERMAL.",HARDWARE,2026-07-26 00:19:37
+manufacturing,dbo,part,safety_stock,Safety Stock,Minimum on-hand quantity the planner keeps in reserve for this part; MRP plans replenishment so projected inventory never dips below it.,1.0,2026-07-26 00:19:37
+manufacturing,dbo,work_order,demand_order_line_id,Demand Order Line ID,Links the work order to the customer-order line whose demand it satisfies; empty when the job was opened without a linked sales demand.,7,2026-07-26 00:19:37
+manufacturing,dbo,receiving,received_date,Received Date,"The date goods physically arrived at the dock (the dock-arrival date), distinct from the posted receipt date.",2026-01-17,2026-07-26 00:19:37
+manufacturing,dbo,receivable,amount_dollars,Amount Dollars,Numeric amount dollars recorded for each receivable.,22257.03,2026-07-26 00:19:37
+manufacturing,dbo,receivable,created_at,Created At,Timestamp for when the receivable record was created.,2026-07-14 04:19:36,2026-07-26 00:19:37
+manufacturing,dbo,receivable,customer_name,Customer Name,Human-readable name of the customer.,Northrop Grumman,2026-07-26 00:19:37
+manufacturing,dbo,receivable,due_date,Due Date,The due date for the receivable.,2025-06-19,2026-07-26 00:19:37
+manufacturing,dbo,receivable,invoice_date,Invoice Date,The invoice date for the receivable.,2025-05-20,2026-07-26 00:19:37
+manufacturing,dbo,receivable,invoice_id,Invoice ID,Unique identifier for each receivable record.,1,2026-07-26 00:19:37
+manufacturing,dbo,receivable,invoice_number,Invoice Number,"The invoice number of each receivable; one of a small set of values such as: AR-CO-00001, AR-CO-00002, AR-CO-00003, AR-CO-00004, AR-CO-00005, AR-CO-00006.",AR-CO-00001,2026-07-26 00:19:37
+manufacturing,dbo,receivable,order_id,Order ID,Links each receivable to its related order.,CO-00001,2026-07-26 00:19:37
+manufacturing,dbo,receivable,payment_date,Payment Date,The payment date for the receivable.,2025-06-14,2026-07-26 00:19:37
+manufacturing,dbo,receivable,status,Status,"The status of each receivable; one of a small set of values such as: Paid, Open, Disputed.",Paid,2026-07-26 00:19:37
+manufacturing,dbo,receivable_line,amount,Amount,Numeric amount recorded for each receivable line.,17884.6,2026-07-26 00:19:37
+manufacturing,dbo,receivable_line,created_at,Created At,Timestamp for when the receivable line record was created.,2026-07-14 04:19:36,2026-07-26 00:19:37
+manufacturing,dbo,receivable_line,invoice_id,Invoice ID,Links each receivable line to its related invoice.,1,2026-07-26 00:19:37
+manufacturing,dbo,receivable_line,line_no,Line No.,Numeric line no. recorded for each receivable line.,1,2026-07-26 00:19:37
+manufacturing,dbo,receivable_line,order_id,Order ID,Links each receivable line to its related order.,CO-00001,2026-07-26 00:19:37
+manufacturing,dbo,receivable_line,order_line_id,Order Line ID,Links each receivable line to its related order line.,1,2026-07-26 00:19:37
+manufacturing,dbo,receivable_line,part_id,Part ID,Links each receivable line to its related part.,P-10040,2026-07-26 00:19:37
+manufacturing,dbo,receivable_line,qty,Quantity,Numeric quantity recorded for each receivable line.,4.0,2026-07-26 00:19:37
+manufacturing,dbo,receivable_line,receivable_line_id,Receivable Line ID,Unique identifier for each receivable line record.,1,2026-07-26 00:19:37
+manufacturing,dbo,receivable_line,shipment_line_id,Shipment Line ID,Links each receivable line to its related shipment line.,,2026-07-26 00:19:37
+manufacturing,dbo,gl_events,amount,Amount,The dollar amount of the posted costing event.,832.66,2026-07-26 00:19:37
+manufacturing,dbo,gl_events,event_date,Event Date,"The date of the economic event, taken from its source document (issue date, clock-out, or work-order close date) — never the posting wall-clock.",2026-01-15,2026-07-26 00:19:37
+manufacturing,dbo,gl_events,event_id,Event ID,Unique identifier for each GL economic event.,1,2026-07-26 00:19:37
+manufacturing,dbo,gl_events,event_type,Event Type,"The kind of costing event posted: material issue into the job, labor applied, burden (overhead) applied, or finished-goods completion.",RM_ISSUE,2026-07-26 00:19:37
+manufacturing,dbo,gl_events,job_id,Job ID,Links each GL event to the work order (job) it was posted against.,WO-240003,2026-07-26 00:19:37
+manufacturing,dbo,gl_events,source_id,Source ID,The originating document row key inside the source table; with source_table and event_type it makes replays a no-op.,1,2026-07-26 00:19:37
+manufacturing,dbo,gl_events,source_table,Source Table,"The originating document table the event was posted from (material_issue, labor_ticket, or work_order).",material_issue,2026-07-26 00:19:37
+manufacturing,dbo,gl_finished_goods_inventory,amount,Amount,"Signed dollar movement on the finished-goods account: positive flows in, negative flows out.",832.66,2026-07-26 00:19:37
+manufacturing,dbo,gl_finished_goods_inventory,event_date,Event Date,"The data-derived date of the event that moved the finished-goods balance — from the source document, never wall-clock.",2026-01-15,2026-07-26 00:19:37
+manufacturing,dbo,gl_finished_goods_inventory,event_id,Event ID,Links each finished-goods ledger line to the GL event it hangs off.,1,2026-07-26 00:19:37
+manufacturing,dbo,gl_finished_goods_inventory,event_type,Event Type,"The kind of costing event that moved the finished-goods balance (material issue, labor, burden, or job completion).",FG_COMPLETION,2026-07-26 00:19:37
+manufacturing,dbo,gl_finished_goods_inventory,job_id,Job ID,Links each finished-goods ledger line to its work order (job).,WO-240003,2026-07-26 00:19:37
+manufacturing,dbo,gl_finished_goods_inventory,line_id,Line ID,Unique identifier for each finished-goods ledger line.,1,2026-07-26 00:19:37
+manufacturing,dbo,gl_finished_goods_inventory,part_id,Part ID,Links each finished-goods ledger line to the part whose dollars are moving.,PN-10200,2026-07-26 00:19:37
+manufacturing,dbo,gl_job_cost_detail,amount,Amount,The dollar amount of this cost element posted to the job.,832.66,2026-07-26 00:19:37
+manufacturing,dbo,gl_job_cost_detail,event_date,Event Date,"The data-derived date the cost element hit the job — from the source document, never wall-clock.",2026-01-15,2026-07-26 00:19:37
+manufacturing,dbo,gl_job_cost_detail,event_id,Event ID,Links each cost detail line to the GL event it hangs off.,1,2026-07-26 00:19:37
+manufacturing,dbo,gl_job_cost_detail,event_type,Cost Element,"The cost element the dollars belong to: MATERIAL, LABOR, or BURDEN.",MATERIAL,2026-07-26 00:19:37
+manufacturing,dbo,gl_job_cost_detail,job_id,Job ID,Links each cost detail line to its work order (job).,WO-240003,2026-07-26 00:19:37
+manufacturing,dbo,gl_job_cost_detail,line_id,Line ID,Unique identifier for each per-job cost detail line.,1,2026-07-26 00:19:37
+manufacturing,dbo,gl_raw_materials_inventory,amount,Amount,"Signed dollar movement on the raw-materials account: positive flows in, negative flows out.",-832.66,2026-07-26 00:19:37
+manufacturing,dbo,gl_raw_materials_inventory,event_date,Event Date,"The data-derived date of the event that moved the raw-materials balance — from the source document, never wall-clock.",2026-01-15,2026-07-26 00:19:37
+manufacturing,dbo,gl_raw_materials_inventory,event_id,Event ID,Links each raw-materials ledger line to the GL event it hangs off.,1,2026-07-26 00:19:37
+manufacturing,dbo,gl_raw_materials_inventory,event_type,Event Type,"The kind of costing event that moved the raw-materials balance (material issue, labor, burden, or job completion).",RM_ISSUE,2026-07-26 00:19:37
+manufacturing,dbo,gl_raw_materials_inventory,job_id,Job ID,Links each raw-materials ledger line to its work order (job).,WO-240003,2026-07-26 00:19:37
+manufacturing,dbo,gl_raw_materials_inventory,line_id,Line ID,Unique identifier for each raw-materials ledger line.,1,2026-07-26 00:19:37
+manufacturing,dbo,gl_raw_materials_inventory,part_id,Part ID,Links each raw-materials ledger line to the part whose dollars are moving.,PN-10200,2026-07-26 00:19:37
+manufacturing,dbo,gl_wip_inventory,amount,Amount,"Signed dollar movement on the work-in-process account: positive flows in, negative flows out.",832.66,2026-07-26 00:19:37
+manufacturing,dbo,gl_wip_inventory,event_date,Event Date,"The data-derived date of the event that moved the work-in-process balance — from the source document, never wall-clock.",2026-01-15,2026-07-26 00:19:37
+manufacturing,dbo,gl_wip_inventory,event_id,Event ID,Links each work-in-process ledger line to the GL event it hangs off.,1,2026-07-26 00:19:37
+manufacturing,dbo,gl_wip_inventory,event_type,Event Type,"The kind of costing event that moved the work-in-process balance (material issue, labor, burden, or job completion).",LABOR,2026-07-26 00:19:37
+manufacturing,dbo,gl_wip_inventory,job_id,Job ID,Links each work-in-process ledger line to its work order (job).,WO-240003,2026-07-26 00:19:37
+manufacturing,dbo,gl_wip_inventory,line_id,Line ID,Unique identifier for each work-in-process ledger line.,1,2026-07-26 00:19:37
+manufacturing,dbo,gl_wip_inventory,part_id,Part ID,Links each work-in-process ledger line to the part whose dollars are moving.,PN-10200,2026-07-26 00:19:37
+manufacturing,dbo,receivable_payment,amount,Amount,Dollar amount of this installment payment.,350.99,2026-07-26 00:19:37
+manufacturing,dbo,receivable_payment,created_at,Created At,Timestamp when the payment record was created.,2026-07-07 00:00:00,2026-07-26 00:19:37
+manufacturing,dbo,receivable_payment,installment_no,Installment Number,Installment sequence within the invoice — 1 first tranche 2 second 3 final.,1,2026-07-26 00:19:37
+manufacturing,dbo,receivable_payment,invoice_id,Invoice ID,Foreign key linking this payment to its parent receivable invoice.,7,2026-07-26 00:19:37
+manufacturing,dbo,receivable_payment,payment_date,Payment Date,Date the installment was collected.,2026-07-07,2026-07-26 00:19:37
+manufacturing,dbo,receivable_payment,payment_id,Payment ID,Primary key — unique identifier for each installment payment row.,1,2026-07-26 00:19:37
+manufacturing,dbo,receivable_payment,source_event_id,Source Event ID,Foreign key to the gl_events cash-receipt event posted for this installment.,42,2026-07-26 00:19:37
+manufacturing,dbo,customer_order_line,shipped_qty,Shipped Quantity,Number of units shipped against this order line — populated by the collect_june2026_ar / ship_august_first_bucket migration when goods leave the warehouse. Zero until the line is shipped.,0,2026-07-26 00:19:37
+manufacturing,dbo,customer_order_line,shipped_date,Shipped Date,Date the units on this order line were physically shipped to the customer. NULL until the line is shipped.,2026-07-23,2026-07-26 00:19:37

@@ -1,0 +1,25 @@
+id,intent_id,perspective_id,intent_factor_weight,explanation,created_at
+1,6,8,1,inventory_planning operates within Inventory_Transactions perspective,2026-07-05 10:36:28
+2,7,8,1,inventory_stock_status operates within Inventory_Transactions perspective,2026-07-05 10:36:28
+3,8,8,1,inventory_atp operates within Inventory_Transactions perspective,2026-07-05 10:36:28
+4,9,8,1,inventory_allocated_qty operates within Inventory_Transactions perspective,2026-07-05 10:36:28
+5,14,8,1,operates within Inventory_Transactions perspective,2026-07-05 10:36:28
+6,11,8,1,operates within Inventory_Transactions perspective,2026-07-05 10:36:28
+7,13,8,1,operates within Inventory_Transactions perspective,2026-07-05 10:36:28
+8,12,8,1,operates within Inventory_Transactions perspective,2026-07-05 10:36:28
+9,10,8,1,operates within Inventory_Transactions perspective,2026-07-05 10:36:28
+10,1,2,1,defect_cost_analysis operates within Finance perspective,2026-07-05 10:36:28
+11,2,1,1,defect_quality_trending operates within Quality perspective,2026-07-05 10:36:28
+12,3,5,1,defect_customer_impact operates within Customer perspective,2026-07-05 10:36:28
+13,4,1,1,supplier_scorecard operates within Quality perspective,2026-07-05 10:36:28
+14,5,2,1,supplier_cost_penalties operates within Finance perspective,2026-07-05 10:36:28
+15,4,2,1,supplier_scorecard within Finance perspective — late-rate drives AP penalty and payment-term decisions,2026-07-05 10:36:29
+16,18,2,1,supplier_payables_exposure within Finance perspective — pure AP roll-up,2026-07-05 10:36:29
+849,19,5,1,order_revenue_recognition within Receivables perspective — the accounting read of the order book,2026-07-06 02:56:59
+2746,2750,4,1,operates within General_Ledger perspective,2026-07-19 04:04:04
+2747,2752,4,1,operates within General_Ledger perspective,2026-07-19 04:04:04
+2748,2748,4,1,operates within General_Ledger perspective,2026-07-19 04:04:04
+2749,2749,4,1,operates within General_Ledger perspective,2026-07-19 04:04:04
+2750,2751,4,1,operates within General_Ledger perspective,2026-07-19 04:04:04
+4937,4934,5,1,ar_cash_receipts within Receivables perspective — the collections read of the invoice book,2026-07-24 06:03:38
+5692,1,14,1,,2026-07-26 00:18:33
