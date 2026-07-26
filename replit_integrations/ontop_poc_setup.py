@@ -30,9 +30,15 @@ SQLITE_JDBC_VERSION = "3.49.1.0"
 # DuckDB JDBC — used for manual `ontop query` runs against Utilities/SQLMesh/db.db.
 # The automated CI parity checks export a SQLite snapshot from the DuckDB source and
 # use the SQLite JDBC driver instead, so there is no runtime DuckDB JDBC dependency in CI.
-# NOTE: This JDBC version (1.1.3) is the latest stable release available on Maven Central.
-# If the installed Python duckdb library is a newer major version, manually verify that the
-# JDBC driver can open DuckDB files produced by that version before using it for manual runs.
+#
+# Compatibility note (verified 2026-07-26):
+#   Python duckdb 1.5.3 writes db.db with storage_compatibility_version = v0.10.2.
+#   That is DuckDB's backward-compatibility floor: any DuckDB >= v0.10.2 can open the
+#   file, regardless of which newer Python release produced it.  JDBC 1.1.3 (v1.1.3)
+#   is well above that floor, so the two are compatible and no version bump is required.
+#   Run `python poc/ontop-ontology-poc/duckdb_jdbc_compat_check.py` after any Python
+#   duckdb upgrade to confirm the storage_compatibility_version default has not risen
+#   above the pinned JDBC version.
 DUCKDB_JDBC_VERSION = "1.1.3"
 
 # SHA-256 checksums of the pinned downloads (reproducibility guard).
