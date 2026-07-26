@@ -30,6 +30,15 @@ cur.execute("CREATE TABLE IF NOT EXISTS schema_concept_fields (id INTEGER PRIMAR
 ensure_column(conn, 'schema_intents', 'intent_category', 'TEXT')
 ensure_column(conn, 'schema_intent_concepts', 'explanation', 'TEXT')
 ensure_column(conn, 'schema_concepts', 'computation_template', 'TEXT')
+# schema_sqlite.sql INSERTs columns that seed_test_db.py's CREATE TABLE
+# statements omit.  If any of these are missing, executescript() aborts on
+# the first offending INSERT, ensure_app_metadata_tables() never runs, and
+# sql_graph_nodes is never created — causing 500s in the MCP endpoints.
+ensure_column(conn, 'schema_perspectives', 'description', 'TEXT')
+ensure_column(conn, 'schema_perspectives', 'stakeholder_role', 'TEXT')
+ensure_column(conn, 'schema_perspectives', 'priority_focus', 'TEXT')
+ensure_column(conn, 'schema_concepts', 'domain', 'TEXT')
+ensure_column(conn, 'schema_intent_perspectives', 'explanation', 'TEXT')
 
 # Insert intent and concepts
 cur.execute("INSERT OR IGNORE INTO schema_intents (intent_name, description) VALUES (?,?)", ("defect_cost_analysis","Detect cost-related defects"))

@@ -6141,7 +6141,7 @@ Check that perspective-concept and intent-concept relationships are seeded.
                 with gr.Column():
                     gr.Markdown("#### 1. Select Intent")
                     available_intents = solder.get_available_intents()
-                    solder_categories = sorted({i["intent_category"] for i in available_intents})
+                    solder_categories = sorted({i["intent_category"] for i in available_intents if i["intent_category"] is not None})
 
                     with gr.Row():
                         solder_category = gr.Dropdown(
