@@ -13,4 +13,4 @@ perspective_id,perspective_name,description,stakeholder_role,priority_focus,crea
 12,Parts,"Part master, revisions, classifications, and material specifications.","Materials Engineer, Config Manager","Part count, revision status, obsolescence rate",2026-07-05 10:36:28
 13,Visual_Admin,"UI configuration, admin metadata, and workspace layout settings.",System Administrator,"Config completeness, admin access, UI state",2026-07-05 10:36:28
 14,Finance,"Financial lens over operations: cost, penalty exposure, and capital effectiveness.","Controller, Finance Analyst","Cost variances, delivery penalty exposure, capital utilization (OEE strategic)",2026-07-05 20:06:48
-17,Customer,,,, 2026-07-05 20:20:40
+17,Customer,,,,2026-07-05 20:20:40

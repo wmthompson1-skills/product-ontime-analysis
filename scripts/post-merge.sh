@@ -576,4 +576,17 @@ if [ -f tests/test_mrp_term_promoter.py ]; then
   }
 fi
 
+if [ -f scripts/check_seed_freshness.py ] \
+  && [ -d Utilities/SQLMesh/seeds ]; then
+  # Gate: seed CSVs in Utilities/SQLMesh/seeds/ must stay in sync with
+  # manufacturing.db (column set + row count). When a migration adds or
+  # changes a table, this gate fails with a clear diff and a one-liner refresh
+  # command.  Only checked when the DB exists (skipped on stripped checkouts).
+  python scripts/check_seed_freshness.py || {
+    echo "post-merge: Ontop seed CSV freshness gate failed"
+    echo "post-merge:   run: python Utilities/SQLMesh/scripts/export_seeds.py"
+    exit 1
+  }
+fi
+
 echo "post-merge: OK"
