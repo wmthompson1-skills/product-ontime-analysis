@@ -110,16 +110,6 @@ jobs:
             pip install -r Utilities/SQLMesh/requirements.txt
           fi
 
-      - name: Materialize DuckDB via SQLMesh
-        run: |
-          cd Utilities/SQLMesh
-          sqlmesh plan --auto-apply
-          if [ ! -f db.db ]; then
-            echo "::error title=DuckDB missing::sqlmesh plan succeeded but Utilities/SQLMesh/db.db was not created."
-            exit 1
-          fi
-          echo "DuckDB materialized: $(du -h db.db | cut -f1) at Utilities/SQLMesh/db.db"
-
       # TEMPORARY — replaced by Plan-015 (SQLMesh/DuckDB migration) once complete.
       # manufacturing.db is gitignored and never present in a fresh checkout, so
       # the parity check scripts fail before any Ontop step runs.  This step
@@ -135,6 +125,33 @@ jobs:
         timeout-minutes: 20
         run: |
           cd hf-space-inventory-sqlgen && python scripts/bootstrap_db.py
+
+      # Regenerate seed CSVs from the freshly-migrated manufacturing.db before
+      # DuckDB materializes.  Without this, every migration PR would leave the
+      # committed seeds stale and the freshness gate would fail in CI.
+      # --include-new also creates seed files for any tables added by migrations
+      # so the DuckDB snapshot is never silently missing a table.
+      - name: Refresh Ontop seed CSVs from migrated DB
+        run: |
+          python Utilities/SQLMesh/scripts/export_seeds.py --include-new
+          echo "Seed refresh complete."
+
+      # Confirm the freshness gate passes before investing time in the DuckDB
+      # materialization.  Fails closed if any seed is still stale or a table is
+      # missing a seed CSV — surfaces the problem at the right step.
+      - name: Verify seed freshness gate
+        run: |
+          python scripts/check_seed_freshness.py
+
+      - name: Materialize DuckDB via SQLMesh
+        run: |
+          cd Utilities/SQLMesh
+          sqlmesh plan --auto-apply
+          if [ ! -f db.db ]; then
+            echo "::error title=DuckDB missing::sqlmesh plan succeeded but Utilities/SQLMesh/db.db was not created."
+            exit 1
+          fi
+          echo "DuckDB materialized: $(du -h db.db | cut -f1) at Utilities/SQLMesh/db.db"
 
       - name: Provision the pinned Ontop toolchain
         run: python replit_integrations/ontop_poc_setup.py
