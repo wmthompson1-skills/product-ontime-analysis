@@ -19,4 +19,4 @@ id,intent_id,query_category,query_file,query_index,query_name,created_at
 988,2751,job_costing_ledger,job_costing_ledger.sql,3,Material Issued over a Period,2026-07-19 04:04:04
 989,2752,job_costing_ledger,job_costing_ledger.sql,4,Finished Goods Produced over a Period,2026-07-19 04:04:04
 1555,19,receivables,receivables_araging_20260724_000001,3,AR Aging — Open & Disputed Invoices,2026-07-24 03:39:08
-2132,4934,receivables,receivables_cashreceipts_20260724_000002,4,Cash Receipts by Invoice,2026-07-24 06:03:38
+2132,19,receivables,receivables_cashreceipts_20260724_000002,4,Cash Receipts by Invoice,2026-07-24 06:03:38

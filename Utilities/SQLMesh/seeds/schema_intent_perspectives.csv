@@ -22,4 +22,4 @@ id,intent_id,perspective_id,intent_factor_weight,explanation,created_at
 2749,2749,4,1,operates within General_Ledger perspective,2026-07-19 04:04:04
 2750,2751,4,1,operates within General_Ledger perspective,2026-07-19 04:04:04
 4937,4934,5,1,ar_cash_receipts within Receivables perspective — the collections read of the invoice book,2026-07-24 06:03:38
-5692,1,14,1,,2026-07-26 00:18:33
+6177,1,14,1,,2026-07-26 00:45:11

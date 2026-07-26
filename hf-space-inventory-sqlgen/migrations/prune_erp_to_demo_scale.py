@@ -186,6 +186,11 @@ def prune(cur) -> None:
     kept_wos = pick_work_orders(cur, kept_cos)
     kept_wos += _ids(cur, "SELECT wo_id FROM work_order "
                           "WHERE wo_id LIKE 'WO-JUL-%'")
+    # Pin the three shop orders that expand_demand_and_completions.py closes.
+    # They must survive the prune or the downstream migration fails closed.
+    for _pin in ("WO-00007", "WO-00015", "WO-00009"):
+        if _pin not in kept_wos:
+            kept_wos += _ids(cur, "SELECT wo_id FROM work_order WHERE wo_id = ?", (_pin,))
     ph_wo = ",".join("?" * len(kept_wos))
     kept_pos = pick_purchase_orders(cur, kept_wos, demand_parts)
     ph_po = ",".join("?" * len(kept_pos))

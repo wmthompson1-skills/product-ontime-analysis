@@ -33,6 +33,6 @@ id,intent_id,concept_id,intent_factor_weight,explanation,created_at
 6334,2751,4461,1,ELEVATED: RM_ISSUE outflow is the measure this intent reports,2026-07-19 16:44:04
 6335,2752,4462,1,ELEVATED: FG_COMPLETION inflow is the measure this intent reports,2026-07-19 16:44:04
 9224,4934,5481,1,Cash receipts are read from receivable_payment.amount; ARCashReceiptAmount is the concept that anchors the chain,2026-07-24 06:03:38
-10590,1,2,1,Elevate cost,2026-07-26 00:18:33
-10591,1,1,0,Neutral quality,2026-07-26 00:18:33
-10592,1,3,0,Neutral customer,2026-07-26 00:18:33
+11470,1,2,1,Elevate cost,2026-07-26 00:45:11
+11471,1,1,0,Neutral quality,2026-07-26 00:45:11
+11472,1,3,0,Neutral customer,2026-07-26 00:45:11
