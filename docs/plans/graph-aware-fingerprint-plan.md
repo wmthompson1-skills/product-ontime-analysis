@@ -62,17 +62,35 @@ Build a cached set `graph_join_edges` in the SAME canonical form, from the graph
 `references` edges: each edge gives child (`_from` node → table:col) and parent
 (`references_table` / `references_column`).
 
-**Coupling (why write-back is required, not optional):** today the graph has only 39
-FK-derived edges, but approved snippets join on more than declared FKs. So the
-extractor's discovered `join_edges` are upserted back into the graph (idempotent
-UPSERT, mirroring existing duplicate-edge protection) as **first-class STRUCTURAL
-edges** — same `edge_family = structural` layer as `references`, part of ONE ontology
-mosaic (NOT a segregated `join_lineage` provenance silo). Provenance is kept as an
-edge **property** (`origin`: `fk_declared` | `sql_observed`) plus `join_type`, so we
-never falsely assert referential integrity we don't have, while still unifying joins
-and FKs into one structural graph. `graph_join_edges` = every structural relationship
-edge (FK references + observed joins) in the canonical §1 form. Without write-back a
-correct snippet joining on a non-FK column would wrongly fail closed.
+**Verified baseline (2026-09-21, live):** the canonical pipeline —
+`export_graph_metadata.py` → `sql_graph_nodes`/`sql_graph_edges` → `graph_metadata.json`
+→ `sql_graph_parity_check.py` (authoritative) → `load_canonical_to_arango.py` — was run
+end-to-end against the current schema and confirmed consistent across SQLite, the
+frozen JSON, and ArangoDB's `manufacturing_graph_node`/`manufacturing_graph_edge`:
+**34 physical tables, 340 columns, 71 `references` (declared-FK) edges.** This
+supersedes the earlier "39 FK-derived edges" figure, which predated both the Wave-4
+traceability-spine tables and the `references_edge_key()` bug fix (the key format used
+`->`, an illegal ArangoDB `_key` character, so most declared-FK edges silently failed
+to sync before that fix — the true declared-FK count was always closer to 71 than 39).
+`graph_sync.py`'s live-sync path independently reproduces the same 34/340/71 figures,
+confirming the two pipelines agree.
+
+**Coupling (why write-back is required, not optional):** 71 declared-FK edges is
+already an undercount relative to what approved snippets actually join on — e.g. the
+"Three-Way Match Coverage" query (`payables_threewaymatchcoverage_20260708_000005`)
+joins `po_line → purchase_order` (declared FK, present) but also
+`purchase_order → suppliers`, `po_line → receiving_line`, `receiving_line → receiving`,
+`receiving_line → payable_line`, `payable_line → payables` — several of which are not
+declared foreign keys in `schema_sqlite.sql` today. So the extractor's discovered
+`join_edges` are upserted back into the graph (idempotent UPSERT, mirroring existing
+duplicate-edge protection) as **first-class STRUCTURAL edges** — same
+`edge_family = structural` layer as `references`, part of ONE ontology mosaic (NOT a
+segregated `join_lineage` provenance silo). Provenance is kept as an edge **property**
+(`origin`: `fk_declared` | `sql_observed`) plus `join_type`, so we never falsely assert
+referential integrity we don't have, while still unifying joins and FKs into one
+structural graph. `graph_join_edges` = every structural relationship edge (FK
+references + observed joins) in the canonical §1 form. Without write-back a correct
+snippet joining on a non-FK column would wrongly fail closed.
 
 ## 4. New validation function (additive, alongside validate_fingerprint)
     validate_join_edges(sql_text, approved_join_edges, graph_join_edges) -> (ok, reason, warnings)
@@ -89,6 +107,50 @@ Non-blocking:
   These are legitimate in approved SQL (e.g. time-phasing range joins). The base-table
   fingerprint still bounds which tables they can reach, so the invariant holds; the
   warning surfaces them for SME visibility.
+
+### 4a. Beyond single-edge membership: topology-level checks
+Recognition (check (b) above) is a per-edge set-membership test — it answers "does this exact
+join exist somewhere in the graph?" but not "does this *set* of joins, taken together,
+form a topologically sound path?" Two failure modes slip through pure edge-membership
+and need their own classification, both derived from `graph_join_edges` treated as a
+graph `G` (nodes = tables, edges = join relationships, each edge annotated with a
+cardinality hint — see below):
+
+**Missing bridging entity.** A query edge `(A, B)` that is *not* in `G` directly, but
+`A` and `B` *are* connected in `G` via exactly one intermediate table `M` (a 2-hop path
+`A–M–B` exists, no direct `A–B` edge does), gets classified as `missing_bridging_entity`
+rather than a generic `join_not_in_graph`. This is a more actionable diagnosis: the fix
+is "route the join through `M`," not "this join is wrong." Worked counter-example from
+the live schema: a hypothetical query joining `po_line` directly to `payables` would
+fail this way — the real path is `po_line → receiving_line → payable_line → payables`;
+skipping `receiving_line`/`payable_line` bypasses the receipt/voucher legs the
+three-way-match logic depends on. (The real "Three-Way Match Coverage" query gets this
+right — see §3's join list — which is exactly why it should validate clean once this
+check exists.)
+
+**Fan-out trap.** Classify each edge in `G` by cardinality using the schema's declared
+keys: an edge `(A.col_a, B.col_b)` is `many_to_one` in the `A → B` direction when
+`col_b` is `B`'s primary key (the reverse direction is `one_to_many`). A fan-out risk
+exists when a query aggregates (`SUM`/`COUNT`/`AVG` — not wrapping a `GROUP BY` grain
+column) a column anchored at or before the query's grain root, while the join graph
+reaches that aggregate's table through a *different* `one_to_many` branch than another
+aggregate in the same `SELECT`, or through more than one `one_to_many` hop from the
+grain root without an intervening `DISTINCT`/pre-aggregation. Concretely: joining a
+header table to two independent child tables (e.g. `work_order` to both
+`labor_ticket` and `material_issue`) and summing a column from each in the same
+`SELECT` double/triple-counts unless each branch is pre-aggregated before the join.
+This is exactly the risk the "Three-Way Match Coverage" query's own SME header comment
+already reasons about by hand: *"In the synthetic twin the linkage is 1:1 (no PO line
+has multiple receipt lines, no receipt line has multiple voucher lines), so row totals
+equal line totals; the flat grain stays honest if that ever changes."* — i.e. the SME
+already identified this exact fan-out trap and documented the (currently-true, not
+schema-enforced) 1:1 assumption that keeps the flat join safe. Formalizing this check
+turns that prose caveat into something the validator can actually re-verify.
+
+Both checks are **warn, never block** (like `unresolved_joins` in §4 above) — they
+surface a specific, actionable classification for SME review rather than adding a new
+fail-closed condition on top of Recognition. Promoting either to blocking is a
+follow-on decision, not part of this plan.
 
 ## 5. Wiring into assemble_query / dispatch (extends fail-closed condition 4)
 Condition 4 today = base-table mismatch. Extend it to also fire on join-edge drift or
@@ -123,7 +185,34 @@ attach as warnings on the served result, not as fail-closed conditions.
 5. Directionality: canonicalize by sorting endpoints lexicographically and flipping
    `LEFT`↔`RIGHT` when the sort swaps sides (INNER/FULL/CROSS symmetric) — one
    canonical edge per relationship, with join type + order specified on it.
+   **Confirmed live (2026-09-21):** observed directly in the Ontology Mosaic's
+   "SQL Semantics" lens for the "Three-Way Match Coverage" query. The raw SQL writes
+   `receiving_line rl LEFT JOIN payable_line pyl ON pyl.receipt_line_id = rl.receipt_line_id`
+   and `receiving r LEFT JOIN receiving_line rl` (i.e. `receiving_line` keeps all rows
+   in both). The extracted canonical join-edge table renders these as
+   `payable_line.receipt_line_id RIGHT receiving_line.receipt_line_id` and
+   `receiving.receipt_id RIGHT receiving_line.receipt_id` — `payable_line` sorts before
+   `receiving_line` and `receiving` sorts before `receiving_line` alphabetically, so the
+   endpoint swap correctly flips `LEFT`→`RIGHT` in both cases, preserving "keep all
+   `receiving_line` rows" under the swapped order. This is `structural_fingerprint.py`'s
+   `join_edges_from_sql()` (via `view_ontology_extractor.py`), already live in
+   production — this part of §1 is not aspirational, it is running code today.
 
 ## Status
-Schema fully specified and locked. No open questions. Ready to be turned into a
-build task on request (not auto-created, per user preference).
+Schema fully specified and locked. No open questions on the design.
+
+**Revised status (2026-09-21):** this plan is not starting from zero. §1's canonical
+join-edge extraction and LEFT/RIGHT normalization is **already implemented and
+confirmed live** (`structural_fingerprint.py`, exercised today via the Ontology
+Mosaic's SQL Semantics lens for both "Three-Way Match Exceptions" and "Three-Way Match
+Coverage") — the exporter's own comments call this "v22: fold graph-aware structural
+fingerprints in." What remains **not yet built**:
+- §2's `join_edges`/`unresolved_joins` fields on the manifest's `structural_fingerprint`
+  (today's snippets carry only `base_tables`).
+- §3's write-back of `sql_observed` edges into the structural graph layer.
+- §4's `validate_join_edges()` fail-closed gate, including the §4a topology checks
+  (missing bridging entity, fan-out trap) added in this revision.
+- §5's wiring into `assemble_query`/dispatch and §6's hard-cutover backfill migration.
+
+Still ready to be turned into a build task on request (not auto-created, per user
+preference) — the scope above is what that task would need to cover.
