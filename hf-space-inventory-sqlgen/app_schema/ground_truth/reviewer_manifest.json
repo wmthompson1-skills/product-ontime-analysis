@@ -1,1538 +1,1549 @@
 {
-  "last_updated": "2026-07-24T05:47:35.613992+00:00",
-  "approved_snippets": {
-    "inventory_reorderpoint_20260703_000001": {
-      "concept_anchor": "REORDERPOINT",
-      "perspective": "Inventory_Transactions",
-      "category": "inventory_management",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/inventory_reorderpoint_20260703_000001.sql",
-      "sme_justification": "Parts at or below reorder point \u2014 replenishment trigger report against the part table reorder_point threshold; primary MRP replenishment planning query",
-      "validation_status": "APPROVED",
-      "binding_key": "inventory_reorderpoint_20260703_000001",
-      "created_at": "2026-07-03T00:00:01Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-07-03T00:00:01Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "part"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.591003+00:00"
-      }
-    },
-    "inventory_onhandquantity_20260703_000002": {
-      "concept_anchor": "ONHANDQUANTITY",
-      "perspective": "Inventory_Transactions",
-      "category": "inventory_management",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/inventory_onhandquantity_20260703_000002.sql",
-      "sme_justification": "On-hand stock levels by part class with inventory value and reorder-point flag counts \u2014 primary stock-status query against the part table",
-      "validation_status": "APPROVED",
-      "binding_key": "inventory_onhandquantity_20260703_000002",
-      "created_at": "2026-07-03T00:00:02Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-07-03T00:00:02Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "part"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.595135+00:00"
-      }
-    },
-    "inventory_leadtime_20260703_000003": {
-      "concept_anchor": "LEADTIME",
-      "perspective": "Inventory_Transactions",
-      "category": "inventory_management",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/inventory_leadtime_20260703_000003.sql",
-      "sme_justification": "Lead time summary by part class (avg/min/max days, long-lead count) \u2014 MRP planning-horizon decision support query against the part table",
-      "validation_status": "APPROVED",
-      "binding_key": "inventory_leadtime_20260703_000003",
-      "created_at": "2026-07-03T00:00:03Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-07-03T00:00:03Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "part"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.598121+00:00"
-      }
-    },
-    "inventory_atp_20260703_000004": {
-      "concept_anchor": "AVAILABLETOPROMISE",
-      "perspective": "Inventory_Transactions",
-      "category": "inventory_management",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/inventory_atp_20260703_000004.sql",
-      "sme_justification": "Available-to-promise quantity per part: on-hand stock minus total open customer-order commitments. Dataset derivation \u2014 no single column owns ATP; the approved snippet is the definition.",
-      "validation_status": "APPROVED",
-      "binding_key": "inventory_atp_20260703_000004",
-      "created_at": "2026-07-03T00:00:04Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-07-03T00:00:04Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "customer_order",
-          "customer_order_line",
-          "part",
-          "po_line",
-          "purchase_order",
-          "work_order"
-        ],
-        "join_edges": [
-          {
-            "table_a": "customer_order",
-            "column_a": "order_id",
-            "table_b": "customer_order_line",
-            "column_b": "order_id",
-            "join_type": "INNER"
-          },
-          {
-            "table_a": "po_line",
-            "column_a": "po_id",
-            "table_b": "purchase_order",
-            "column_b": "po_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [
-          {
-            "reason": "cross_join",
-            "detail": "buckets"
-          },
-          {
-            "reason": "non_equi",
-            "detail": "NOT col.need_by_date IS NULL AND DATE(col.need_by_date) >= b.b_start AND DATE(col.need_by_date) < b.b_end"
-          },
-          {
-            "reason": "non_equi",
-            "detail": "NOT po.required_date IS NULL AND DATE(po.required_date) >= b.b_start AND DATE(po.required_date) < b.b_end"
-          },
-          {
-            "reason": "non_equi",
-            "detail": "NOT wo.required_date IS NULL AND DATE(wo.required_date) >= b.b_start AND DATE(wo.required_date) < b.b_end"
-          },
-          {
-            "reason": "unresolved_columns",
-            "detail": "d.part_id = p.part_id AND d.idx = b.idx"
-          },
-          {
-            "reason": "unresolved_columns",
-            "detail": "r.part_id = p.part_id AND r.idx = b.idx"
-          }
-        ],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.620470+00:00"
-      }
-    },
-    "inventory_allocated_20260703_000005": {
-      "concept_anchor": "ALLOCATEDQUANTITY",
-      "perspective": "Inventory_Transactions",
-      "category": "inventory_management",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/inventory_allocated_20260703_000005.sql",
-      "sme_justification": "Allocated quantity per part: sum of open customer-order-line quantities committed against on-hand stock. Dataset derivation over customer_order_line \u2014 the approved snippet is the definition.",
-      "validation_status": "APPROVED",
-      "binding_key": "inventory_allocated_20260703_000005",
-      "created_at": "2026-07-03T00:00:05Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-07-03T00:00:05Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "customer_order",
-          "customer_order_line",
-          "part"
-        ],
-        "join_edges": [
-          {
-            "table_a": "customer_order",
-            "column_a": "order_id",
-            "table_b": "customer_order_line",
-            "column_b": "order_id",
-            "join_type": "INNER"
-          },
-          {
-            "table_a": "customer_order_line",
-            "column_a": "part_id",
-            "table_b": "part",
-            "column_b": "part_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.629065+00:00"
-      }
-    },
-    "suppliers_supplierscorecard_20260601_000001": {
-      "concept_anchor": "DELIVERYPERFORMANCESUPPLIER",
-      "perspective": "Quality",
-      "category": "supplier_performance",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/suppliers_supplierscorecard_20260601_000001.sql",
-      "sme_justification": "Active supplier list with category, certification level, lead time, and performance rating \u2014 core supplier scorecard query against live suppliers table",
-      "validation_status": "APPROVED",
-      "binding_key": "suppliers_supplierscorecard_20260601_000001",
-      "created_at": "2026-06-01T00:00:01Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-06-01T00:00:01Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "suppliers"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.631449+00:00"
-      }
-    },
-    "suppliers_outsideservicesuppliers_20260601_000002": {
-      "concept_anchor": "DELIVERYPERFORMANCESUPPLIER",
-      "perspective": "Work_Orders",
-      "category": "supplier_performance",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/suppliers_outsideservicesuppliers_20260601_000002.sql",
-      "sme_justification": "Outside-service supplier list (NADCAP-certified vendors for heat treat, NDT, anodize, plating) \u2014 used when routing operations to outside vendors",
-      "validation_status": "APPROVED",
-      "binding_key": "suppliers_outsideservicesuppliers_20260601_000002",
-      "created_at": "2026-06-01T00:00:02Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-06-01T00:00:02Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "suppliers"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.633341+00:00"
-      }
-    },
-    "operations_workorderstatus_20260601_000003": {
-      "concept_anchor": "ORDERLIFECYCLESTATE",
-      "perspective": "Manufacturing",
-      "category": "production_analytics",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/operations_workorderstatus_20260601_000003.sql",
-      "sme_justification": "Work order status summary grouped by lifecycle state with quantity and cost rollup \u2014 primary production planning query against live work_order table",
-      "validation_status": "APPROVED",
-      "binding_key": "operations_workorderstatus_20260601_000003",
-      "created_at": "2026-06-01T00:00:03Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-06-01T00:00:03Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "work_order"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.635907+00:00"
-      }
-    },
-    "operations_workordercostdetail_20260601_000004": {
-      "concept_anchor": "ORDERLIFECYCLESTATE",
-      "perspective": "General_Ledger",
-      "category": "production_analytics",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/operations_workordercostdetail_20260601_000004.sql",
-      "sme_justification": "Per-work-order cost breakdown (labor, burden, outside service, material) for WIP valuation and job costing \u2014 joins against live work_order table",
-      "validation_status": "APPROVED",
-      "binding_key": "operations_workordercostdetail_20260601_000004",
-      "created_at": "2026-06-01T00:00:04Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-06-01T00:00:04Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "work_order"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.638768+00:00"
-      }
-    },
-    "payables_purchaseorderstatus_20260601_000005": {
-      "concept_anchor": "ORDERACCOUNTINGSTATE",
-      "perspective": "Payables",
-      "category": "delivery_performance",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/payables_purchaseorderstatus_20260601_000005.sql",
-      "sme_justification": "Purchase order status list with supplier name, type, dates, and value \u2014 core AP dashboard query joining purchase_order to suppliers",
-      "validation_status": "APPROVED",
-      "binding_key": "payables_purchaseorderstatus_20260601_000005",
-      "created_at": "2026-06-01T00:00:05Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-06-01T00:00:05Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "purchase_order",
-          "suppliers"
-        ],
-        "join_edges": [
-          {
-            "table_a": "purchase_order",
-            "column_a": "supplier_id",
-            "table_b": "suppliers",
-            "column_b": "supplier_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.640677+00:00"
-      }
-    },
-    "payables_openpobysupp_20260601_000006": {
-      "concept_anchor": "DELIVERYPERFORMANCEFINANCE",
-      "perspective": "Payables",
-      "category": "supplier_performance",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/payables_openpobysupp_20260601_000006.sql",
-      "sme_justification": "Open PO spend aggregated by supplier with count and total value \u2014 payables aging and supplier spend analysis joining purchase_order to suppliers",
-      "validation_status": "APPROVED",
-      "binding_key": "payables_openpobysupp_20260601_000006",
-      "created_at": "2026-06-01T00:00:06Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-06-01T00:00:06Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "purchase_order",
-          "suppliers"
-        ],
-        "join_edges": [
-          {
-            "table_a": "purchase_order",
-            "column_a": "supplier_id",
-            "table_b": "suppliers",
-            "column_b": "supplier_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.643294+00:00"
-      }
-    },
-    "finance_ncm_cost_20260208_150000": {
-      "concept_anchor": "DEFECTSEVERITYCOST",
-      "perspective": "Finance",
-      "category": "cost_analysis",
-      "logic_type": "DIRECT",
-      "file_path": "hf-space-inventory-sqlgen/app_schema/ground_truth/finance_ncm_cost_20260208_150000.sql",
-      "sme_justification": "NCM cost analysis with repair and scrap cost aggregation for financial defect severity assessment",
-      "validation_status": "ARCHIVED",
-      "binding_key": "finance_ncm_cost_20260208_150000",
-      "created_at": "2026-02-08T15:00:00Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-02-08T15:01:00Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "quality_defectseverityquality_20260208_150100": {
-      "concept_anchor": "DEFECTSEVERITYQUALITY",
-      "perspective": "Quality",
-      "category": "quality_trending",
-      "logic_type": "DIRECT",
-      "file_path": "hf-space-inventory-sqlgen/app_schema/ground_truth/quality_defectseverityquality_20260208_150100.sql",
-      "sme_justification": "Quality-focused defect severity with root cause and quality score for trending analysis",
-      "validation_status": "ARCHIVED",
-      "binding_key": "quality_defectseverityquality_20260208_150100",
-      "created_at": "2026-02-08T15:01:00Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-02-08T15:01:30Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "customer_defectseveritycustomer_20260208_150200": {
-      "concept_anchor": "DEFECTSEVERITYCUSTOMER",
-      "perspective": "Customer",
-      "category": "customer_impact",
-      "logic_type": "DIRECT",
-      "file_path": "hf-space-inventory-sqlgen/app_schema/ground_truth/customer_defectseveritycustomer_20260208_150200.sql",
-      "sme_justification": "Customer impact tracking for defect severity with complaint and notification data",
-      "validation_status": "ARCHIVED",
-      "binding_key": "customer_defectseveritycustomer_20260208_150200",
-      "created_at": "2026-02-08T15:02:00Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-02-08T15:02:30Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "operations_deliveryperformanceops_20260208_160001": {
-      "concept_anchor": "DELIVERYPERFORMANCEOPS",
-      "perspective": "Operations",
-      "category": "delivery_performance",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/operations_deliveryperformanceops_20260208_160001.sql",
-      "sme_justification": "Seeded from ground truth: DeliveryPerformanceOps \u2014 Operations perspective - Daily logistics tracking for route optimization and warehouse scheduling",
-      "validation_status": "ARCHIVED",
-      "binding_key": "operations_deliveryperformanceops_20260208_160001",
-      "created_at": "2026-02-08T23:07:56Z",
-      "approved_by": "seed_initial_load",
-      "approved_at": "2026-02-08T23:07:56Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "quality_deliveryperformancesupplier_20260208_160002": {
-      "concept_anchor": "DELIVERYPERFORMANCESUPPLIER",
-      "perspective": "Quality",
-      "category": "delivery_performance",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/quality_deliveryperformancesupplier_20260208_160002.sql",
-      "sme_justification": "Seeded from ground truth: DeliveryPerformanceSupplier \u2014 Supplier perspective - Vendor scorecard metrics for evaluation and contract negotiations",
-      "validation_status": "ARCHIVED",
-      "binding_key": "quality_deliveryperformancesupplier_20260208_160002",
-      "created_at": "2026-02-08T23:07:56Z",
-      "approved_by": "seed_initial_load",
-      "approved_at": "2026-02-08T23:07:56Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "finance_deliveryperformancefinance_20260208_160003": {
-      "concept_anchor": "DELIVERYPERFORMANCEFINANCE",
-      "perspective": "Finance",
-      "category": "delivery_performance",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/finance_deliveryperformancefinance_20260208_160003.sql",
-      "sme_justification": "Seeded from ground truth: DeliveryPerformanceFinance \u2014 Finance perspective - Late delivery penalties and cost impact for P&L reporting",
-      "validation_status": "ARCHIVED",
-      "binding_key": "finance_deliveryperformancefinance_20260208_160003",
-      "created_at": "2026-02-08T23:07:56Z",
-      "approved_by": "seed_initial_load",
-      "approved_at": "2026-02-08T23:07:56Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "quality_defectseverityquality_20260208_160004": {
-      "concept_anchor": "DEFECTSEVERITYQUALITY",
-      "perspective": "Quality",
-      "category": "quality_control",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/quality_defectseverityquality_20260208_160004.sql",
-      "sme_justification": "Seeded from ground truth: Daily Defect Rate by Product Line \u2014 Calculate defect rate percentage for each product line by date",
-      "validation_status": "ARCHIVED",
-      "binding_key": "quality_defectseverityquality_20260208_160004",
-      "created_at": "2026-02-08T23:07:56Z",
-      "approved_by": "seed_initial_load",
-      "approved_at": "2026-02-08T23:07:56Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "quality_ncmdispositionquality_20260208_160005": {
-      "concept_anchor": "NCMDISPOSITIONQUALITY",
-      "perspective": "Quality",
-      "category": "quality_control",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/quality_ncmdispositionquality_20260208_160005.sql",
-      "sme_justification": "Seeded from ground truth: Non-Conformant Materials Summary \u2014 Track NCM status and corrective action progress",
-      "validation_status": "ARCHIVED",
-      "binding_key": "quality_ncmdispositionquality_20260208_160005",
-      "created_at": "2026-02-08T23:07:56Z",
-      "approved_by": "seed_initial_load",
-      "approved_at": "2026-02-08T23:07:56Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "quality_defectseverityquality_20260208_160006": {
-      "concept_anchor": "DEFECTSEVERITYQUALITY",
-      "perspective": "Quality",
-      "category": "quality_control",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/quality_defectseverityquality_20260208_160006.sql",
-      "sme_justification": "Seeded from ground truth: Quality Incidents by Severity \u2014 Aggregate quality incidents by severity level",
-      "validation_status": "ARCHIVED",
-      "binding_key": "quality_defectseverityquality_20260208_160006",
-      "created_at": "2026-02-08T23:07:56Z",
-      "approved_by": "seed_initial_load",
-      "approved_at": "2026-02-08T23:07:56Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "operations_deliveryperformanceops_20260208_160007": {
-      "concept_anchor": "DELIVERYPERFORMANCEOPS",
-      "perspective": "Operations",
-      "category": "supplier_performance",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/operations_deliveryperformanceops_20260208_160007.sql",
-      "sme_justification": "Seeded from ground truth: Supplier On-Time Delivery Performance \u2014 Calculate supplier delivery performance metrics",
-      "validation_status": "ARCHIVED",
-      "binding_key": "operations_deliveryperformanceops_20260208_160007",
-      "created_at": "2026-02-08T23:07:56Z",
-      "approved_by": "seed_initial_load",
-      "approved_at": "2026-02-08T23:07:56Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "quality_deliveryperformancesupplier_20260208_160008": {
-      "concept_anchor": "DELIVERYPERFORMANCESUPPLIER",
-      "perspective": "Quality",
-      "category": "supplier_performance",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/quality_deliveryperformancesupplier_20260208_160008.sql",
-      "sme_justification": "Seeded from ground truth: Supplier Quality Scorecard \u2014 Comprehensive supplier quality metrics",
-      "validation_status": "ARCHIVED",
-      "binding_key": "quality_deliveryperformancesupplier_20260208_160008",
-      "created_at": "2026-02-08T23:07:56Z",
-      "approved_by": "seed_initial_load",
-      "approved_at": "2026-02-08T23:07:56Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "operations_oeeoperational_20260208_160009": {
-      "concept_anchor": "OEEOPERATIONAL",
-      "perspective": "Operations",
-      "category": "equipment_reliability",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/operations_oeeoperational_20260208_160009.sql",
-      "sme_justification": "Seeded from ground truth: Overall Equipment Effectiveness (OEE) \u2014 Calculate OEE metrics by equipment",
-      "validation_status": "ARCHIVED",
-      "binding_key": "operations_oeeoperational_20260208_160009",
-      "created_at": "2026-02-08T23:07:56Z",
-      "approved_by": "seed_initial_load",
-      "approved_at": "2026-02-08T23:07:56Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "operations_equipmentstatemaintenance_20260208_160010": {
-      "concept_anchor": "EQUIPMENTSTATEMAINTENANCE",
-      "perspective": "Operations",
-      "category": "equipment_reliability",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/operations_equipmentstatemaintenance_20260208_160010.sql",
-      "sme_justification": "Seeded from ground truth: Downtime Analysis by Category \u2014 Aggregate downtime events by category",
-      "validation_status": "ARCHIVED",
-      "binding_key": "operations_equipmentstatemaintenance_20260208_160010",
-      "created_at": "2026-02-08T23:07:56Z",
-      "approved_by": "seed_initial_load",
-      "approved_at": "2026-02-08T23:07:56Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "operations_failureseverityproduction_20260208_160011": {
-      "concept_anchor": "FAILURESEVERITYPRODUCTION",
-      "perspective": "Operations",
-      "category": "equipment_reliability",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/operations_failureseverityproduction_20260208_160011.sql",
-      "sme_justification": "Seeded from ground truth: Equipment Failure Analysis (MTBF) \u2014 Mean Time Between Failures analysis",
-      "validation_status": "ARCHIVED",
-      "binding_key": "operations_failureseverityproduction_20260208_160011",
-      "created_at": "2026-02-08T23:07:56Z",
-      "approved_by": "seed_initial_load",
-      "approved_at": "2026-02-08T23:07:56Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "operations_orderlifecyclestate_20260208_160012": {
-      "concept_anchor": "ORDERLIFECYCLESTATE",
-      "perspective": "Operations",
-      "category": "production_analytics",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/operations_orderlifecyclestate_20260208_160012.sql",
-      "sme_justification": "Seeded from ground truth: Production Schedule Adherence \u2014 Compare planned vs actual production",
-      "validation_status": "ARCHIVED",
-      "binding_key": "operations_orderlifecyclestate_20260208_160012",
-      "created_at": "2026-02-08T23:07:56Z",
-      "approved_by": "seed_initial_load",
-      "approved_at": "2026-02-08T23:07:56Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "operations_oeeoperational_20260208_160013": {
-      "concept_anchor": "OEEOPERATIONAL",
-      "perspective": "Operations",
-      "category": "production_analytics",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/operations_oeeoperational_20260208_160013.sql",
-      "sme_justification": "Seeded from ground truth: Production Line Performance \u2014 Aggregate production metrics by line",
-      "validation_status": "ARCHIVED",
-      "binding_key": "operations_oeeoperational_20260208_160013",
-      "created_at": "2026-02-08T23:07:56Z",
-      "approved_by": "seed_initial_load",
-      "approved_at": "2026-02-08T23:07:56Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "finance_defectseveritycost_20260208_160014": {
-      "concept_anchor": "DEFECTSEVERITYCOST",
-      "perspective": "Finance",
-      "category": "production_analytics",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/finance_defectseveritycost_20260208_160014.sql",
-      "sme_justification": "Seeded from ground truth: Quality Cost Analysis \u2014 Track quality-related costs by category",
-      "validation_status": "ARCHIVED",
-      "binding_key": "finance_defectseveritycost_20260208_160014",
-      "created_at": "2026-02-08T23:07:56Z",
-      "approved_by": "seed_initial_load",
-      "approved_at": "2026-02-08T23:07:56Z",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "quality_ncm_cost_20260209_193816": {
-      "concept_anchor": "NCM_COST",
-      "perspective": "Quality",
-      "category": "Quality",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/_archived/quality_ncm_cost_20260209_193816.sql",
-      "sme_justification": "test capa",
-      "validation_status": "ARCHIVED",
-      "binding_key": "quality_ncm_cost_20260209_193816",
-      "created_at": "2026-02-09T19:38:16.162929",
-      "reviewed_at": "2026-04-10T17:34:25.176158",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "gt_ncm_by_employee_20260210_230752": {
-      "concept_anchor": "NCM_BY_EMPLOYEE",
-      "perspective": "Pending",
-      "category": "Quality",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/_archived/gt_ncm_by_employee_20260210_230752.sql",
-      "sme_justification": "Auto-created from Ground Truth: NCM by Employee \u2014 Links non-conformant materials to assigned employees for accountability tracking",
-      "validation_status": "ARCHIVED",
-      "binding_key": "gt_ncm_by_employee_20260210_230752",
-      "created_at": "2026-02-10T23:07:52.850232",
-      "reviewed_at": "2026-04-10T17:34:07.938805",
-      "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
-    },
-    "operations_oeeoperational_20260604_000007": {
-      "concept_anchor": "OEEOPERATIONAL",
-      "perspective": "Operations",
-      "category": "equipment_reliability",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/operations_oeeoperational_20260604_000007.sql",
-      "sme_justification": "OEE operational proxy: actual vs. scheduled run hours per active shop resource, grouped by resource for shift-level line efficiency and throughput reporting",
-      "validation_status": "APPROVED",
-      "binding_key": "operations_oeeoperational_20260604_000007",
-      "created_at": "2026-06-04T00:00:07Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-06-04T00:00:07Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "operation",
-          "shop_resource"
-        ],
-        "join_edges": [
-          {
-            "table_a": "operation",
-            "column_a": "resource_id",
-            "table_b": "shop_resource",
-            "column_b": "resource_id",
-            "join_type": "RIGHT"
-          }
-        ],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.647320+00:00"
-      }
-    },
-    "operations_oeestrategic_20260604_000008": {
-      "concept_anchor": "OEESTRATEGIC",
-      "perspective": "Operations",
-      "category": "equipment_reliability",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/operations_oeestrategic_20260604_000008.sql",
-      "sme_justification": "OEE strategic proxy: cost efficiency and utilization aggregated by resource type for capital investment, capacity planning, and equipment replacement decisions",
-      "validation_status": "APPROVED",
-      "binding_key": "operations_oeestrategic_20260604_000008",
-      "created_at": "2026-06-04T00:00:08Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-06-04T00:00:08Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "operation",
-          "shop_resource"
-        ],
-        "join_edges": [
-          {
-            "table_a": "operation",
-            "column_a": "resource_id",
-            "table_b": "shop_resource",
-            "column_b": "resource_id",
-            "join_type": "RIGHT"
-          }
-        ],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.651944+00:00"
-      }
-    },
-    "operations_equipmentstatemaintenance_20260604_000009": {
-      "concept_anchor": "EQUIPMENTSTATEMAINTENANCE",
-      "perspective": "Operations",
-      "category": "equipment_reliability",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/operations_equipmentstatemaintenance_20260604_000009.sql",
-      "sme_justification": "Maintenance scheduling view: open-operation count, remaining run hours, and last close date per active shop resource \u2014 identifies resources due for PM or blocked by open operations",
-      "validation_status": "APPROVED",
-      "binding_key": "operations_equipmentstatemaintenance_20260604_000009",
-      "created_at": "2026-06-04T00:00:09Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-06-04T00:00:09Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "operation",
-          "shop_resource"
-        ],
-        "join_edges": [
-          {
-            "table_a": "operation",
-            "column_a": "resource_id",
-            "table_b": "shop_resource",
-            "column_b": "resource_id",
-            "join_type": "RIGHT"
-          }
-        ],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.658622+00:00"
-      }
-    },
-    "operations_equipmentstatecompliance_20260604_000010": {
-      "concept_anchor": "EQUIPMENTSTATECOMPLIANCE",
-      "perspective": "Quality",
-      "category": "equipment_reliability",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/operations_equipmentstatecompliance_20260604_000010.sql",
-      "sme_justification": "Compliance view: cert-required receipts with inspection and certificate status joined to shop resources \u2014 verifies cert-required material processed on each resource has a current certificate",
-      "validation_status": "APPROVED",
-      "binding_key": "operations_equipmentstatecompliance_20260604_000010",
-      "created_at": "2026-06-04T00:00:10Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-06-04T00:00:10Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "certification",
-          "operation",
-          "receiving",
-          "shop_resource",
-          "work_order"
-        ],
-        "join_edges": [
-          {
-            "table_a": "certification",
-            "column_a": "receipt_id",
-            "table_b": "receiving",
-            "column_b": "receipt_id",
-            "join_type": "RIGHT"
-          },
-          {
-            "table_a": "operation",
-            "column_a": "resource_id",
-            "table_b": "shop_resource",
-            "column_b": "resource_id",
-            "join_type": "INNER"
-          },
-          {
-            "table_a": "operation",
-            "column_a": "wo_id",
-            "table_b": "work_order",
-            "column_b": "wo_id",
-            "join_type": "INNER"
-          },
-          {
-            "table_a": "receiving",
-            "column_a": "part_id",
-            "table_b": "work_order",
-            "column_b": "part_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.662369+00:00"
-      }
-    },
-    "operations_equipmentstateproduction_20260604_000011": {
-      "concept_anchor": "EQUIPMENTSTATEPRODUCTION",
-      "perspective": "Manufacturing",
-      "category": "equipment_reliability",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/operations_equipmentstateproduction_20260604_000011.sql",
-      "sme_justification": "Production scheduling view: active shop resources with their current open work order operations, scheduled windows, and estimated cost \u2014 used by supervisors for machine loading and scheduling decisions",
-      "validation_status": "APPROVED",
-      "binding_key": "operations_equipmentstateproduction_20260604_000011",
-      "created_at": "2026-06-04T00:00:11Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-06-04T00:00:11Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "operation",
-          "shop_resource",
-          "work_order"
-        ],
-        "join_edges": [
-          {
-            "table_a": "operation",
-            "column_a": "resource_id",
-            "table_b": "shop_resource",
-            "column_b": "resource_id",
-            "join_type": "INNER"
-          },
-          {
-            "table_a": "operation",
-            "column_a": "wo_id",
-            "table_b": "work_order",
-            "column_b": "wo_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.666391+00:00"
-      }
-    },
-    "sales_ordercustomerstate_20260604_000012": {
-      "concept_anchor": "ORDERCUSTOMERSTATE",
-      "perspective": "Customer",
-      "category": "production_analytics",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/sales_ordercustomerstate_20260604_000012.sql",
-      "sme_justification": "Customer-facing work order delivery status: classifies each order as On Time, Late, Overdue, At Risk, or On Schedule against required delivery dates",
-      "validation_status": "APPROVED",
-      "binding_key": "sales_ordercustomerstate_20260604_000012",
-      "created_at": "2026-06-04T00:00:12Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-06-04T00:00:12Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "work_order"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.670584+00:00"
-      }
-    },
-    "operations_deliveryperformanceops_20260604_000013": {
-      "concept_anchor": "DELIVERYPERFORMANCEOPS",
-      "perspective": "Operations",
-      "category": "delivery_performance",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/operations_deliveryperformanceops_20260604_000013.sql",
-      "sme_justification": "Operations delivery performance: inbound on-time receipt rate per PO compared to required date \u2014 flags overdue open POs for expediting and tracks material delivery reliability",
-      "validation_status": "APPROVED",
-      "binding_key": "operations_deliveryperformanceops_20260604_000013",
-      "created_at": "2026-06-04T00:00:13Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-06-04T00:00:13Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "purchase_order",
-          "receiving",
-          "suppliers"
-        ],
-        "join_edges": [
-          {
-            "table_a": "purchase_order",
-            "column_a": "po_id",
-            "table_b": "receiving",
-            "column_b": "po_id",
-            "join_type": "LEFT"
-          },
-          {
-            "table_a": "purchase_order",
-            "column_a": "supplier_id",
-            "table_b": "suppliers",
-            "column_b": "supplier_id",
-            "join_type": "LEFT"
-          }
-        ],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.676917+00:00"
-      }
-    },
-    "inventory_safetystock_20260703_000006": {
-      "concept_anchor": "SAFETYSTOCK",
-      "perspective": "Inventory_Transactions",
-      "category": "inventory_management",
-      "logic_type": "DERIVED",
-      "file_path": "app_schema/ground_truth/sql_snippets/inventory_safetystock_20260703_000006.sql",
-      "sme_justification": "Safety stock proxy: reorder point minus estimated lead-time demand (avg daily demand from customer_order_line \u00d7 lead_time_days). Column anchor: part.reorder_point encodes the safety buffer in this ERP (ROP = SS + LT demand). Dataset derivation \u2014 approved snippet is the authoritative definition.",
-      "validation_status": "APPROVED",
-      "binding_key": "inventory_safetystock_20260703_000006",
-      "created_at": "2026-07-03T00:00:06Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-07-03T00:00:06Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "customer_order",
-          "customer_order_line",
-          "part",
-          "work_order"
-        ],
-        "join_edges": [
-          {
-            "table_a": "customer_order",
-            "column_a": "order_id",
-            "table_b": "customer_order_line",
-            "column_b": "order_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [
-          {
-            "reason": "cross_join",
-            "detail": "horizon"
-          },
-          {
-            "reason": "unresolved_columns",
-            "detail": "od.part_id = p.part_id"
-          }
-        ],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.724050+00:00"
-      }
-    },
-    "inventory_leadtimedemand_20260703_000007": {
-      "concept_anchor": "LEADTIMEDEMAND",
-      "perspective": "Inventory_Transactions",
-      "category": "inventory_management",
-      "logic_type": "DERIVED",
-      "file_path": "app_schema/ground_truth/sql_snippets/inventory_leadtimedemand_20260703_000007.sql",
-      "sme_justification": "Lead-time demand: average daily demand (customer_order_line) \u00d7 part.lead_time_days. Column anchor: part.lead_time_days is the planning window factor. Dataset derivation \u2014 approved snippet is the authoritative definition.",
-      "validation_status": "APPROVED",
-      "binding_key": "inventory_leadtimedemand_20260703_000007",
-      "created_at": "2026-07-03T00:00:07Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-07-03T00:00:07Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "customer_order",
-          "customer_order_line",
-          "part",
-          "work_order"
-        ],
-        "join_edges": [
-          {
-            "table_a": "customer_order",
-            "column_a": "order_id",
-            "table_b": "customer_order_line",
-            "column_b": "order_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [
-          {
-            "reason": "cross_join",
-            "detail": "horizon"
-          },
-          {
-            "reason": "unresolved_columns",
-            "detail": "od.part_id = p.part_id"
-          }
-        ],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.751704+00:00"
-      }
-    },
-    "inventory_minimumstock_20260703_000008": {
-      "concept_anchor": "MINIMUMSTOCKQUANTITY",
-      "perspective": "Inventory_Transactions",
-      "category": "inventory_management",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/inventory_minimumstock_20260703_000008.sql",
-      "sme_justification": "Minimum stock quantity: part.reorder_point is the min level in a min/max replenishment policy. Direct column read with below/at/above status classification.",
-      "validation_status": "APPROVED",
-      "binding_key": "inventory_minimumstock_20260703_000008",
-      "created_at": "2026-07-03T00:00:08Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-07-03T00:00:08Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "part"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.755672+00:00"
-      }
-    },
-    "inventory_maximumstock_20260703_000009": {
-      "concept_anchor": "MAXIMUMSTOCKQUANTITY",
-      "perspective": "Inventory_Transactions",
-      "category": "inventory_management",
-      "logic_type": "DERIVED",
-      "file_path": "app_schema/ground_truth/sql_snippets/inventory_maximumstock_20260703_000009.sql",
-      "sme_justification": "Maximum stock quantity: reorder_point + average historical PO replenishment qty (po_line.quantity aggregated per part). Column anchor: po_line.quantity captures the observed replenishment lot size. Dataset derivation \u2014 approved snippet is the authoritative definition.",
-      "validation_status": "APPROVED",
-      "binding_key": "inventory_maximumstock_20260703_000009",
-      "created_at": "2026-07-03T00:00:09Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-07-03T00:00:09Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "part",
-          "po_line",
-          "purchase_order"
-        ],
-        "join_edges": [
-          {
-            "table_a": "po_line",
-            "column_a": "po_id",
-            "table_b": "purchase_order",
-            "column_b": "po_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [
-          {
-            "reason": "unresolved_columns",
-            "detail": "pol.part_id = p.part_id"
-          }
-        ],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.761454+00:00"
-      }
-    },
-    "inventory_eoq_20260703_000010": {
-      "concept_anchor": "ECONOMICORDERQUANTITY",
-      "perspective": "Inventory_Transactions",
-      "category": "inventory_management",
-      "logic_type": "DERIVED",
-      "file_path": "app_schema/ground_truth/sql_snippets/inventory_eoq_20260703_000010.sql",
-      "sme_justification": "EOQ proxy: average observed PO order quantity (po_line.quantity) reflects the historically settled replenishment lot size. Without D/S/H cost parameters in this schema the empirical PO quantity is the closest available proxy. Column anchor: po_line.quantity. Falls back to reorder_point when no PO history exists.",
-      "validation_status": "APPROVED",
-      "binding_key": "inventory_eoq_20260703_000010",
-      "created_at": "2026-07-03T00:00:10Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-07-03T00:00:10Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "part",
-          "po_line",
-          "purchase_order"
-        ],
-        "join_edges": [
-          {
-            "table_a": "po_line",
-            "column_a": "po_id",
-            "table_b": "purchase_order",
-            "column_b": "po_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [
-          {
-            "reason": "unresolved_columns",
-            "detail": "pol.part_id = p.part_id"
-          }
-        ],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-04T07:51:10.768821+00:00"
-      }
-    },
-    "payables_ordersreceived_20260706_000001": {
-      "concept_anchor": "ORDERSRECEIVED",
-      "perspective": "Payables",
-      "category": "delivery_performance",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/payables_ordersreceived_20260706_000001.sql",
-      "sme_justification": "Purchase orders fully received \u2014 every po_line has receipt coverage >= ordered quantity, computed line-by-line via receiving_line.po_line_id; core receiving-completion procurement view",
-      "validation_status": "APPROVED",
-      "binding_key": "payables_ordersreceived_20260706_000001",
-      "created_at": "2026-07-06T00:00:01Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-07-06T00:00:01Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "po_line",
-          "purchase_order",
-          "receiving",
-          "receiving_line"
-        ],
-        "join_edges": [
-          {
-            "table_a": "po_line",
-            "column_a": "po_id",
-            "table_b": "purchase_order",
-            "column_b": "po_id",
-            "join_type": "INNER"
-          },
-          {
-            "table_a": "receiving",
-            "column_a": "receipt_id",
-            "table_b": "receiving_line",
-            "column_b": "receipt_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [
-          {
-            "reason": "unresolved_columns",
-            "detail": "r.po_line_id = pl.line_id"
-          }
-        ],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-06T05:13:07.070810+00:00"
-      }
-    },
-    "payables_ordersunreceived_20260706_000002": {
-      "concept_anchor": "ORDERSUNRECEIVED",
-      "perspective": "Payables",
-      "category": "delivery_performance",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/payables_ordersunreceived_20260706_000002.sql",
-      "sme_justification": "Purchase orders unreceived or short \u2014 at least one po_line not fully received, with unreceived vs short line counts and outstanding quantity; core expediting / open-order procurement view",
-      "validation_status": "APPROVED",
-      "binding_key": "payables_ordersunreceived_20260706_000002",
-      "created_at": "2026-07-06T00:00:02Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-07-06T00:00:02Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "po_line",
-          "purchase_order",
-          "receiving_line"
-        ],
-        "join_edges": [
-          {
-            "table_a": "po_line",
-            "column_a": "po_id",
-            "table_b": "purchase_order",
-            "column_b": "po_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [
-          {
-            "reason": "unresolved_columns",
-            "detail": "r.po_line_id = pl.line_id"
-          }
-        ],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-06T05:13:07.077220+00:00"
-      }
-    },
-    "payables_uninvoicedreceipts_20260706_000003": {
-      "concept_anchor": "UNINVOICEDRECEIPTS",
-      "perspective": "Payables",
-      "category": "delivery_performance",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/payables_uninvoicedreceipts_20260706_000003.sql",
-      "sme_justification": "Uninvoiced receipts exception report (three-way match): receipts with at least one receiving line whose non-cancelled payable coverage is below the received quantity or absent entirely \u2014 refactored from the private-repo ground truth '203 3WM Uninvoiced Receipts'",
-      "validation_status": "APPROVED",
-      "binding_key": "payables_uninvoicedreceipts_20260706_000003",
-      "created_at": "2026-07-06T00:00:03Z",
-      "approved_by": "seed_data",
-      "approved_at": "2026-07-06T00:00:03Z",
-      "structural_fingerprint": {
-        "base_tables": [
-          "payable_line",
-          "payables",
-          "purchase_order",
-          "receiving",
-          "receiving_line",
-          "suppliers"
-        ],
-        "join_edges": [
-          {
-            "table_a": "payable_line",
-            "column_a": "invoice_id",
-            "table_b": "payables",
-            "column_b": "invoice_id",
-            "join_type": "INNER"
-          },
-          {
-            "table_a": "purchase_order",
-            "column_a": "po_id",
-            "table_b": "receiving",
-            "column_b": "po_id",
-            "join_type": "INNER"
-          },
-          {
-            "table_a": "purchase_order",
-            "column_a": "supplier_id",
-            "table_b": "suppliers",
-            "column_b": "supplier_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "seed_backfill",
-        "signed_off_at": "2026-07-06T19:58:05.305686+00:00"
-      }
-    },
-    "gt_open_order_backlog_aging_20260706_185147": {
-      "concept_anchor": "OPEN_ORDER_BACKLOG_AGING",
-      "perspective": "Pending",
-      "category": "receivables",
-      "logic_type": "DIRECT",
-      "file_path": "/home/runner/workspace/hf-space-inventory-sqlgen/app_schema/ground_truth/sql_snippets/gt_open_order_backlog_aging_20260706_185147.sql",
-      "sme_justification": "Auto-created from Ground Truth: Open Order Backlog Aging \u2014 How old is the open order backlog? Open orders with value and days since booking, aged against a data-derived as-of date.",
-      "validation_status": "PENDING",
-      "binding_key": "gt_open_order_backlog_aging_20260706_185147",
-      "created_at": "2026-07-06T18:51:47.431547"
-    },
-    "payables_partialreceiptaccrual_20260708_000004": {
-      "binding_key": "payables_partialreceiptaccrual_20260708_000004",
-      "category": "delivery_performance",
-      "perspective": "Payables",
-      "concept_anchor": "PARTIALRECEIPTACCRUAL",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/payables_partialreceiptaccrual_20260708_000004.sql",
-      "sme_justification": "Partial-receipt accrual exposure (PO-line accrual): PO lines with received qty > 0 but < ordered qty whose received portion is not fully voucher-covered \u2014 open PRA exposure per the TWM accrual guides (docs/my-mrp-kb/07-three-way-match)",
-      "validation_status": "APPROVED",
-      "created_at": "2026-07-08T04:02:59.199327+00:00",
-      "approved_at": "2026-07-08T04:02:59.199327+00:00",
-      "approved_by": "twm_accrual_guides",
-      "structural_fingerprint": {
-        "base_tables": [
-          "payable_line",
-          "payables",
-          "po_line",
-          "purchase_order",
-          "receiving",
-          "receiving_line",
-          "suppliers"
-        ],
-        "join_edges": [
-          {
-            "table_a": "payable_line",
-            "column_a": "invoice_id",
-            "table_b": "payables",
-            "column_b": "invoice_id",
-            "join_type": "INNER"
-          },
-          {
-            "table_a": "po_line",
-            "column_a": "po_id",
-            "table_b": "purchase_order",
-            "column_b": "po_id",
-            "join_type": "INNER"
-          },
-          {
-            "table_a": "purchase_order",
-            "column_a": "supplier_id",
-            "table_b": "suppliers",
-            "column_b": "supplier_id",
-            "join_type": "INNER"
-          },
-          {
-            "table_a": "receiving",
-            "column_a": "receipt_id",
-            "table_b": "receiving_line",
-            "column_b": "receipt_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [
-          {
-            "reason": "unresolved_columns",
-            "detail": "inv.po_line_id = pl.line_id"
-          },
-          {
-            "reason": "unresolved_columns",
-            "detail": "rcv.po_line_id = pl.line_id"
-          }
-        ],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "twm_accrual_guides",
-        "signed_off_at": "2026-07-08T04:02:59.199327+00:00"
-      }
-    },
-    "payables_threewaymatchcoverage_20260708_000005": {
-      "binding_key": "payables_threewaymatchcoverage_20260708_000005",
-      "category": "delivery_performance",
-      "perspective": "Payables",
-      "concept_anchor": "THREEWAYMATCHCOVERAGE",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/payables_threewaymatchcoverage_20260708_000005.sql",
-      "sme_justification": "Consolidated three-way-match coverage spine at receipt/voucher row grain: flat base-table joins only (no CTEs/derived tables), po_line->purchase_order INNER then all LEFT, covering Not Received / Received-Uninvoiced / Partially Invoiced / Matched / Over-Invoiced states; sibling exception views become filters over this spine",
-      "validation_status": "APPROVED",
-      "created_at": "2026-07-08T06:04:21.164937+00:00",
-      "approved_at": "2026-07-08T06:04:21.164937+00:00",
-      "approved_by": "twm_accrual_guides",
-      "structural_fingerprint": {
-        "base_tables": [
-          "payable_line",
-          "payables",
-          "po_line",
-          "purchase_order",
-          "receiving",
-          "receiving_line",
-          "suppliers"
-        ],
-        "join_edges": [
-          {
-            "table_a": "payable_line",
-            "column_a": "invoice_id",
-            "table_b": "payables",
-            "column_b": "invoice_id",
-            "join_type": "LEFT"
-          },
-          {
-            "table_a": "payable_line",
-            "column_a": "receipt_line_id",
-            "table_b": "receiving_line",
-            "column_b": "receipt_line_id",
-            "join_type": "RIGHT"
-          },
-          {
-            "table_a": "po_line",
-            "column_a": "line_id",
-            "table_b": "receiving_line",
-            "column_b": "po_line_id",
-            "join_type": "LEFT"
-          },
-          {
-            "table_a": "po_line",
-            "column_a": "po_id",
-            "table_b": "purchase_order",
-            "column_b": "po_id",
-            "join_type": "INNER"
-          },
-          {
-            "table_a": "purchase_order",
-            "column_a": "supplier_id",
-            "table_b": "suppliers",
-            "column_b": "supplier_id",
-            "join_type": "LEFT"
-          },
-          {
-            "table_a": "receiving",
-            "column_a": "receipt_id",
-            "table_b": "receiving_line",
-            "column_b": "receipt_id",
-            "join_type": "RIGHT"
-          }
-        ],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "twm_accrual_guides",
-        "signed_off_at": "2026-07-08T06:04:21.164937+00:00"
-      }
-    },
-    "ledger_inventorybalance_20260719_000001": {
-      "binding_key": "ledger_inventorybalance_20260719_000001",
-      "category": "job_costing_ledger",
-      "perspective": "General_Ledger",
-      "concept_anchor": "GLINVENTORYBALANCE",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/ledger_inventorybalance_20260719_000001.sql",
-      "sme_justification": "Signed running balance per perpetual inventory bucket (RM/WIP/FG) from the gl_* sub-ledgers; optional :as_of_date horizon guard. Single UNION ALL over the three bucket tables, no joins.",
-      "validation_status": "APPROVED",
-      "created_at": "2026-07-19T03:58:13.687759+00:00",
-      "approved_at": "2026-07-19T03:58:13.687759+00:00",
-      "approved_by": "ledger_nlq_governed_queries",
-      "structural_fingerprint": {
-        "base_tables": [
-          "gl_finished_goods_inventory",
-          "gl_raw_materials_inventory",
-          "gl_wip_inventory"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "ledger_nlq_governed_queries",
-        "signed_off_at": "2026-07-19T03:58:13.687759+00:00"
-      }
-    },
-    "ledger_jobcostsummary_20260719_000002": {
-      "binding_key": "ledger_jobcostsummary_20260719_000002",
-      "category": "job_costing_ledger",
-      "perspective": "General_Ledger",
-      "concept_anchor": "GLJOBCOSTSUMMARY",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/ledger_jobcostsummary_20260719_000002.sql",
-      "sme_justification": "Job cost roll-up by work order and cost element (LABOR/MATERIAL/BURDEN/SERVICE) from gl_job_cost_detail; optional :job_id filter guard and :start_date/:end_date horizon guards.",
-      "validation_status": "APPROVED",
-      "created_at": "2026-07-19T03:58:13.759122+00:00",
-      "approved_at": "2026-07-19T03:58:13.759122+00:00",
-      "approved_by": "ledger_nlq_governed_queries",
-      "structural_fingerprint": {
-        "base_tables": [
-          "gl_job_cost_detail"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "ledger_nlq_governed_queries",
-        "signed_off_at": "2026-07-19T03:58:13.759122+00:00"
-      }
-    },
-    "ledger_eventtrace_20260719_000003": {
-      "binding_key": "ledger_eventtrace_20260719_000003",
-      "category": "job_costing_ledger",
-      "perspective": "General_Ledger",
-      "concept_anchor": "GLEVENTTRACE",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/ledger_eventtrace_20260719_000003.sql",
-      "sme_justification": "Chronological audit trace of gl_events postings for a job, carrying the originating source document (table + row key); optional :job_id filter and :start_date/:end_date horizon guards.",
-      "validation_status": "APPROVED",
-      "created_at": "2026-07-19T03:58:13.767896+00:00",
-      "approved_at": "2026-07-19T03:58:13.767896+00:00",
-      "approved_by": "ledger_nlq_governed_queries",
-      "structural_fingerprint": {
-        "base_tables": [
-          "gl_events"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "ledger_nlq_governed_queries",
-        "signed_off_at": "2026-07-19T03:58:13.767896+00:00"
-      }
-    },
-    "ledger_materialissued_20260719_000004": {
-      "binding_key": "ledger_materialissued_20260719_000004",
-      "category": "job_costing_ledger",
-      "perspective": "General_Ledger",
-      "concept_anchor": "GLMATERIALISSUED",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/ledger_materialissued_20260719_000004.sql",
-      "sme_justification": "Material issued over a period: RM_ISSUE postings (signed negative out of the RM bucket) reported as positive issued value per part and job; :start_date/:end_date horizon guards.",
-      "validation_status": "APPROVED",
-      "created_at": "2026-07-19T03:58:13.777617+00:00",
-      "approved_at": "2026-07-19T03:58:13.777617+00:00",
-      "approved_by": "ledger_nlq_governed_queries",
-      "structural_fingerprint": {
-        "base_tables": [
-          "gl_raw_materials_inventory"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "ledger_nlq_governed_queries",
-        "signed_off_at": "2026-07-19T03:58:13.777617+00:00"
-      }
-    },
-    "ledger_fgproduced_20260719_000005": {
-      "binding_key": "ledger_fgproduced_20260719_000005",
-      "category": "job_costing_ledger",
-      "perspective": "General_Ledger",
-      "concept_anchor": "GLFGPRODUCED",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/ledger_fgproduced_20260719_000005.sql",
-      "sme_justification": "Finished goods produced over a period: FG_COMPLETION postings (signed positive into the FG bucket) per part and job; :start_date/:end_date horizon guards.",
-      "validation_status": "APPROVED",
-      "created_at": "2026-07-19T03:58:13.786597+00:00",
-      "approved_at": "2026-07-19T03:58:13.786597+00:00",
-      "approved_by": "ledger_nlq_governed_queries",
-      "structural_fingerprint": {
-        "base_tables": [
-          "gl_finished_goods_inventory"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "ledger_nlq_governed_queries",
-        "signed_off_at": "2026-07-19T03:58:13.786597+00:00"
-      }
-    },
-    "receivables_araging_20260724_000001": {
-      "binding_key": "receivables_araging_20260724_000001",
-      "category": "receivables",
-      "perspective": "Receivables",
-      "concept_anchor": "ARAGING",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/receivables_araging_20260724_000001.sql",
-      "sme_justification": "AR aging report (Open + Disputed invoices only) bucketed by days past due_date \u2014 Current / 1-30 / 31-60 / >60 days \u2014 relative to a data-derived as-of date (MAX payment_date from Paid invoices). After collect_june2026_ar, all pre-July-2026 invoices are Paid and return zero rows here, confirming the cash-to-cash cycle closed correctly.",
-      "validation_status": "APPROVED",
-      "created_at": "2026-07-24T00:00:01Z",
-      "approved_at": "2026-07-24T00:00:01Z",
-      "approved_by": "ar_aging_governed_view",
-      "structural_fingerprint": {
-        "base_tables": [
-          "receivable"
-        ],
-        "join_edges": [],
-        "unresolved_joins": [
-          {
-            "reason": "cross_join",
-            "detail": "as_of"
-          }
-        ],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "ar_aging_governed_view",
-        "signed_off_at": "2026-07-24T00:00:01Z"
-      }
-    },
-    "receivables_cashreceipts_20260724_000002": {
-      "binding_key": "receivables_cashreceipts_20260724_000002",
-      "category": "receivables",
-      "perspective": "Receivables",
-      "concept_anchor": "ARCASHRECEIPTS",
-      "logic_type": "DIRECT",
-      "file_path": "app_schema/ground_truth/sql_snippets/receivables_cashreceipts_20260724_000002.sql",
-      "sme_justification": "Cash receipts by invoice \u2014 every receivable_payment installment joined to its invoice header with running cumulative-paid and remaining-balance, so partial collections are visible line by line. Answers 'what payments came in this month?' and 'show cash receipts against invoice X'.",
-      "validation_status": "APPROVED",
-      "created_at": "2026-07-24T05:47:35.613992+00:00",
-      "approved_at": "2026-07-24T05:47:35.613992+00:00",
-      "approved_by": "cash_receipts_governed_view",
-      "structural_fingerprint": {
-        "base_tables": [
-          "receivable",
-          "receivable_payment"
-        ],
-        "join_edges": [
-          {
-            "table_a": "receivable",
-            "column_a": "invoice_id",
-            "table_b": "receivable_payment",
-            "column_b": "invoice_id",
-            "join_type": "INNER"
-          }
-        ],
-        "unresolved_joins": [],
-        "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
-        "dialect": "sqlite",
-        "signed_off_by": "cash_receipts_governed_view",
-        "signed_off_at": "2026-07-24T05:47:35.613992+00:00"
-      }
+    "last_updated": "2026-09-20T18:10:03.666444",
+    "approved_snippets": {
+        "inventory_reorderpoint_20260703_000001": {
+            "concept_anchor": "REORDERPOINT",
+            "perspective": "Inventory_Transactions",
+            "category": "inventory_management",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/inventory_reorderpoint_20260703_000001.sql",
+            "sme_justification": "Parts at or below reorder point \u2014 replenishment trigger report against the part table reorder_point threshold; primary MRP replenishment planning query",
+            "validation_status": "APPROVED",
+            "binding_key": "inventory_reorderpoint_20260703_000001",
+            "created_at": "2026-07-03T00:00:01Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-07-03T00:00:01Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "part"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.591003+00:00"
+            }
+        },
+        "inventory_onhandquantity_20260703_000002": {
+            "concept_anchor": "ONHANDQUANTITY",
+            "perspective": "Inventory_Transactions",
+            "category": "inventory_management",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/inventory_onhandquantity_20260703_000002.sql",
+            "sme_justification": "On-hand stock levels by part class with inventory value and reorder-point flag counts \u2014 primary stock-status query against the part table",
+            "validation_status": "APPROVED",
+            "binding_key": "inventory_onhandquantity_20260703_000002",
+            "created_at": "2026-07-03T00:00:02Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-07-03T00:00:02Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "part"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.595135+00:00"
+            }
+        },
+        "inventory_leadtime_20260703_000003": {
+            "concept_anchor": "LEADTIME",
+            "perspective": "Inventory_Transactions",
+            "category": "inventory_management",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/inventory_leadtime_20260703_000003.sql",
+            "sme_justification": "Lead time summary by part class (avg/min/max days, long-lead count) \u2014 MRP planning-horizon decision support query against the part table",
+            "validation_status": "APPROVED",
+            "binding_key": "inventory_leadtime_20260703_000003",
+            "created_at": "2026-07-03T00:00:03Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-07-03T00:00:03Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "part"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.598121+00:00"
+            }
+        },
+        "inventory_atp_20260703_000004": {
+            "concept_anchor": "AVAILABLETOPROMISE",
+            "perspective": "Inventory_Transactions",
+            "category": "inventory_management",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/inventory_atp_20260703_000004.sql",
+            "sme_justification": "Available-to-promise quantity per part: on-hand stock minus total open customer-order commitments. Dataset derivation \u2014 no single column owns ATP; the approved snippet is the definition.",
+            "validation_status": "APPROVED",
+            "binding_key": "inventory_atp_20260703_000004",
+            "created_at": "2026-07-03T00:00:04Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-07-03T00:00:04Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "customer_order",
+                    "customer_order_line",
+                    "part",
+                    "po_line",
+                    "purchase_order",
+                    "work_order"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "customer_order",
+                        "column_a": "order_id",
+                        "table_b": "customer_order_line",
+                        "column_b": "order_id",
+                        "join_type": "INNER"
+                    },
+                    {
+                        "table_a": "po_line",
+                        "column_a": "po_id",
+                        "table_b": "purchase_order",
+                        "column_b": "po_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [
+                    {
+                        "reason": "cross_join",
+                        "detail": "buckets"
+                    },
+                    {
+                        "reason": "non_equi",
+                        "detail": "NOT col.need_by_date IS NULL AND DATE(col.need_by_date) >= b.b_start AND DATE(col.need_by_date) < b.b_end"
+                    },
+                    {
+                        "reason": "non_equi",
+                        "detail": "NOT po.required_date IS NULL AND DATE(po.required_date) >= b.b_start AND DATE(po.required_date) < b.b_end"
+                    },
+                    {
+                        "reason": "non_equi",
+                        "detail": "NOT wo.required_date IS NULL AND DATE(wo.required_date) >= b.b_start AND DATE(wo.required_date) < b.b_end"
+                    },
+                    {
+                        "reason": "unresolved_columns",
+                        "detail": "d.part_id = p.part_id AND d.idx = b.idx"
+                    },
+                    {
+                        "reason": "unresolved_columns",
+                        "detail": "r.part_id = p.part_id AND r.idx = b.idx"
+                    }
+                ],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.620470+00:00"
+            }
+        },
+        "inventory_allocated_20260703_000005": {
+            "concept_anchor": "ALLOCATEDQUANTITY",
+            "perspective": "Inventory_Transactions",
+            "category": "inventory_management",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/inventory_allocated_20260703_000005.sql",
+            "sme_justification": "Allocated quantity per part: sum of open customer-order-line quantities committed against on-hand stock. Dataset derivation over customer_order_line \u2014 the approved snippet is the definition.",
+            "validation_status": "APPROVED",
+            "binding_key": "inventory_allocated_20260703_000005",
+            "created_at": "2026-07-03T00:00:05Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-07-03T00:00:05Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "customer_order",
+                    "customer_order_line",
+                    "part"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "customer_order",
+                        "column_a": "order_id",
+                        "table_b": "customer_order_line",
+                        "column_b": "order_id",
+                        "join_type": "INNER"
+                    },
+                    {
+                        "table_a": "customer_order_line",
+                        "column_a": "part_id",
+                        "table_b": "part",
+                        "column_b": "part_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.629065+00:00"
+            }
+        },
+        "suppliers_supplierscorecard_20260601_000001": {
+            "concept_anchor": "DELIVERYPERFORMANCESUPPLIER",
+            "perspective": "Quality",
+            "category": "supplier_performance",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/suppliers_supplierscorecard_20260601_000001.sql",
+            "sme_justification": "Active supplier list with category, certification level, lead time, and performance rating \u2014 core supplier scorecard query against live suppliers table",
+            "validation_status": "APPROVED",
+            "binding_key": "suppliers_supplierscorecard_20260601_000001",
+            "created_at": "2026-06-01T00:00:01Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-06-01T00:00:01Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "suppliers"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.631449+00:00"
+            }
+        },
+        "suppliers_outsideservicesuppliers_20260601_000002": {
+            "concept_anchor": "DELIVERYPERFORMANCESUPPLIER",
+            "perspective": "Work_Orders",
+            "category": "supplier_performance",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/suppliers_outsideservicesuppliers_20260601_000002.sql",
+            "sme_justification": "Outside-service supplier list (NADCAP-certified vendors for heat treat, NDT, anodize, plating) \u2014 used when routing operations to outside vendors",
+            "validation_status": "APPROVED",
+            "binding_key": "suppliers_outsideservicesuppliers_20260601_000002",
+            "created_at": "2026-06-01T00:00:02Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-06-01T00:00:02Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "suppliers"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.633341+00:00"
+            }
+        },
+        "operations_workorderstatus_20260601_000003": {
+            "concept_anchor": "ORDERLIFECYCLESTATE",
+            "perspective": "Manufacturing",
+            "category": "production_analytics",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/operations_workorderstatus_20260601_000003.sql",
+            "sme_justification": "Work order status summary grouped by lifecycle state with quantity and cost rollup \u2014 primary production planning query against live work_order table",
+            "validation_status": "APPROVED",
+            "binding_key": "operations_workorderstatus_20260601_000003",
+            "created_at": "2026-06-01T00:00:03Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-06-01T00:00:03Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "work_order"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.635907+00:00"
+            }
+        },
+        "operations_workordercostdetail_20260601_000004": {
+            "concept_anchor": "ORDERLIFECYCLESTATE",
+            "perspective": "General_Ledger",
+            "category": "production_analytics",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/operations_workordercostdetail_20260601_000004.sql",
+            "sme_justification": "Per-work-order cost breakdown (labor, burden, outside service, material) for WIP valuation and job costing \u2014 joins against live work_order table",
+            "validation_status": "APPROVED",
+            "binding_key": "operations_workordercostdetail_20260601_000004",
+            "created_at": "2026-06-01T00:00:04Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-06-01T00:00:04Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "work_order"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.638768+00:00"
+            }
+        },
+        "payables_purchaseorderstatus_20260601_000005": {
+            "concept_anchor": "ORDERACCOUNTINGSTATE",
+            "perspective": "Payables",
+            "category": "delivery_performance",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/payables_purchaseorderstatus_20260601_000005.sql",
+            "sme_justification": "Purchase order status list with supplier name, type, dates, and value \u2014 core AP dashboard query joining purchase_order to suppliers",
+            "validation_status": "APPROVED",
+            "binding_key": "payables_purchaseorderstatus_20260601_000005",
+            "created_at": "2026-06-01T00:00:05Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-06-01T00:00:05Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "purchase_order",
+                    "suppliers"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "purchase_order",
+                        "column_a": "supplier_id",
+                        "table_b": "suppliers",
+                        "column_b": "supplier_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.640677+00:00"
+            }
+        },
+        "payables_openpobysupp_20260601_000006": {
+            "concept_anchor": "DELIVERYPERFORMANCEFINANCE",
+            "perspective": "Payables",
+            "category": "supplier_performance",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/payables_openpobysupp_20260601_000006.sql",
+            "sme_justification": "Open PO spend aggregated by supplier with count and total value \u2014 payables aging and supplier spend analysis joining purchase_order to suppliers",
+            "validation_status": "APPROVED",
+            "binding_key": "payables_openpobysupp_20260601_000006",
+            "created_at": "2026-06-01T00:00:06Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-06-01T00:00:06Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "purchase_order",
+                    "suppliers"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "purchase_order",
+                        "column_a": "supplier_id",
+                        "table_b": "suppliers",
+                        "column_b": "supplier_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.643294+00:00"
+            }
+        },
+        "finance_ncm_cost_20260208_150000": {
+            "concept_anchor": "DEFECTSEVERITYCOST",
+            "perspective": "Finance",
+            "category": "cost_analysis",
+            "logic_type": "DIRECT",
+            "file_path": "hf-space-inventory-sqlgen/app_schema/ground_truth/finance_ncm_cost_20260208_150000.sql",
+            "sme_justification": "NCM cost analysis with repair and scrap cost aggregation for financial defect severity assessment",
+            "validation_status": "ARCHIVED",
+            "binding_key": "finance_ncm_cost_20260208_150000",
+            "created_at": "2026-02-08T15:00:00Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-02-08T15:01:00Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "quality_defectseverityquality_20260208_150100": {
+            "concept_anchor": "DEFECTSEVERITYQUALITY",
+            "perspective": "Quality",
+            "category": "quality_trending",
+            "logic_type": "DIRECT",
+            "file_path": "hf-space-inventory-sqlgen/app_schema/ground_truth/quality_defectseverityquality_20260208_150100.sql",
+            "sme_justification": "Quality-focused defect severity with root cause and quality score for trending analysis",
+            "validation_status": "ARCHIVED",
+            "binding_key": "quality_defectseverityquality_20260208_150100",
+            "created_at": "2026-02-08T15:01:00Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-02-08T15:01:30Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "customer_defectseveritycustomer_20260208_150200": {
+            "concept_anchor": "DEFECTSEVERITYCUSTOMER",
+            "perspective": "Customer",
+            "category": "customer_impact",
+            "logic_type": "DIRECT",
+            "file_path": "hf-space-inventory-sqlgen/app_schema/ground_truth/customer_defectseveritycustomer_20260208_150200.sql",
+            "sme_justification": "Customer impact tracking for defect severity with complaint and notification data",
+            "validation_status": "ARCHIVED",
+            "binding_key": "customer_defectseveritycustomer_20260208_150200",
+            "created_at": "2026-02-08T15:02:00Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-02-08T15:02:30Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "operations_deliveryperformanceops_20260208_160001": {
+            "concept_anchor": "DELIVERYPERFORMANCEOPS",
+            "perspective": "Operations",
+            "category": "delivery_performance",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/operations_deliveryperformanceops_20260208_160001.sql",
+            "sme_justification": "Seeded from ground truth: DeliveryPerformanceOps \u2014 Operations perspective - Daily logistics tracking for route optimization and warehouse scheduling",
+            "validation_status": "ARCHIVED",
+            "binding_key": "operations_deliveryperformanceops_20260208_160001",
+            "created_at": "2026-02-08T23:07:56Z",
+            "approved_by": "seed_initial_load",
+            "approved_at": "2026-02-08T23:07:56Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "quality_deliveryperformancesupplier_20260208_160002": {
+            "concept_anchor": "DELIVERYPERFORMANCESUPPLIER",
+            "perspective": "Quality",
+            "category": "delivery_performance",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/quality_deliveryperformancesupplier_20260208_160002.sql",
+            "sme_justification": "Seeded from ground truth: DeliveryPerformanceSupplier \u2014 Supplier perspective - Vendor scorecard metrics for evaluation and contract negotiations",
+            "validation_status": "ARCHIVED",
+            "binding_key": "quality_deliveryperformancesupplier_20260208_160002",
+            "created_at": "2026-02-08T23:07:56Z",
+            "approved_by": "seed_initial_load",
+            "approved_at": "2026-02-08T23:07:56Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "finance_deliveryperformancefinance_20260208_160003": {
+            "concept_anchor": "DELIVERYPERFORMANCEFINANCE",
+            "perspective": "Finance",
+            "category": "delivery_performance",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/finance_deliveryperformancefinance_20260208_160003.sql",
+            "sme_justification": "Seeded from ground truth: DeliveryPerformanceFinance \u2014 Finance perspective - Late delivery penalties and cost impact for P&L reporting",
+            "validation_status": "ARCHIVED",
+            "binding_key": "finance_deliveryperformancefinance_20260208_160003",
+            "created_at": "2026-02-08T23:07:56Z",
+            "approved_by": "seed_initial_load",
+            "approved_at": "2026-02-08T23:07:56Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "quality_defectseverityquality_20260208_160004": {
+            "concept_anchor": "DEFECTSEVERITYQUALITY",
+            "perspective": "Quality",
+            "category": "quality_control",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/quality_defectseverityquality_20260208_160004.sql",
+            "sme_justification": "Seeded from ground truth: Daily Defect Rate by Product Line \u2014 Calculate defect rate percentage for each product line by date",
+            "validation_status": "ARCHIVED",
+            "binding_key": "quality_defectseverityquality_20260208_160004",
+            "created_at": "2026-02-08T23:07:56Z",
+            "approved_by": "seed_initial_load",
+            "approved_at": "2026-02-08T23:07:56Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "quality_ncmdispositionquality_20260208_160005": {
+            "concept_anchor": "NCMDISPOSITIONQUALITY",
+            "perspective": "Quality",
+            "category": "quality_control",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/quality_ncmdispositionquality_20260208_160005.sql",
+            "sme_justification": "Seeded from ground truth: Non-Conformant Materials Summary \u2014 Track NCM status and corrective action progress",
+            "validation_status": "ARCHIVED",
+            "binding_key": "quality_ncmdispositionquality_20260208_160005",
+            "created_at": "2026-02-08T23:07:56Z",
+            "approved_by": "seed_initial_load",
+            "approved_at": "2026-02-08T23:07:56Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "quality_defectseverityquality_20260208_160006": {
+            "concept_anchor": "DEFECTSEVERITYQUALITY",
+            "perspective": "Quality",
+            "category": "quality_control",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/quality_defectseverityquality_20260208_160006.sql",
+            "sme_justification": "Seeded from ground truth: Quality Incidents by Severity \u2014 Aggregate quality incidents by severity level",
+            "validation_status": "ARCHIVED",
+            "binding_key": "quality_defectseverityquality_20260208_160006",
+            "created_at": "2026-02-08T23:07:56Z",
+            "approved_by": "seed_initial_load",
+            "approved_at": "2026-02-08T23:07:56Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "operations_deliveryperformanceops_20260208_160007": {
+            "concept_anchor": "DELIVERYPERFORMANCEOPS",
+            "perspective": "Operations",
+            "category": "supplier_performance",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/operations_deliveryperformanceops_20260208_160007.sql",
+            "sme_justification": "Seeded from ground truth: Supplier On-Time Delivery Performance \u2014 Calculate supplier delivery performance metrics",
+            "validation_status": "ARCHIVED",
+            "binding_key": "operations_deliveryperformanceops_20260208_160007",
+            "created_at": "2026-02-08T23:07:56Z",
+            "approved_by": "seed_initial_load",
+            "approved_at": "2026-02-08T23:07:56Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "quality_deliveryperformancesupplier_20260208_160008": {
+            "concept_anchor": "DELIVERYPERFORMANCESUPPLIER",
+            "perspective": "Quality",
+            "category": "supplier_performance",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/quality_deliveryperformancesupplier_20260208_160008.sql",
+            "sme_justification": "Seeded from ground truth: Supplier Quality Scorecard \u2014 Comprehensive supplier quality metrics",
+            "validation_status": "ARCHIVED",
+            "binding_key": "quality_deliveryperformancesupplier_20260208_160008",
+            "created_at": "2026-02-08T23:07:56Z",
+            "approved_by": "seed_initial_load",
+            "approved_at": "2026-02-08T23:07:56Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "operations_oeeoperational_20260208_160009": {
+            "concept_anchor": "OEEOPERATIONAL",
+            "perspective": "Operations",
+            "category": "equipment_reliability",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/operations_oeeoperational_20260208_160009.sql",
+            "sme_justification": "Seeded from ground truth: Overall Equipment Effectiveness (OEE) \u2014 Calculate OEE metrics by equipment",
+            "validation_status": "ARCHIVED",
+            "binding_key": "operations_oeeoperational_20260208_160009",
+            "created_at": "2026-02-08T23:07:56Z",
+            "approved_by": "seed_initial_load",
+            "approved_at": "2026-02-08T23:07:56Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "operations_equipmentstatemaintenance_20260208_160010": {
+            "concept_anchor": "EQUIPMENTSTATEMAINTENANCE",
+            "perspective": "Operations",
+            "category": "equipment_reliability",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/operations_equipmentstatemaintenance_20260208_160010.sql",
+            "sme_justification": "Seeded from ground truth: Downtime Analysis by Category \u2014 Aggregate downtime events by category",
+            "validation_status": "ARCHIVED",
+            "binding_key": "operations_equipmentstatemaintenance_20260208_160010",
+            "created_at": "2026-02-08T23:07:56Z",
+            "approved_by": "seed_initial_load",
+            "approved_at": "2026-02-08T23:07:56Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "operations_failureseverityproduction_20260208_160011": {
+            "concept_anchor": "FAILURESEVERITYPRODUCTION",
+            "perspective": "Operations",
+            "category": "equipment_reliability",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/operations_failureseverityproduction_20260208_160011.sql",
+            "sme_justification": "Seeded from ground truth: Equipment Failure Analysis (MTBF) \u2014 Mean Time Between Failures analysis",
+            "validation_status": "ARCHIVED",
+            "binding_key": "operations_failureseverityproduction_20260208_160011",
+            "created_at": "2026-02-08T23:07:56Z",
+            "approved_by": "seed_initial_load",
+            "approved_at": "2026-02-08T23:07:56Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "operations_orderlifecyclestate_20260208_160012": {
+            "concept_anchor": "ORDERLIFECYCLESTATE",
+            "perspective": "Operations",
+            "category": "production_analytics",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/operations_orderlifecyclestate_20260208_160012.sql",
+            "sme_justification": "Seeded from ground truth: Production Schedule Adherence \u2014 Compare planned vs actual production",
+            "validation_status": "ARCHIVED",
+            "binding_key": "operations_orderlifecyclestate_20260208_160012",
+            "created_at": "2026-02-08T23:07:56Z",
+            "approved_by": "seed_initial_load",
+            "approved_at": "2026-02-08T23:07:56Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "operations_oeeoperational_20260208_160013": {
+            "concept_anchor": "OEEOPERATIONAL",
+            "perspective": "Operations",
+            "category": "production_analytics",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/operations_oeeoperational_20260208_160013.sql",
+            "sme_justification": "Seeded from ground truth: Production Line Performance \u2014 Aggregate production metrics by line",
+            "validation_status": "ARCHIVED",
+            "binding_key": "operations_oeeoperational_20260208_160013",
+            "created_at": "2026-02-08T23:07:56Z",
+            "approved_by": "seed_initial_load",
+            "approved_at": "2026-02-08T23:07:56Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "finance_defectseveritycost_20260208_160014": {
+            "concept_anchor": "DEFECTSEVERITYCOST",
+            "perspective": "Finance",
+            "category": "production_analytics",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/finance_defectseveritycost_20260208_160014.sql",
+            "sme_justification": "Seeded from ground truth: Quality Cost Analysis \u2014 Track quality-related costs by category",
+            "validation_status": "ARCHIVED",
+            "binding_key": "finance_defectseveritycost_20260208_160014",
+            "created_at": "2026-02-08T23:07:56Z",
+            "approved_by": "seed_initial_load",
+            "approved_at": "2026-02-08T23:07:56Z",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "quality_ncm_cost_20260209_193816": {
+            "concept_anchor": "NCM_COST",
+            "perspective": "Quality",
+            "category": "Quality",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/_archived/quality_ncm_cost_20260209_193816.sql",
+            "sme_justification": "test capa",
+            "validation_status": "ARCHIVED",
+            "binding_key": "quality_ncm_cost_20260209_193816",
+            "created_at": "2026-02-09T19:38:16.162929",
+            "reviewed_at": "2026-04-10T17:34:25.176158",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "gt_ncm_by_employee_20260210_230752": {
+            "concept_anchor": "NCM_BY_EMPLOYEE",
+            "perspective": "Pending",
+            "category": "Quality",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/_archived/gt_ncm_by_employee_20260210_230752.sql",
+            "sme_justification": "Auto-created from Ground Truth: NCM by Employee \u2014 Links non-conformant materials to assigned employees for accountability tracking",
+            "validation_status": "ARCHIVED",
+            "binding_key": "gt_ncm_by_employee_20260210_230752",
+            "created_at": "2026-02-10T23:07:52.850232",
+            "reviewed_at": "2026-04-10T17:34:07.938805",
+            "archived_reason": "References empty PoC tables dropped in drop_poc_tables migration"
+        },
+        "operations_oeeoperational_20260604_000007": {
+            "concept_anchor": "OEEOPERATIONAL",
+            "perspective": "Operations",
+            "category": "equipment_reliability",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/operations_oeeoperational_20260604_000007.sql",
+            "sme_justification": "OEE operational proxy: actual vs. scheduled run hours per active shop resource, grouped by resource for shift-level line efficiency and throughput reporting",
+            "validation_status": "APPROVED",
+            "binding_key": "operations_oeeoperational_20260604_000007",
+            "created_at": "2026-06-04T00:00:07Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-06-04T00:00:07Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "operation",
+                    "shop_resource"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "operation",
+                        "column_a": "resource_id",
+                        "table_b": "shop_resource",
+                        "column_b": "resource_id",
+                        "join_type": "RIGHT"
+                    }
+                ],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.647320+00:00"
+            }
+        },
+        "operations_oeestrategic_20260604_000008": {
+            "concept_anchor": "OEESTRATEGIC",
+            "perspective": "Operations",
+            "category": "equipment_reliability",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/operations_oeestrategic_20260604_000008.sql",
+            "sme_justification": "OEE strategic proxy: cost efficiency and utilization aggregated by resource type for capital investment, capacity planning, and equipment replacement decisions",
+            "validation_status": "APPROVED",
+            "binding_key": "operations_oeestrategic_20260604_000008",
+            "created_at": "2026-06-04T00:00:08Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-06-04T00:00:08Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "operation",
+                    "shop_resource"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "operation",
+                        "column_a": "resource_id",
+                        "table_b": "shop_resource",
+                        "column_b": "resource_id",
+                        "join_type": "RIGHT"
+                    }
+                ],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.651944+00:00"
+            }
+        },
+        "operations_equipmentstatemaintenance_20260604_000009": {
+            "concept_anchor": "EQUIPMENTSTATEMAINTENANCE",
+            "perspective": "Operations",
+            "category": "equipment_reliability",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/operations_equipmentstatemaintenance_20260604_000009.sql",
+            "sme_justification": "Maintenance scheduling view: open-operation count, remaining run hours, and last close date per active shop resource \u2014 identifies resources due for PM or blocked by open operations",
+            "validation_status": "APPROVED",
+            "binding_key": "operations_equipmentstatemaintenance_20260604_000009",
+            "created_at": "2026-06-04T00:00:09Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-06-04T00:00:09Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "operation",
+                    "shop_resource"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "operation",
+                        "column_a": "resource_id",
+                        "table_b": "shop_resource",
+                        "column_b": "resource_id",
+                        "join_type": "RIGHT"
+                    }
+                ],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.658622+00:00"
+            }
+        },
+        "operations_equipmentstatecompliance_20260604_000010": {
+            "concept_anchor": "EQUIPMENTSTATECOMPLIANCE",
+            "perspective": "Quality",
+            "category": "equipment_reliability",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/operations_equipmentstatecompliance_20260604_000010.sql",
+            "sme_justification": "Compliance view: cert-required receipts with inspection and certificate status joined to shop resources \u2014 verifies cert-required material processed on each resource has a current certificate",
+            "validation_status": "APPROVED",
+            "binding_key": "operations_equipmentstatecompliance_20260604_000010",
+            "created_at": "2026-06-04T00:00:10Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-06-04T00:00:10Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "certification",
+                    "operation",
+                    "receiving",
+                    "shop_resource",
+                    "work_order"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "certification",
+                        "column_a": "receipt_id",
+                        "table_b": "receiving",
+                        "column_b": "receipt_id",
+                        "join_type": "RIGHT"
+                    },
+                    {
+                        "table_a": "operation",
+                        "column_a": "resource_id",
+                        "table_b": "shop_resource",
+                        "column_b": "resource_id",
+                        "join_type": "INNER"
+                    },
+                    {
+                        "table_a": "operation",
+                        "column_a": "wo_id",
+                        "table_b": "work_order",
+                        "column_b": "wo_id",
+                        "join_type": "INNER"
+                    },
+                    {
+                        "table_a": "receiving",
+                        "column_a": "part_id",
+                        "table_b": "work_order",
+                        "column_b": "part_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.662369+00:00"
+            }
+        },
+        "operations_equipmentstateproduction_20260604_000011": {
+            "concept_anchor": "EQUIPMENTSTATEPRODUCTION",
+            "perspective": "Manufacturing",
+            "category": "equipment_reliability",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/operations_equipmentstateproduction_20260604_000011.sql",
+            "sme_justification": "Production scheduling view: active shop resources with their current open work order operations, scheduled windows, and estimated cost \u2014 used by supervisors for machine loading and scheduling decisions",
+            "validation_status": "APPROVED",
+            "binding_key": "operations_equipmentstateproduction_20260604_000011",
+            "created_at": "2026-06-04T00:00:11Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-06-04T00:00:11Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "operation",
+                    "shop_resource",
+                    "work_order"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "operation",
+                        "column_a": "resource_id",
+                        "table_b": "shop_resource",
+                        "column_b": "resource_id",
+                        "join_type": "INNER"
+                    },
+                    {
+                        "table_a": "operation",
+                        "column_a": "wo_id",
+                        "table_b": "work_order",
+                        "column_b": "wo_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.666391+00:00"
+            }
+        },
+        "sales_ordercustomerstate_20260604_000012": {
+            "concept_anchor": "ORDERCUSTOMERSTATE",
+            "perspective": "Customer",
+            "category": "production_analytics",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/sales_ordercustomerstate_20260604_000012.sql",
+            "sme_justification": "Customer-facing work order delivery status: classifies each order as On Time, Late, Overdue, At Risk, or On Schedule against required delivery dates",
+            "validation_status": "APPROVED",
+            "binding_key": "sales_ordercustomerstate_20260604_000012",
+            "created_at": "2026-06-04T00:00:12Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-06-04T00:00:12Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "work_order"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.670584+00:00"
+            }
+        },
+        "operations_deliveryperformanceops_20260604_000013": {
+            "concept_anchor": "DELIVERYPERFORMANCEOPS",
+            "perspective": "Operations",
+            "category": "delivery_performance",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/operations_deliveryperformanceops_20260604_000013.sql",
+            "sme_justification": "Operations delivery performance: inbound on-time receipt rate per PO compared to required date \u2014 flags overdue open POs for expediting and tracks material delivery reliability",
+            "validation_status": "APPROVED",
+            "binding_key": "operations_deliveryperformanceops_20260604_000013",
+            "created_at": "2026-06-04T00:00:13Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-06-04T00:00:13Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "purchase_order",
+                    "receiving",
+                    "suppliers"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "purchase_order",
+                        "column_a": "po_id",
+                        "table_b": "receiving",
+                        "column_b": "po_id",
+                        "join_type": "LEFT"
+                    },
+                    {
+                        "table_a": "purchase_order",
+                        "column_a": "supplier_id",
+                        "table_b": "suppliers",
+                        "column_b": "supplier_id",
+                        "join_type": "LEFT"
+                    }
+                ],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.676917+00:00"
+            }
+        },
+        "inventory_safetystock_20260703_000006": {
+            "concept_anchor": "SAFETYSTOCK",
+            "perspective": "Inventory_Transactions",
+            "category": "inventory_management",
+            "logic_type": "DERIVED",
+            "file_path": "app_schema/ground_truth/sql_snippets/inventory_safetystock_20260703_000006.sql",
+            "sme_justification": "Safety stock proxy: reorder point minus estimated lead-time demand (avg daily demand from customer_order_line \u00d7 lead_time_days). Column anchor: part.reorder_point encodes the safety buffer in this ERP (ROP = SS + LT demand). Dataset derivation \u2014 approved snippet is the authoritative definition.",
+            "validation_status": "APPROVED",
+            "binding_key": "inventory_safetystock_20260703_000006",
+            "created_at": "2026-07-03T00:00:06Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-07-03T00:00:06Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "customer_order",
+                    "customer_order_line",
+                    "part",
+                    "work_order"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "customer_order",
+                        "column_a": "order_id",
+                        "table_b": "customer_order_line",
+                        "column_b": "order_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [
+                    {
+                        "reason": "cross_join",
+                        "detail": "horizon"
+                    },
+                    {
+                        "reason": "unresolved_columns",
+                        "detail": "od.part_id = p.part_id"
+                    }
+                ],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.724050+00:00"
+            }
+        },
+        "inventory_leadtimedemand_20260703_000007": {
+            "concept_anchor": "LEADTIMEDEMAND",
+            "perspective": "Inventory_Transactions",
+            "category": "inventory_management",
+            "logic_type": "DERIVED",
+            "file_path": "app_schema/ground_truth/sql_snippets/inventory_leadtimedemand_20260703_000007.sql",
+            "sme_justification": "Lead-time demand: average daily demand (customer_order_line) \u00d7 part.lead_time_days. Column anchor: part.lead_time_days is the planning window factor. Dataset derivation \u2014 approved snippet is the authoritative definition.",
+            "validation_status": "APPROVED",
+            "binding_key": "inventory_leadtimedemand_20260703_000007",
+            "created_at": "2026-07-03T00:00:07Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-07-03T00:00:07Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "customer_order",
+                    "customer_order_line",
+                    "part",
+                    "work_order"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "customer_order",
+                        "column_a": "order_id",
+                        "table_b": "customer_order_line",
+                        "column_b": "order_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [
+                    {
+                        "reason": "cross_join",
+                        "detail": "horizon"
+                    },
+                    {
+                        "reason": "unresolved_columns",
+                        "detail": "od.part_id = p.part_id"
+                    }
+                ],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.751704+00:00"
+            }
+        },
+        "inventory_minimumstock_20260703_000008": {
+            "concept_anchor": "MINIMUMSTOCKQUANTITY",
+            "perspective": "Inventory_Transactions",
+            "category": "inventory_management",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/inventory_minimumstock_20260703_000008.sql",
+            "sme_justification": "Minimum stock quantity: part.reorder_point is the min level in a min/max replenishment policy. Direct column read with below/at/above status classification.",
+            "validation_status": "APPROVED",
+            "binding_key": "inventory_minimumstock_20260703_000008",
+            "created_at": "2026-07-03T00:00:08Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-07-03T00:00:08Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "part"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.755672+00:00"
+            }
+        },
+        "inventory_maximumstock_20260703_000009": {
+            "concept_anchor": "MAXIMUMSTOCKQUANTITY",
+            "perspective": "Inventory_Transactions",
+            "category": "inventory_management",
+            "logic_type": "DERIVED",
+            "file_path": "app_schema/ground_truth/sql_snippets/inventory_maximumstock_20260703_000009.sql",
+            "sme_justification": "Maximum stock quantity: reorder_point + average historical PO replenishment qty (po_line.quantity aggregated per part). Column anchor: po_line.quantity captures the observed replenishment lot size. Dataset derivation \u2014 approved snippet is the authoritative definition.",
+            "validation_status": "APPROVED",
+            "binding_key": "inventory_maximumstock_20260703_000009",
+            "created_at": "2026-07-03T00:00:09Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-07-03T00:00:09Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "part",
+                    "po_line",
+                    "purchase_order"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "po_line",
+                        "column_a": "po_id",
+                        "table_b": "purchase_order",
+                        "column_b": "po_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [
+                    {
+                        "reason": "unresolved_columns",
+                        "detail": "pol.part_id = p.part_id"
+                    }
+                ],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.761454+00:00"
+            }
+        },
+        "inventory_eoq_20260703_000010": {
+            "concept_anchor": "ECONOMICORDERQUANTITY",
+            "perspective": "Inventory_Transactions",
+            "category": "inventory_management",
+            "logic_type": "DERIVED",
+            "file_path": "app_schema/ground_truth/sql_snippets/inventory_eoq_20260703_000010.sql",
+            "sme_justification": "EOQ proxy: average observed PO order quantity (po_line.quantity) reflects the historically settled replenishment lot size. Without D/S/H cost parameters in this schema the empirical PO quantity is the closest available proxy. Column anchor: po_line.quantity. Falls back to reorder_point when no PO history exists.",
+            "validation_status": "APPROVED",
+            "binding_key": "inventory_eoq_20260703_000010",
+            "created_at": "2026-07-03T00:00:10Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-07-03T00:00:10Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "part",
+                    "po_line",
+                    "purchase_order"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "po_line",
+                        "column_a": "po_id",
+                        "table_b": "purchase_order",
+                        "column_b": "po_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [
+                    {
+                        "reason": "unresolved_columns",
+                        "detail": "pol.part_id = p.part_id"
+                    }
+                ],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-04T07:51:10.768821+00:00"
+            }
+        },
+        "payables_ordersreceived_20260706_000001": {
+            "concept_anchor": "ORDERSRECEIVED",
+            "perspective": "Payables",
+            "category": "delivery_performance",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/payables_ordersreceived_20260706_000001.sql",
+            "sme_justification": "Purchase orders fully received \u2014 every po_line has receipt coverage >= ordered quantity, computed line-by-line via receiving_line.po_line_id; core receiving-completion procurement view",
+            "validation_status": "APPROVED",
+            "binding_key": "payables_ordersreceived_20260706_000001",
+            "created_at": "2026-07-06T00:00:01Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-07-06T00:00:01Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "po_line",
+                    "purchase_order",
+                    "receiving",
+                    "receiving_line"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "po_line",
+                        "column_a": "po_id",
+                        "table_b": "purchase_order",
+                        "column_b": "po_id",
+                        "join_type": "INNER"
+                    },
+                    {
+                        "table_a": "receiving",
+                        "column_a": "receipt_id",
+                        "table_b": "receiving_line",
+                        "column_b": "receipt_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [
+                    {
+                        "reason": "unresolved_columns",
+                        "detail": "r.po_line_id = pl.line_id"
+                    }
+                ],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-06T05:13:07.070810+00:00"
+            }
+        },
+        "payables_ordersunreceived_20260706_000002": {
+            "concept_anchor": "ORDERSUNRECEIVED",
+            "perspective": "Payables",
+            "category": "delivery_performance",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/payables_ordersunreceived_20260706_000002.sql",
+            "sme_justification": "Purchase orders unreceived or short \u2014 at least one po_line not fully received, with unreceived vs short line counts and outstanding quantity; core expediting / open-order procurement view",
+            "validation_status": "APPROVED",
+            "binding_key": "payables_ordersunreceived_20260706_000002",
+            "created_at": "2026-07-06T00:00:02Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-07-06T00:00:02Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "po_line",
+                    "purchase_order",
+                    "receiving_line"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "po_line",
+                        "column_a": "po_id",
+                        "table_b": "purchase_order",
+                        "column_b": "po_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [
+                    {
+                        "reason": "unresolved_columns",
+                        "detail": "r.po_line_id = pl.line_id"
+                    }
+                ],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-06T05:13:07.077220+00:00"
+            }
+        },
+        "payables_uninvoicedreceipts_20260706_000003": {
+            "concept_anchor": "UNINVOICEDRECEIPTS",
+            "perspective": "Payables",
+            "category": "delivery_performance",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/payables_uninvoicedreceipts_20260706_000003.sql",
+            "sme_justification": "Uninvoiced receipts exception report (three-way match): receipts with at least one receiving line whose non-cancelled payable coverage is below the received quantity or absent entirely \u2014 refactored from the private-repo ground truth '203 3WM Uninvoiced Receipts'",
+            "validation_status": "APPROVED",
+            "binding_key": "payables_uninvoicedreceipts_20260706_000003",
+            "created_at": "2026-07-06T00:00:03Z",
+            "approved_by": "seed_data",
+            "approved_at": "2026-07-06T00:00:03Z",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "payable_line",
+                    "payables",
+                    "purchase_order",
+                    "receiving",
+                    "receiving_line",
+                    "suppliers"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "payable_line",
+                        "column_a": "invoice_id",
+                        "table_b": "payables",
+                        "column_b": "invoice_id",
+                        "join_type": "INNER"
+                    },
+                    {
+                        "table_a": "purchase_order",
+                        "column_a": "po_id",
+                        "table_b": "receiving",
+                        "column_b": "po_id",
+                        "join_type": "INNER"
+                    },
+                    {
+                        "table_a": "purchase_order",
+                        "column_a": "supplier_id",
+                        "table_b": "suppliers",
+                        "column_b": "supplier_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "seed_backfill",
+                "signed_off_at": "2026-07-06T19:58:05.305686+00:00"
+            }
+        },
+        "gt_open_order_backlog_aging_20260706_185147": {
+            "concept_anchor": "OPEN_ORDER_BACKLOG_AGING",
+            "perspective": "Pending",
+            "category": "receivables",
+            "logic_type": "DIRECT",
+            "file_path": "/home/runner/workspace/hf-space-inventory-sqlgen/app_schema/ground_truth/sql_snippets/gt_open_order_backlog_aging_20260706_185147.sql",
+            "sme_justification": "Auto-created from Ground Truth: Open Order Backlog Aging \u2014 How old is the open order backlog? Open orders with value and days since booking, aged against a data-derived as-of date.",
+            "validation_status": "PENDING",
+            "binding_key": "gt_open_order_backlog_aging_20260706_185147",
+            "created_at": "2026-07-06T18:51:47.431547"
+        },
+        "payables_partialreceiptaccrual_20260708_000004": {
+            "binding_key": "payables_partialreceiptaccrual_20260708_000004",
+            "category": "delivery_performance",
+            "perspective": "Payables",
+            "concept_anchor": "PARTIALRECEIPTACCRUAL",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/payables_partialreceiptaccrual_20260708_000004.sql",
+            "sme_justification": "Partial-receipt accrual exposure (PO-line accrual): PO lines with received qty > 0 but < ordered qty whose received portion is not fully voucher-covered \u2014 open PRA exposure per the TWM accrual guides (docs/my-mrp-kb/07-three-way-match)",
+            "validation_status": "APPROVED",
+            "created_at": "2026-07-08T04:02:59.199327+00:00",
+            "approved_at": "2026-07-08T04:02:59.199327+00:00",
+            "approved_by": "twm_accrual_guides",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "payable_line",
+                    "payables",
+                    "po_line",
+                    "purchase_order",
+                    "receiving",
+                    "receiving_line",
+                    "suppliers"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "payable_line",
+                        "column_a": "invoice_id",
+                        "table_b": "payables",
+                        "column_b": "invoice_id",
+                        "join_type": "INNER"
+                    },
+                    {
+                        "table_a": "po_line",
+                        "column_a": "po_id",
+                        "table_b": "purchase_order",
+                        "column_b": "po_id",
+                        "join_type": "INNER"
+                    },
+                    {
+                        "table_a": "purchase_order",
+                        "column_a": "supplier_id",
+                        "table_b": "suppliers",
+                        "column_b": "supplier_id",
+                        "join_type": "INNER"
+                    },
+                    {
+                        "table_a": "receiving",
+                        "column_a": "receipt_id",
+                        "table_b": "receiving_line",
+                        "column_b": "receipt_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [
+                    {
+                        "reason": "unresolved_columns",
+                        "detail": "inv.po_line_id = pl.line_id"
+                    },
+                    {
+                        "reason": "unresolved_columns",
+                        "detail": "rcv.po_line_id = pl.line_id"
+                    }
+                ],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "twm_accrual_guides",
+                "signed_off_at": "2026-07-08T04:02:59.199327+00:00"
+            }
+        },
+        "payables_threewaymatchcoverage_20260708_000005": {
+            "binding_key": "payables_threewaymatchcoverage_20260708_000005",
+            "category": "delivery_performance",
+            "perspective": "Payables",
+            "concept_anchor": "THREEWAYMATCHCOVERAGE",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/payables_threewaymatchcoverage_20260708_000005.sql",
+            "sme_justification": "Consolidated three-way-match coverage spine at receipt/voucher row grain: flat base-table joins only (no CTEs/derived tables), po_line->purchase_order INNER then all LEFT, covering Not Received / Received-Uninvoiced / Partially Invoiced / Matched / Over-Invoiced states; sibling exception views become filters over this spine",
+            "validation_status": "APPROVED",
+            "created_at": "2026-07-08T06:04:21.164937+00:00",
+            "approved_at": "2026-07-08T06:04:21.164937+00:00",
+            "approved_by": "twm_accrual_guides",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "payable_line",
+                    "payables",
+                    "po_line",
+                    "purchase_order",
+                    "receiving",
+                    "receiving_line",
+                    "suppliers"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "payable_line",
+                        "column_a": "invoice_id",
+                        "table_b": "payables",
+                        "column_b": "invoice_id",
+                        "join_type": "LEFT"
+                    },
+                    {
+                        "table_a": "payable_line",
+                        "column_a": "receipt_line_id",
+                        "table_b": "receiving_line",
+                        "column_b": "receipt_line_id",
+                        "join_type": "RIGHT"
+                    },
+                    {
+                        "table_a": "po_line",
+                        "column_a": "line_id",
+                        "table_b": "receiving_line",
+                        "column_b": "po_line_id",
+                        "join_type": "LEFT"
+                    },
+                    {
+                        "table_a": "po_line",
+                        "column_a": "po_id",
+                        "table_b": "purchase_order",
+                        "column_b": "po_id",
+                        "join_type": "INNER"
+                    },
+                    {
+                        "table_a": "purchase_order",
+                        "column_a": "supplier_id",
+                        "table_b": "suppliers",
+                        "column_b": "supplier_id",
+                        "join_type": "LEFT"
+                    },
+                    {
+                        "table_a": "receiving",
+                        "column_a": "receipt_id",
+                        "table_b": "receiving_line",
+                        "column_b": "receipt_id",
+                        "join_type": "RIGHT"
+                    }
+                ],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "twm_accrual_guides",
+                "signed_off_at": "2026-07-08T06:04:21.164937+00:00"
+            }
+        },
+        "ledger_inventorybalance_20260719_000001": {
+            "binding_key": "ledger_inventorybalance_20260719_000001",
+            "category": "job_costing_ledger",
+            "perspective": "General_Ledger",
+            "concept_anchor": "GLINVENTORYBALANCE",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/ledger_inventorybalance_20260719_000001.sql",
+            "sme_justification": "Signed running balance per perpetual inventory bucket (RM/WIP/FG) from the gl_* sub-ledgers; optional :as_of_date horizon guard. Single UNION ALL over the three bucket tables, no joins.",
+            "validation_status": "APPROVED",
+            "created_at": "2026-07-19T03:58:13.687759+00:00",
+            "approved_at": "2026-07-19T03:58:13.687759+00:00",
+            "approved_by": "ledger_nlq_governed_queries",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "gl_finished_goods_inventory",
+                    "gl_raw_materials_inventory",
+                    "gl_wip_inventory"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "ledger_nlq_governed_queries",
+                "signed_off_at": "2026-07-19T03:58:13.687759+00:00"
+            }
+        },
+        "ledger_jobcostsummary_20260719_000002": {
+            "binding_key": "ledger_jobcostsummary_20260719_000002",
+            "category": "job_costing_ledger",
+            "perspective": "General_Ledger",
+            "concept_anchor": "GLJOBCOSTSUMMARY",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/ledger_jobcostsummary_20260719_000002.sql",
+            "sme_justification": "Job cost roll-up by work order and cost element (LABOR/MATERIAL/BURDEN/SERVICE) from gl_job_cost_detail; optional :job_id filter guard and :start_date/:end_date horizon guards.",
+            "validation_status": "APPROVED",
+            "created_at": "2026-07-19T03:58:13.759122+00:00",
+            "approved_at": "2026-07-19T03:58:13.759122+00:00",
+            "approved_by": "ledger_nlq_governed_queries",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "gl_job_cost_detail"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "ledger_nlq_governed_queries",
+                "signed_off_at": "2026-07-19T03:58:13.759122+00:00"
+            }
+        },
+        "ledger_eventtrace_20260719_000003": {
+            "binding_key": "ledger_eventtrace_20260719_000003",
+            "category": "job_costing_ledger",
+            "perspective": "General_Ledger",
+            "concept_anchor": "GLEVENTTRACE",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/ledger_eventtrace_20260719_000003.sql",
+            "sme_justification": "Chronological audit trace of gl_events postings for a job, carrying the originating source document (table + row key); optional :job_id filter and :start_date/:end_date horizon guards.",
+            "validation_status": "APPROVED",
+            "created_at": "2026-07-19T03:58:13.767896+00:00",
+            "approved_at": "2026-07-19T03:58:13.767896+00:00",
+            "approved_by": "ledger_nlq_governed_queries",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "gl_events"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "ledger_nlq_governed_queries",
+                "signed_off_at": "2026-07-19T03:58:13.767896+00:00"
+            }
+        },
+        "ledger_materialissued_20260719_000004": {
+            "binding_key": "ledger_materialissued_20260719_000004",
+            "category": "job_costing_ledger",
+            "perspective": "General_Ledger",
+            "concept_anchor": "GLMATERIALISSUED",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/ledger_materialissued_20260719_000004.sql",
+            "sme_justification": "Material issued over a period: RM_ISSUE postings (signed negative out of the RM bucket) reported as positive issued value per part and job; :start_date/:end_date horizon guards.",
+            "validation_status": "APPROVED",
+            "created_at": "2026-07-19T03:58:13.777617+00:00",
+            "approved_at": "2026-07-19T03:58:13.777617+00:00",
+            "approved_by": "ledger_nlq_governed_queries",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "gl_raw_materials_inventory"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "ledger_nlq_governed_queries",
+                "signed_off_at": "2026-07-19T03:58:13.777617+00:00"
+            }
+        },
+        "ledger_fgproduced_20260719_000005": {
+            "binding_key": "ledger_fgproduced_20260719_000005",
+            "category": "job_costing_ledger",
+            "perspective": "General_Ledger",
+            "concept_anchor": "GLFGPRODUCED",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/ledger_fgproduced_20260719_000005.sql",
+            "sme_justification": "Finished goods produced over a period: FG_COMPLETION postings (signed positive into the FG bucket) per part and job; :start_date/:end_date horizon guards.",
+            "validation_status": "APPROVED",
+            "created_at": "2026-07-19T03:58:13.786597+00:00",
+            "approved_at": "2026-07-19T03:58:13.786597+00:00",
+            "approved_by": "ledger_nlq_governed_queries",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "gl_finished_goods_inventory"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "ledger_nlq_governed_queries",
+                "signed_off_at": "2026-07-19T03:58:13.786597+00:00"
+            }
+        },
+        "receivables_araging_20260724_000001": {
+            "binding_key": "receivables_araging_20260724_000001",
+            "category": "receivables",
+            "perspective": "Receivables",
+            "concept_anchor": "ARAGING",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/receivables_araging_20260724_000001.sql",
+            "sme_justification": "AR aging report (Open + Disputed invoices only) bucketed by days past due_date \u2014 Current / 1-30 / 31-60 / >60 days \u2014 relative to a data-derived as-of date (MAX payment_date from Paid invoices). After collect_june2026_ar, all pre-July-2026 invoices are Paid and return zero rows here, confirming the cash-to-cash cycle closed correctly.",
+            "validation_status": "APPROVED",
+            "created_at": "2026-07-24T00:00:01Z",
+            "approved_at": "2026-07-24T00:00:01Z",
+            "approved_by": "ar_aging_governed_view",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "receivable"
+                ],
+                "join_edges": [],
+                "unresolved_joins": [
+                    {
+                        "reason": "cross_join",
+                        "detail": "as_of"
+                    }
+                ],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "ar_aging_governed_view",
+                "signed_off_at": "2026-07-24T00:00:01Z"
+            }
+        },
+        "receivables_cashreceipts_20260724_000002": {
+            "binding_key": "receivables_cashreceipts_20260724_000002",
+            "category": "receivables",
+            "perspective": "Receivables",
+            "concept_anchor": "ARCASHRECEIPTS",
+            "logic_type": "DIRECT",
+            "file_path": "app_schema/ground_truth/sql_snippets/receivables_cashreceipts_20260724_000002.sql",
+            "sme_justification": "Cash receipts by invoice \u2014 every receivable_payment installment joined to its invoice header with running cumulative-paid and remaining-balance, so partial collections are visible line by line. Answers 'what payments came in this month?' and 'show cash receipts against invoice X'.",
+            "validation_status": "APPROVED",
+            "created_at": "2026-07-24T05:47:35.613992+00:00",
+            "approved_at": "2026-07-24T05:47:35.613992+00:00",
+            "approved_by": "cash_receipts_governed_view",
+            "structural_fingerprint": {
+                "base_tables": [
+                    "receivable",
+                    "receivable_payment"
+                ],
+                "join_edges": [
+                    {
+                        "table_a": "receivable",
+                        "column_a": "invoice_id",
+                        "table_b": "receivable_payment",
+                        "column_b": "invoice_id",
+                        "join_type": "INNER"
+                    }
+                ],
+                "unresolved_joins": [],
+                "extractor": "sqlglot-sqlite-base-tables+join-edges-v2",
+                "dialect": "sqlite",
+                "signed_off_by": "cash_receipts_governed_view",
+                "signed_off_at": "2026-07-24T05:47:35.613992+00:00"
+            }
+        },
+        "gt_supplier_ap_total_due_20260920_181003": {
+            "concept_anchor": "SUPPLIER_AP_TOTAL_DUE",
+            "perspective": "Pending",
+            "category": "Delivery",
+            "logic_type": "DIRECT",
+            "file_path": "/home/williamt/git/product-ontime-analysis/hf-space-inventory-sqlgen/app_schema/ground_truth/sql_snippets/gt_supplier_ap_total_due_20260920_181003.sql",
+            "sme_justification": "Auto-created from Ground Truth: Supplier AP Total Due \u2014 What is our AP exposure by supplier, defined as total due \u2014 the sum of all unpaid (Open or Disputed) invoice amounts, with overdue split.",
+            "validation_status": "PENDING",
+            "binding_key": "gt_supplier_ap_total_due_20260920_181003",
+            "created_at": "2026-09-20T18:10:03.665866"
+        }
     }
-  }
 }

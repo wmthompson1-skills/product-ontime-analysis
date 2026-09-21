@@ -6,8 +6,15 @@ weights, binding keys, plus perspective bridge rows) into ArangoDB as
 a named graph.
 
 Graph structure:
-  Vertex collections: intents, concepts, bindings, tables, columns
+  Vertex collections: intents, concepts, query_bindings, tables, columns
   Edge collections:   elevates, bound_to, contains
+
+  NOTE: the vertex collection is named `query_bindings`, not `bindings` —
+  this Arango instance already has a pre-existing, unrelated `bindings`
+  EDGE collection (field_components -> concepts UDF mappings from a
+  different real-data pipeline). Reusing that name here would crash on
+  ArangoDB's edge-attribute validation (ERR 1233) and must not be revisited
+  without first confirming the `bindings` collection's role.
   Bridge document collections (composite-key, not graph edges):
     Perspective_Intents   key = (perspective, intent)
     Perspective_Concepts  key = (perspective, concept)
@@ -45,7 +52,7 @@ MANIFEST_PATH = os.path.join(os.path.dirname(__file__), "app_schema", "ground_tr
 
 GRAPH_NAME = os.environ.get("ARANGO_DB", "manufacturing_graph")
 
-VERTEX_COLLECTIONS = ["intents", "concepts", "bindings", "tables", "columns"]
+VERTEX_COLLECTIONS = ["intents", "concepts", "query_bindings", "tables", "columns"]
 EDGE_COLLECTIONS = ["elevates", "bound_to", "contains", "references"]
 BRIDGE_COLLECTIONS = ["Perspective_Intents", "Perspective_Concepts"]
 
@@ -61,7 +68,7 @@ EDGE_DEFINITIONS = [
     {
         "edge_collection": "bound_to",
         "from_vertex_collections": ["intents"],
-        "to_vertex_collections": ["bindings"],
+        "to_vertex_collections": ["query_bindings"],
     },
     {
         "edge_collection": "contains",
@@ -209,10 +216,17 @@ def get_arango_db(client):
 def ensure_graph(db) -> None:
     if db.has_graph(GRAPH_NAME):
         graph = db.graph(GRAPH_NAME)
-        existing_edge_defs = {ed["edge_collection"] for ed in graph.edge_definitions()}
+        existing_edge_defs = {ed["edge_collection"]: ed for ed in graph.edge_definitions()}
         for ed in EDGE_DEFINITIONS:
-            if ed["edge_collection"] not in existing_edge_defs:
+            existing = existing_edge_defs.get(ed["edge_collection"])
+            if existing is None:
                 graph.create_edge_definition(**ed)
+            elif (sorted(existing["from_vertex_collections"]) != sorted(ed["from_vertex_collections"])
+                  or sorted(existing["to_vertex_collections"]) != sorted(ed["to_vertex_collections"])):
+                # Vertex collections drifted from what this script declares (e.g. a
+                # rename) — bring the live graph definition back in line. This never
+                # touches any document data, only the edge definition's collection set.
+                graph.replace_edge_definition(**ed)
     else:
         db.create_graph(
             GRAPH_NAME,
@@ -640,7 +654,7 @@ def sync_graph(db_path: str = SQLITE_DB_PATH,
         report.vertices_synced = {
             "intents": len(data["intents"]),
             "concepts": len(data["concepts"]),
-            "bindings": len(manifest.get("approved_snippets", {})),
+            "query_bindings": len(manifest.get("approved_snippets", {})),
             "Perspective_Intents": len(data["intent_perspectives"]),
             "Perspective_Concepts": len(data["perspective_concepts"]),
         }
@@ -661,7 +675,7 @@ def sync_graph(db_path: str = SQLITE_DB_PATH,
 
     graph = db.graph(GRAPH_NAME)
 
-    bridge_keys = ["intents", "concepts", "bindings", "Perspective_Intents", "Perspective_Concepts"]
+    bridge_keys = ["intents", "concepts", "query_bindings", "Perspective_Intents", "Perspective_Concepts"]
     v_synced = {k: 0 for k in bridge_keys}
     v_new = {k: 0 for k in bridge_keys}
     v_updated = {k: 0 for k in bridge_keys}
@@ -707,7 +721,7 @@ def sync_graph(db_path: str = SQLITE_DB_PATH,
         except Exception as e:
             report.warnings.append(f"Concept '{key}': {e}")
 
-    bindings_coll = graph.vertex_collection("bindings")
+    bindings_coll = graph.vertex_collection("query_bindings")
     approved = manifest.get("approved_snippets", {})
     for bk, entry in approved.items():
         doc = {
@@ -724,11 +738,11 @@ def sync_graph(db_path: str = SQLITE_DB_PATH,
         }
         try:
             is_new = _upsert_vertex(bindings_coll, bk, doc)
-            v_synced["bindings"] += 1
+            v_synced["query_bindings"] += 1
             if is_new:
-                v_new["bindings"] += 1
+                v_new["query_bindings"] += 1
             else:
-                v_updated["bindings"] += 1
+                v_updated["query_bindings"] += 1
         except Exception as e:
             report.warnings.append(f"Binding '{bk}': {e}")
 
@@ -835,7 +849,7 @@ def sync_graph(db_path: str = SQLITE_DB_PATH,
         bk = intent.get("primary_binding_key")
         if bk and bk in approved:
             from_id = f"intents/{intent['intent_name']}"
-            to_id = f"bindings/{bk}"
+            to_id = f"query_bindings/{bk}"
             key = f"{intent['intent_name']}__{bk}"
             doc = {
                 "relationship": "BOUND_TO",

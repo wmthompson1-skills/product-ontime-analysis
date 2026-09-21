@@ -25,6 +25,16 @@ SCHEMA_NODES_HEALTH_MAP: dict[str, str] = {
     "tables": "schema_nodes",
 }
 
+# Some ArangoDB collections (``tables`` in particular) carry legacy documents
+# from earlier schema/key-scheme generations alongside the current canonical
+# ones (see docs/plans/arango-key-guardrail.md). A raw collection .count()
+# would compare stale + current against SQLite's current-only count and
+# always report a false mismatch. Collections listed here are counted via an
+# AQL query filtered to the given key prefix instead of a raw count.
+CANONICAL_KEY_PREFIX: dict[str, str] = {
+    "tables": "table::",
+}
+
 
 def run_bridge_health_check_impl(
     sqlite_db_path: str,
@@ -135,10 +145,19 @@ def run_bridge_health_check_impl(
     arango_counts: dict = {}
     for coll_name in bridge_map:
         try:
-            if db.has_collection(coll_name):
-                arango_counts[coll_name] = db.collection(coll_name).count()
-            else:
+            if not db.has_collection(coll_name):
                 arango_counts[coll_name] = -1
+                continue
+            prefix = CANONICAL_KEY_PREFIX.get(coll_name)
+            if prefix:
+                cursor = db.aql.execute(
+                    f"RETURN LENGTH(FOR d IN {coll_name} "
+                    "FILTER STARTS_WITH(d._key, @prefix) RETURN 1)",
+                    bind_vars={"prefix": prefix},
+                )
+                arango_counts[coll_name] = next(iter(cursor))
+            else:
+                arango_counts[coll_name] = db.collection(coll_name).count()
         except Exception as exc:
             arango_counts[coll_name] = f"ERROR: {exc}"
 

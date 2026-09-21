@@ -133,11 +133,35 @@ def insert_receipt_lines(cur, po_id, recv_date, fractions=None):
                 continue
         else:
             frac = 1.0
-        if cur.execute(
-            "SELECT 1 FROM receiving WHERE po_id=? AND part_id=?", (po_id, part_id)
-        ).fetchone():
-            continue
         qty_recv = round(qty_ord * frac, 1)
+
+        existing = cur.execute(
+            "SELECT receipt_id, quantity_received FROM receiving "
+            "WHERE po_id=? AND part_id=?", (po_id, part_id)
+        ).fetchone()
+        if existing:
+            receipt_id, existing_qty = existing
+            if existing_qty >= qty_recv:
+                # Already covers the target fraction (e.g. a prior run of this
+                # migration, or the base seeder happened to receive enough) —
+                # idempotent no-op.
+                continue
+            # The base seeder (seed_erp_synthetic.py) always receives a
+            # partial quantity for Partial/Closed POs. Top up that existing
+            # row to the target quantity instead of skipping it outright —
+            # skipping would leave the line under-received relative to what
+            # this PO's engineered scenario (or a full receipt) requires.
+            cur.execute(
+                "UPDATE receiving SET quantity_received=? WHERE receipt_id=?",
+                (qty_recv, receipt_id),
+            )
+            cur.execute(
+                "UPDATE receiving_line SET quantity_received=? WHERE receipt_id=?",
+                (qty_recv, receipt_id),
+            )
+            inserted += 1
+            continue
+
         cur.execute(
             "INSERT INTO receiving (po_id, supplier_id, part_id, quantity_ordered, "
             "quantity_received, receipt_date, inspection_status, cert_required) "

@@ -54,6 +54,13 @@ hf-space-inventory-sqlgen/app_schema/manufacturing.db
 # Runtime-generated CI/health-check artifacts
 drift_report.txt
 
+# Dev server run artifacts (pid files, stdout/stderr logs)
+*.pid
+*.out
+
+# ArangoDB collection backups (ad-hoc JSON dumps, not source)
+arango_backups/
+
 # Knowledge loop ingestion runner output (versioned run artifacts)
 mrp_ingest_artifacts/
 

@@ -153,7 +153,16 @@ def _make_sqlite_conn(counts: dict):
 
 
 def _make_arango_db(collection_counts: dict):
-    """Return a fake ArangoDB db object with has_collection / collection.count()."""
+    """Return a fake ArangoDB db object with has_collection / collection.count()
+    and an .aql.execute() that resolves the LENGTH(FOR d IN <coll> ...) queries
+    bridge_health.py issues for key-prefix-filtered collections (e.g. 'tables').
+    The fake doesn't model raw-vs-filtered counts separately — it just returns
+    whatever count the test configured for that collection either way, since
+    these tests are about the in-sync/out-of-sync comparison, not the AQL
+    filtering itself (that's exercised live against real ArangoDB).
+    """
+    import re
+
     class _Coll:
         def __init__(self, n):
             self._n = n
@@ -161,7 +170,15 @@ def _make_arango_db(collection_counts: dict):
         def count(self):
             return self._n
 
+    class _Aql:
+        def execute(self, query, bind_vars=None):
+            m = re.search(r"FOR d IN (\w+)", query)
+            coll_name = m.group(1) if m else None
+            return iter([collection_counts.get(coll_name, 0)])
+
     class _DB:
+        aql = _Aql()
+
         def has_collection(self, name):
             return name in collection_counts
 
@@ -464,7 +481,15 @@ def test_schema_nodes_tables_count_match() -> None:
         conn.close()
 
     if db.has_collection("tables"):
-        tables_n = db.collection("tables").count()
+        # Raw .count() includes legacy pre-canonical-key documents that
+        # coexist with the current table::X-keyed ones (see
+        # docs/plans/arango-key-guardrail.md) — filter to the canonical
+        # prefix so this compares current state to current state, matching
+        # bridge_health.py's CANONICAL_KEY_PREFIX handling.
+        tables_n = next(iter(db.aql.execute(
+            "RETURN LENGTH(FOR d IN tables "
+            "FILTER STARTS_WITH(d._key, 'table::') RETURN 1)"
+        )))
     else:
         tables_n = -1
 

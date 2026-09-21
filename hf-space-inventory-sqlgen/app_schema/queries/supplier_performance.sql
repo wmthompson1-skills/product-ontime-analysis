@@ -132,6 +132,7 @@ ORDER BY estimated_ap_exposure DESC;
 --           ledger. No estimates or cost proxies.
 -- ============================================================
 -- Query: Supplier AP Total Due
+-- Binding: gt_supplier_ap_total_due_20260920_181003
 -- Description: What is our AP exposure by supplier, defined as total due — the sum of all unpaid (Open or Disputed) invoice amounts, with overdue split.
 SELECT
     s.supplier_id,

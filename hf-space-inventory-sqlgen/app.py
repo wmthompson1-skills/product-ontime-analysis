@@ -5273,7 +5273,7 @@ Check that perspective-concept and intent-concept relationships are seeded.
                 # `(:param IS NULL OR col op :param)` which short-circuits
                 # cleanly when the param is NULL.
                 sql_clean = re.sub(r":\w+", "NULL", sql_text.strip())
-                result = run_sql_query(sql_clean)
+                result = execute_readonly_sql(sql_clean)
                 if result.get("error"):
                     return (
                         gr.update(value=f"Error: {result['error']}", visible=True),

@@ -463,7 +463,10 @@ INSERT INTO schema_concepts (concept_name, description, domain) VALUES
 
 -- OEE concepts
 ('OEEOperational', 'OEE for shift/line performance tracking', 'operations'),
-('OEEStrategic', 'OEE for capital investment decisions', 'finance');
+('OEEStrategic', 'OEE for capital investment decisions', 'finance'),
+
+-- Receivables concepts
+('ARCashReceiptAmount', 'Cash receipts applied against AR invoices, read from receivable_payment.amount', 'finance');
 
 -- Seed data: Link ambiguous fields to concepts
 -- NOTE: All concept_field rows referencing empty PoC tables were removed in

@@ -467,12 +467,17 @@ def seed_receiving(cur):
     existing_po_ids = {r[0] for r in cur.execute(
         "SELECT DISTINCT po_id FROM receiving").fetchall()}
 
+    exclude_clause = ""
+    params: list = []
+    if existing_po_ids:
+        exclude_clause = f" AND pl.po_id NOT IN ({','.join('?' for _ in existing_po_ids)})"
+        params = list(existing_po_ids)
+
     lines = cur.execute(
         "SELECT pl.po_id, pl.part_id, pl.quantity, po.supplier_id "
         "FROM po_line pl JOIN purchase_order po USING(po_id) "
-        "WHERE po.status IN ('Partial','Closed') AND pl.po_id NOT IN "
-        f"({','.join('?' for _ in existing_po_ids) or 'NULL'})",
-        list(existing_po_ids) or [],
+        "WHERE po.status IN ('Partial','Closed')" + exclude_clause,
+        params,
     ).fetchall()
 
     start_d = date(2024, 2, 1)

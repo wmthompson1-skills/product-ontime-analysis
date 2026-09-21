@@ -98,6 +98,11 @@ STEPS = [
     # 100+ plannable parts for the MRP dropdown (runs LAST: after the prune so
     # the demo-scale trim never sees — or removes — the expansion rows)
     ("migrations/expand_mrp_part_universe.py", []),
+    # backfill customer_order_line demand coverage for any WO part that still
+    # has zero lines (a WO can never link on a part with no candidate at all,
+    # regardless of scoring) — runs after the MRP expansion so it sees the
+    # final WO/part set, and right before the linkage gate that needs it
+    ("migrations/add_demand_lines_for_orphan_wo_parts.py", []),
     # demand linkage (WO -> customer_order_line, >=50%), safety stock, forecast
     # demand source (runs after the expansion so its WOs/CO lines participate)
     ("migrations/add_demand_linkage_and_forecast.py", []),

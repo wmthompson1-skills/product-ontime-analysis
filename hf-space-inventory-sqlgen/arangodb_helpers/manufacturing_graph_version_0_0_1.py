@@ -121,17 +121,18 @@ def references_edge_key(
     contains edge — the column key alone is not unique. The key encodes BOTH
     endpoints so re-sync is a deterministic, idempotent upsert.
 
-    Format: ``fk::{CHILD_TABLE}.{CHILD_COL}->{PARENT_TABLE}.{PARENT_COL}``
-    (all uppercase).
+    Format: ``fk::{CHILD_TABLE}.{CHILD_COL}__TO__{PARENT_TABLE}.{PARENT_COL}``
+    (all uppercase). Uses ``__TO__`` rather than ``->`` because ArangoDB
+    document keys may not contain ``<`` or ``>``.
 
     Example::
 
         references_edge_key("receiving", "po_id", "purchase_order", "po_id")
-        # → "fk::RECEIVING.PO_ID->PURCHASE_ORDER.PO_ID"
+        # → "fk::RECEIVING.PO_ID__TO__PURCHASE_ORDER.PO_ID"
     """
     return (
         f"fk::{child_table.strip().upper()}.{child_column.strip().upper()}"
-        f"->{parent_table.strip().upper()}.{parent_column.strip().upper()}"
+        f"__TO__{parent_table.strip().upper()}.{parent_column.strip().upper()}"
     )
 
 

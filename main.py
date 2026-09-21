@@ -782,11 +782,12 @@ def langextract_demo():
 def run_defect_analysis():
     """Run the defect rate analysis and return results"""
     import subprocess
+    import sys
     import os
-    
+
     try:
         # Run the analysis script
-        result = subprocess.run(['python', 'simple_defect_analyzer.py'], 
+        result = subprocess.run([sys.executable, 'simple_defect_analyzer.py'],
                               capture_output=True, text=True, timeout=60)
         
         if result.returncode == 0:
@@ -893,7 +894,8 @@ analyzer.generate_report()
             f.write(analyzer_script)
         
         import subprocess
-        result = subprocess.run(['python', 'custom_analysis.py'], 
+        import sys
+        result = subprocess.run([sys.executable, 'custom_analysis.py'],
                               capture_output=True, text=True, timeout=60)
         
         # Clean up files
@@ -1047,7 +1049,8 @@ def run_ontime_analysis():
     """Run sample on-time delivery analysis"""
     try:
         import subprocess
-        result = subprocess.run(['python', 'ontime_delivery_analyzer.py'], 
+        import sys
+        result = subprocess.run([sys.executable, 'ontime_delivery_analyzer.py'],
                               capture_output=True, text=True, timeout=60)
         
         if result.returncode == 0:
@@ -1136,7 +1139,8 @@ analyzer.generate_report()
             f.write(analyzer_script)
         
         import subprocess
-        result = subprocess.run(['python', 'custom_ontime_analysis.py'], 
+        import sys
+        result = subprocess.run([sys.executable, 'custom_ontime_analysis.py'],
                               capture_output=True, text=True, timeout=60)
         
         # Clean up files
