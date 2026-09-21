@@ -466,7 +466,10 @@ INSERT INTO schema_concepts (concept_name, description, domain) VALUES
 ('OEEStrategic', 'OEE for capital investment decisions', 'finance'),
 
 -- Receivables concepts
-('ARCashReceiptAmount', 'Cash receipts applied against AR invoices, read from receivable_payment.amount', 'finance');
+('ARCashReceiptAmount', 'Cash receipts applied against AR invoices, read from receivable_payment.amount', 'finance'),
+
+-- Payables / three-way-match concepts
+('ThreeWayMatchState', 'PO-Receipt-Invoice match state from payables.three_way_match_status', 'finance');
 
 -- Seed data: Link ambiguous fields to concepts
 -- NOTE: All concept_field rows referencing empty PoC tables were removed in

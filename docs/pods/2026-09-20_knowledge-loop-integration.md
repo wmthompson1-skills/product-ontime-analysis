@@ -1,4 +1,4 @@
-William, yes — if the librarian is the driver of **local knowledge ingestion**, then the coding agent needs a **clean, authoritative listing** of *every file and folder the librarian consumes*.
+ the librarian is the driver of **local knowledge ingestion**, then the coding agent needs a **clean, authoritative listing** of *every file and folder the librarian consumes*.
 
 And you're right to flag this now:
 the *Knowledge Loop* is embodied in **docs/my-mrp-kb/**, not in **docs/plans/** — and the librarian's ingestion pipeline depends on this folder.

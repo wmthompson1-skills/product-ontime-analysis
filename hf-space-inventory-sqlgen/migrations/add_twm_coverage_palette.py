@@ -41,7 +41,7 @@ SNIPPET_PATH = os.path.join(
     HF_DIR, "app_schema", "ground_truth", "sql_snippets",
     "payables_threewaymatchcoverage_20260708_000005.sql")
 
-INTENT_ID = 18  # supplier_payables_exposure (payables intent)
+INTENT_NAME = "supplier_payables_exposure"  # resolved by name — see add_supplier_payables_wiring.py
 COVERAGE_NAME = "Three-Way Match Coverage"
 EXCEPTIONS_NAME = "Three-Way Match Exceptions"
 COVERAGE_INDEX = 7
@@ -75,6 +75,17 @@ def main():
         raise SystemExit(f"FAIL: database not found at {DB_PATH}")
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
+
+    row = cur.execute(
+        "SELECT intent_id FROM schema_intents WHERE intent_name = ?",
+        (INTENT_NAME,),
+    ).fetchone()
+    if not row:
+        raise SystemExit(
+            f"FAIL: intent {INTENT_NAME!r} not found — run "
+            "add_supplier_payables_wiring.py first")
+    INTENT_ID = row[0]
+    print(f"  resolved intent_id = {INTENT_ID}")
     print(f"add_twm_coverage_palette: wiring '{COVERAGE_NAME}' "
           f"into the Query Palette (intent {INTENT_ID})")
 

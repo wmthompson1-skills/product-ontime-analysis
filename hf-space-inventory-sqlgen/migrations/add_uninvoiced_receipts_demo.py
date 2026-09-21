@@ -167,25 +167,36 @@ def main():
     # is now the 6th "-- Query:" marker (0-based index 5) and Three-Way
     # moved to index 6. schema_intent_queries has a unique index on
     # (intent_id, query_file, query_index), so bump Three-Way first, then
-    # insert Uninvoiced at 5 under the same payables intent (18).
-    # Idempotent: the guarded UPDATE matches nothing on re-run, and the
-    # INSERT OR IGNORE is a no-op once the row exists.
+    # insert Uninvoiced at 5 under the same payables intent. Intent ID is
+    # resolved BY NAME (never hardcode autoincrement IDs — see
+    # add_supplier_payables_wiring.py's 2026-09-21 fix). Idempotent: the
+    # guarded UPDATE matches nothing on re-run, and the INSERT OR IGNORE is
+    # a no-op once the row exists.
+    payables_intent = cur.execute(
+        "SELECT intent_id FROM schema_intents WHERE intent_name = 'supplier_payables_exposure'"
+    ).fetchone()
+    if not payables_intent:
+        raise SystemExit(
+            "FAIL: intent 'supplier_payables_exposure' not found — run "
+            "add_supplier_payables_wiring.py first")
+    payables_intent_id = payables_intent[0]
+
     cur.execute(
         """UPDATE schema_intent_queries SET query_index = 6
-           WHERE intent_id = 18 AND query_file = 'supplier_performance.sql'
+           WHERE intent_id = ? AND query_file = 'supplier_performance.sql'
              AND query_name = 'Three-Way Match Exceptions'
-             AND query_index = 5""")
+             AND query_index = 5""", (payables_intent_id,))
     if cur.rowcount:
         print("  ~ Three-Way Match Exceptions: query_index 5 -> 6 "
               "(file order shifted)")
     cur.execute(
         """INSERT OR IGNORE INTO schema_intent_queries
                (intent_id, query_category, query_file, query_index, query_name)
-           VALUES (18, 'supplier_performance', 'supplier_performance.sql',
-                   5, 'Uninvoiced Receipts')""")
+           VALUES (?, 'supplier_performance', 'supplier_performance.sql',
+                   5, 'Uninvoiced Receipts')""", (payables_intent_id,))
     if cur.rowcount:
-        print("  + intent_query 'Uninvoiced Receipts' wired to "
-              "supplier_payables_exposure (intent 18)")
+        print(f"  + intent_query 'Uninvoiced Receipts' wired to "
+              f"supplier_payables_exposure (intent {payables_intent_id})")
     else:
         print("  = intent_query 'Uninvoiced Receipts' already wired, skipping")
     conn.commit()

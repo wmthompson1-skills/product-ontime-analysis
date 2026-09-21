@@ -79,6 +79,11 @@ STEPS = [
     ("migrations/add_warehouse_part_location.py", []),
     ("migrations/add_supplier_payables_wiring.py", []),
     ("migrations/add_receivables_wiring.py", []),
+    # selector wiring: was never actually in the bootstrap chain before
+    # (dead code, bugs latent) — added 2026-09-21 alongside the ID-collision
+    # fix in both files.
+    ("migrations/add_crm_customer_intents.py", []),
+    ("migrations/add_customer_order_perspective.py", []),
     ("migrations/add_customer_order_completed_date.py", []),
     # documented high-fidelity chain (order is mandatory)
     ("migrations/add_operation_type.py", []),
