@@ -1,7 +1,7 @@
 warehouse_id,description,name,site_id,region_id,independent,mrp_exempt,created_at
-WH-1A,Main Stores — Main Assembly Plant — Wichita KS,SITE-1 Main Stores,SITE-1,US-Central,Y,N,2026-07-05 10:36:29
-WH-1B,Floor Stock / WIP — Main Assembly Plant — Wichita KS,SITE-1 Floor Stock,SITE-1,US-Central,N,N,2026-07-05 10:36:29
-WH-2A,Main Stores — Machining Center — Phoenix AZ,SITE-2 Main Stores,SITE-2,US-Southwest,Y,N,2026-07-05 10:36:29
-WH-2B,Floor Stock / WIP — Machining Center — Phoenix AZ,SITE-2 Floor Stock,SITE-2,US-Southwest,N,N,2026-07-05 10:36:29
-WH-3A,Main Stores — Composite Fab — Tacoma WA,SITE-3 Main Stores,SITE-3,US-Northwest,Y,N,2026-07-05 10:36:29
-WH-3B,Floor Stock / WIP — Composite Fab — Tacoma WA,SITE-3 Floor Stock,SITE-3,US-Northwest,N,N,2026-07-05 10:36:29
+WH-1A,Main Stores — Main Assembly Plant — Wichita KS,SITE-1 Main Stores,SITE-1,US-Central,Y,N,2026-09-21 14:37:59
+WH-1B,Floor Stock / WIP — Main Assembly Plant — Wichita KS,SITE-1 Floor Stock,SITE-1,US-Central,N,N,2026-09-21 14:37:59
+WH-2A,Main Stores — Machining Center — Phoenix AZ,SITE-2 Main Stores,SITE-2,US-Southwest,Y,N,2026-09-21 14:37:59
+WH-2B,Floor Stock / WIP — Machining Center — Phoenix AZ,SITE-2 Floor Stock,SITE-2,US-Southwest,N,N,2026-09-21 14:37:59
+WH-3A,Main Stores — Composite Fab — Tacoma WA,SITE-3 Main Stores,SITE-3,US-Northwest,Y,N,2026-09-21 14:37:59
+WH-3B,Floor Stock / WIP — Composite Fab — Tacoma WA,SITE-3 Floor Stock,SITE-3,US-Northwest,N,N,2026-09-21 14:37:59

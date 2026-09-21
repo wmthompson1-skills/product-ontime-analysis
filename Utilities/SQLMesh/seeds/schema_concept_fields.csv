@@ -1,53 +1,50 @@
 id,table_name,field_name,concept_id,is_primary_meaning,context_hint,component_index,created_at,variable_name
-1,inventory_transaction,site_id,400,1,Inventory move traced to its warehouse site,1,2026-07-05 20:06:48,
-2,payables,three_way_match_status,401,1,AP three-way match validation state,1,2026-07-05 20:06:48,
-3,customer_order,status,5,1,Order status at shipment = revenue recognition (AR lens),1,2026-07-05 20:06:48,
-4,work_order,status,402,1,Work order shop-floor lifecycle stage,1,2026-07-05 20:06:48,
-5,part,part_class,403,1,Make/buy/raw sourcing class (engineering design intent),1,2026-07-05 20:06:48,
-6,inventory_transaction,type,404,1,Stock in vs out direction of the move,1,2026-07-05 20:06:48,
-7,operation,status,405,1,Routing operation execution state,1,2026-07-05 20:06:48,
-8,work_order,quantity,406,1,Per-unit design basis; batch = N x per-unit requirement,1,2026-07-05 20:06:48,
-9,work_order,quantity,407,1,Production batch / lot size (qty > 1),2,2026-07-05 20:06:48,
-10,customer_order_line,order_qty,406,1,Per-unit design basis multiplier for the ordered line,1,2026-07-05 20:06:48,
-11,customer_order_line,order_qty,407,1,Ordered quantity driving the manufacturing batch (qty > 1),2,2026-07-05 20:06:48,
-12,purchase_order,status,408,1,Purchase order lifecycle state,1,2026-07-05 20:06:48,
-13,receiving,inspection_status,409,1,Inspection disposition of a received shipment,1,2026-07-05 20:06:48,
-14,certification,status,410,1,Validity state of a certification,1,2026-07-05 20:06:48,
-15,certification,cert_type,411,1,Kind of certification held,1,2026-07-05 20:06:48,
-16,requirement,component_type,412,1,"component_type = 'PART' — as-designed routing standard (per-unit, engineering)",1,2026-07-05 20:06:48,
-17,requirement,component_type,413,1,"component_type = 'WORK_ORDER' — as-built actuals (batch, manufacturing)",2,2026-07-05 20:06:48,
-18,part,reorder_point,414,1,Part reorder point — replenishment trigger level,1,2026-07-05 20:06:48,
-19,part,lead_time_days,415,1,Part replenishment lead time (days),1,2026-07-05 20:06:48,
-20,part,on_hand_qty,416,1,Part on-hand stock quantity,1,2026-07-05 20:06:48,
-21,part,on_hand_qty,422,1,Primary stock input to ATP: on-hand qty reduced by open customer-order commitments,2,2026-07-05 20:06:48,
-22,customer_order_line,order_qty,423,1,Per-line order quantity — the raw demand commitment allocated against on-hand stock,3,2026-07-05 20:06:48,
-23,part,reorder_point,417,1,ROP encodes the safety buffer: ROP ≈ SS + lead-time demand,2,2026-07-05 20:06:48,
-24,part,lead_time_days,418,1,Lead-time days — the planning-window factor in the LT demand derivation,2,2026-07-05 20:06:48,
-25,part,reorder_point,419,1,Min-max minimum level = reorder_point (the replenishment floor in this ERP),3,2026-07-05 20:06:48,
-26,po_line,quantity,420,1,Average PO replenishment quantity — upper bound input for the max-stock derivation,1,2026-07-05 20:06:48,
-27,po_line,quantity,421,1,Average observed PO order quantity — empirical EOQ proxy (no D/S/H cost params in schema),2,2026-07-05 20:06:48,
-28,operation,act_run_hrs,18,1,Actual run hours logged against the operation (numerator),1,2026-07-05 20:06:48,act_run_hrs
-29,operation,run_hrs,18,1,Scheduled/standard run hours for the operation (denominator),1,2026-07-05 20:06:48,run_hrs
-30,operation,act_atl_lab_cost,19,1,Actual at-the-operation labour cost (numerator term),1,2026-07-05 20:06:48,act_atl_lab_cost
-31,operation,act_atl_bur_cost,19,1,Actual at-the-operation burden/overhead cost (numerator term),1,2026-07-05 20:06:48,act_atl_bur_cost
-32,operation,act_run_hrs,19,1,Actual run hours (denominator — cost per actual hour),2,2026-07-05 20:06:48,act_run_hrs
-33,receiving,receipt_date,7,1,"Actual goods receipt date (on-time comparison, operational lens)",1,2026-07-05 20:06:48,receipt_date
-34,purchase_order,required_date,7,1,"PO required-by date (on-time comparison, operational lens)",1,2026-07-05 20:06:48,required_date
-35,receiving,receipt_date,8,1,Actual goods receipt date (supplier scorecard lens),2,2026-07-05 20:06:48,receipt_date
-36,purchase_order,required_date,8,1,PO required-by date (supplier scorecard lens),2,2026-07-05 20:06:48,required_date
-37,receiving,receipt_date,9,1,Actual goods receipt date (cost/penalty lens),3,2026-07-05 20:06:48,receipt_date
-38,purchase_order,required_date,9,1,PO required-by date (cost/penalty lens),3,2026-07-05 20:06:48,required_date
-238,gl_events,event_type,4458,1,Posting event class in the ledger audit trail (RM_ISSUE / LABOR / BURDEN / FG_COMPLETION),1,2026-07-19 16:43:38,
-239,gl_job_cost_detail,event_type,4459,1,Cost element of the job-cost line (labor / material / burden per work order),1,2026-07-19 16:43:38,
-240,gl_raw_materials_inventory,amount,4460,1,Signed RM-bucket posting amount — primary input to the running bucket balance,1,2026-07-19 16:43:38,
-241,gl_wip_inventory,amount,4460,1,Signed WIP-bucket posting amount — primary input to the running bucket balance,1,2026-07-19 16:43:38,
-242,gl_finished_goods_inventory,amount,4460,1,Signed FG-bucket posting amount — primary input to the running bucket balance,1,2026-07-19 16:43:38,
-243,gl_raw_materials_inventory,event_type,4461,1,event_type = 'RM_ISSUE' — material issued out of the RM bucket to a job,1,2026-07-19 16:43:38,
-244,gl_finished_goods_inventory,event_type,4462,1,event_type = 'FG_COMPLETION' — finished goods completed into the FG bucket,1,2026-07-19 16:43:38,
-422,receivable_payment,invoice_id,5480,1,AR invoice this payment installment is applied against (FK to receivable),1,2026-07-24 04:53:53,
-423,receivable_payment,amount,5481,1,Dollar amount of cash received in this payment installment,1,2026-07-24 04:53:53,
-424,receivable_payment,payment_date,5482,1,Date the cash payment was received and applied to the AR invoice,1,2026-07-24 04:53:53,
-425,receivable_payment,installment_no,5483,1,Ordinal position of this installment within the payment schedule (1-based),1,2026-07-24 04:53:53,
-597,stg_manufacturing_flat,ncm_cost,2,0,NCM cost field,1,2026-07-26 00:45:11,
-598,stg_manufacturing_flat,quality_score,1,0,Quality score,1,2026-07-26 00:45:11,
-599,stg_manufacturing_flat,customer_impact_flag,3,0,Customer impact flag,1,2026-07-26 00:45:11,
+1,inventory_transaction,site_id,106,1,Inventory move traced to its warehouse site,1,2026-09-21 15:54:10,
+2,payables,three_way_match_status,21,1,AP three-way match validation state,1,2026-09-21 15:54:10,
+3,customer_order,status,5,1,Order status at shipment = revenue recognition (AR lens),1,2026-09-21 15:54:10,
+4,work_order,status,108,1,Work order shop-floor lifecycle stage,1,2026-09-21 15:54:10,
+5,part,part_class,109,1,Make/buy/raw sourcing class (engineering design intent),1,2026-09-21 15:54:10,
+6,inventory_transaction,type,110,1,Stock in vs out direction of the move,1,2026-09-21 15:54:10,
+7,operation,status,111,1,Routing operation execution state,1,2026-09-21 15:54:10,
+8,work_order,quantity,112,1,Per-unit design basis; batch = N x per-unit requirement,1,2026-09-21 15:54:10,
+9,work_order,quantity,113,1,Production batch / lot size (qty > 1),2,2026-09-21 15:54:10,
+10,customer_order_line,order_qty,112,1,Per-unit design basis multiplier for the ordered line,1,2026-09-21 15:54:10,
+11,customer_order_line,order_qty,113,1,Ordered quantity driving the manufacturing batch (qty > 1),2,2026-09-21 15:54:10,
+12,purchase_order,status,114,1,Purchase order lifecycle state,1,2026-09-21 15:54:10,
+13,receiving,inspection_status,115,1,Inspection disposition of a received shipment,1,2026-09-21 15:54:10,
+14,certification,status,116,1,Validity state of a certification,1,2026-09-21 15:54:10,
+15,certification,cert_type,117,1,Kind of certification held,1,2026-09-21 15:54:10,
+16,requirement,component_type,118,1,"component_type = 'PART' — as-designed routing standard (per-unit, engineering)",1,2026-09-21 15:54:10,
+17,requirement,component_type,119,1,"component_type = 'WORK_ORDER' — as-built actuals (batch, manufacturing)",2,2026-09-21 15:54:10,
+18,part,reorder_point,129,1,Part reorder point — replenishment trigger level,1,2026-09-21 15:54:10,
+19,part,lead_time_days,130,1,Part replenishment lead time (days),1,2026-09-21 15:54:10,
+20,part,on_hand_qty,131,1,Part on-hand stock quantity,1,2026-09-21 15:54:10,
+21,part,on_hand_qty,137,1,Primary stock input to ATP: on-hand qty reduced by open customer-order commitments,2,2026-09-21 15:54:10,
+22,customer_order_line,order_qty,138,1,Per-line order quantity — the raw demand commitment allocated against on-hand stock,3,2026-09-21 15:54:10,
+23,part,reorder_point,132,1,ROP encodes the safety buffer: ROP ≈ SS + lead-time demand,2,2026-09-21 15:54:10,
+24,part,lead_time_days,133,1,Lead-time days — the planning-window factor in the LT demand derivation,2,2026-09-21 15:54:10,
+25,part,reorder_point,134,1,Min-max minimum level = reorder_point (the replenishment floor in this ERP),3,2026-09-21 15:54:10,
+26,po_line,quantity,135,1,Average PO replenishment quantity — upper bound input for the max-stock derivation,1,2026-09-21 15:54:10,
+27,po_line,quantity,136,1,Average observed PO order quantity — empirical EOQ proxy (no D/S/H cost params in schema),2,2026-09-21 15:54:10,
+28,gl_events,event_type,124,1,Posting event class in the ledger audit trail (RM_ISSUE / LABOR / BURDEN / FG_COMPLETION),1,2026-09-21 15:54:10,
+29,gl_job_cost_detail,event_type,125,1,Cost element of the job-cost line (labor / material / burden per work order),1,2026-09-21 15:54:10,
+30,gl_raw_materials_inventory,amount,126,1,Signed RM-bucket posting amount — primary input to the running bucket balance,1,2026-09-21 15:54:10,
+31,gl_wip_inventory,amount,126,1,Signed WIP-bucket posting amount — primary input to the running bucket balance,1,2026-09-21 15:54:10,
+32,gl_finished_goods_inventory,amount,126,1,Signed FG-bucket posting amount — primary input to the running bucket balance,1,2026-09-21 15:54:10,
+33,gl_raw_materials_inventory,event_type,127,1,event_type = 'RM_ISSUE' — material issued out of the RM bucket to a job,1,2026-09-21 15:54:10,
+34,gl_finished_goods_inventory,event_type,128,1,event_type = 'FG_COMPLETION' — finished goods completed into the FG bucket,1,2026-09-21 15:54:10,
+35,receivable_payment,invoice_id,120,1,AR invoice this payment installment is applied against (FK to receivable),1,2026-09-21 15:54:10,
+36,receivable_payment,amount,20,1,Dollar amount of cash received in this payment installment,1,2026-09-21 15:54:10,
+37,receivable_payment,payment_date,122,1,Date the cash payment was received and applied to the AR invoice,1,2026-09-21 15:54:10,
+38,receivable_payment,installment_no,123,1,Ordinal position of this installment within the payment schedule (1-based),1,2026-09-21 15:54:10,
+39,operation,act_run_hrs,18,1,Actual run hours logged against the operation (numerator),1,2026-09-21 15:54:10,act_run_hrs
+40,operation,run_hrs,18,1,Scheduled/standard run hours for the operation (denominator),1,2026-09-21 15:54:10,run_hrs
+41,operation,act_atl_lab_cost,19,1,Actual at-the-operation labour cost (numerator term),1,2026-09-21 15:54:10,act_atl_lab_cost
+42,operation,act_atl_bur_cost,19,1,Actual at-the-operation burden/overhead cost (numerator term),1,2026-09-21 15:54:10,act_atl_bur_cost
+43,operation,act_run_hrs,19,1,Actual run hours (denominator — cost per actual hour),2,2026-09-21 15:54:10,act_run_hrs
+44,receiving,receipt_date,7,1,"Actual goods receipt date (on-time comparison, operational lens)",1,2026-09-21 15:54:10,receipt_date
+45,purchase_order,required_date,7,1,"PO required-by date (on-time comparison, operational lens)",1,2026-09-21 15:54:10,required_date
+46,receiving,receipt_date,8,1,Actual goods receipt date (supplier scorecard lens),2,2026-09-21 15:54:10,receipt_date
+47,purchase_order,required_date,8,1,PO required-by date (supplier scorecard lens),2,2026-09-21 15:54:10,required_date
+48,receiving,receipt_date,9,1,Actual goods receipt date (cost/penalty lens),3,2026-09-21 15:54:10,receipt_date
+49,purchase_order,required_date,9,1,PO required-by date (cost/penalty lens),3,2026-09-21 15:54:10,required_date

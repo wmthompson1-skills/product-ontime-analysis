@@ -393,3 +393,189 @@ def validate_join_edges(
             )
 
     return True, None, warnings
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# §4a Topology Gate — scaffolding (docs/plans/graph-aware-fingerprint-plan.md)
+#
+# Beyond validate_join_edges()'s per-edge set-membership test: two checks that
+# reason about the query's join TOPOLOGY as a whole. Both are warn-only —
+# neither is wired into validate_join_edges()'s fail-closed return, they are
+# separate functions an SME-review surface can call alongside it. Nothing here
+# generates or infers a join; both only classify joins an SME already wrote.
+# ─────────────────────────────────────────────────────────────────────────────
+
+def load_pk_lookup(conn) -> dict:
+    """table_name(lower) -> primary-key column_name(lower), from sql_graph_nodes.
+
+    Returns {} (not a failure) when sql_graph_nodes is absent or empty — callers
+    degrade to 'unknown' cardinality rather than raising.
+    """
+    lookup: dict = {}
+    try:
+        cols = {r[1] for r in conn.execute("PRAGMA table_info(sql_graph_nodes)")}
+        if not cols:
+            return lookup
+        rows = conn.execute(
+            "SELECT table_name, column_name FROM sql_graph_nodes "
+            "WHERE node_type='column' AND primary_key=1"
+        ).fetchall()
+    except Exception:
+        return lookup
+    for table_name, column_name in rows:
+        if table_name and column_name:
+            lookup[table_name.lower()] = column_name.lower()
+    return lookup
+
+
+def classify_edge_cardinality(edge: JoinEdge, pk_lookup: dict) -> str:
+    """Classify a canonical edge's cardinality from A's side using PK lookup.
+
+    Returns one of:
+      "one_to_one"   — both column_a and column_b are their table's PK
+      "many_to_one"  — column_b is B's PK, column_a is not A's PK (A:B = N:1)
+      "one_to_many"  — column_a is A's PK, column_b is not B's PK (A:B = 1:N)
+      "unknown"      — neither/PK data unavailable (never asserted as safe)
+    """
+    table_a, col_a, table_b, col_b, _jt = edge
+    a_is_pk = pk_lookup.get(table_a) == col_a
+    b_is_pk = pk_lookup.get(table_b) == col_b
+    if a_is_pk and b_is_pk:
+        return "one_to_one"
+    if b_is_pk and not a_is_pk:
+        return "many_to_one"
+    if a_is_pk and not b_is_pk:
+        return "one_to_many"
+    return "unknown"
+
+
+def _table_adjacency(edges) -> dict:
+    """table -> set of directly-joined tables, from an iterable of JoinEdge."""
+    adj: dict = {}
+    for table_a, _ca, table_b, _cb, _jt in edges:
+        adj.setdefault(table_a, set()).add(table_b)
+        adj.setdefault(table_b, set()).add(table_a)
+    return adj
+
+
+def detect_missing_bridging_entities(
+    query_edges: List[JoinEdge], graph_join_edges: set
+) -> List[dict]:
+    """Classify query edges absent from the graph but bridgeable via one hop.
+
+    For a query edge (A, B) not directly present in ``graph_join_edges`` (a
+    table-level check — same table pair, regardless of column, since the
+    concern here is topology, not the exact column), look for tables M that
+    connect to BOTH A and B in the graph. If any exist, this is a more
+    actionable diagnosis than a bare "join not recognized": route the join
+    through M instead. Returns [] when every query edge already has a direct
+    graph counterpart (including when ``graph_join_edges`` is falsy/None —
+    nothing to compare against).
+    """
+    if not graph_join_edges:
+        return []
+    adj = _table_adjacency(graph_join_edges)
+    graph_table_pairs = {(e[0], e[2]) for e in graph_join_edges} | {
+        (e[2], e[0]) for e in graph_join_edges
+    }
+    findings: List[dict] = []
+    seen_pairs = set()
+    for table_a, _ca, table_b, _cb, _jt in query_edges:
+        if (table_a, table_b) in graph_table_pairs or (table_a, table_b) in seen_pairs:
+            continue
+        seen_pairs.add((table_a, table_b))
+        bridges = sorted((adj.get(table_a, set()) & adj.get(table_b, set())) - {table_a, table_b})
+        if bridges:
+            findings.append({
+                "reason": "missing_bridging_entity",
+                "table_a": table_a,
+                "table_b": table_b,
+                "candidate_bridges": bridges,
+                "detail": (
+                    f"`{table_a}` and `{table_b}` are not directly connected in "
+                    f"the graph, but both connect to {', '.join(f'`{b}`' for b in bridges)} "
+                    "— consider routing the join through it instead of a direct edge."
+                ),
+            })
+    return findings
+
+
+_AGGREGATE_EXPR_TYPES = (exp.Sum, exp.Count, exp.Avg)
+
+
+def _aggregate_columns(select, alias_map: dict, cte_names: set) -> List[Tuple[str, str]]:
+    """(table, column) for every SUM/COUNT/AVG argument in select's projections
+    that resolves to a real base-table column. Skips COUNT(*) and anything
+    wrapping a subquery/CTE/expression rather than a bare column."""
+    found: List[Tuple[str, str]] = []
+    for proj in select.expressions or []:
+        for agg in proj.find_all(_AGGREGATE_EXPR_TYPES):
+            for col in agg.find_all(exp.Column):
+                resolved = _resolve_column(col, alias_map, cte_names)
+                if resolved:
+                    found.append(resolved)
+    return found
+
+
+def detect_fan_out_traps(
+    sql_text: str, query_edges: List[JoinEdge], pk_lookup: dict
+) -> List[dict]:
+    """Warn when a query aggregates across a join graph that fans out.
+
+    Heuristic (deliberately conservative — false negatives over false
+    positives): classify every query edge's cardinality via ``pk_lookup``.
+    If the query's SELECT list has >= 2 aggregate (SUM/COUNT/AVG) columns AND
+    the query's own join graph contains >= 2 distinct ``one_to_many`` edges
+    (from either endpoint's perspective — a header joined to two independent
+    child tables is the classic double-count shape), flag ONE finding
+    summarizing the risk for SME review. This does not attempt to prove
+    double-counting occurred (that needs execution, which this module never
+    does) — it surfaces the shape that makes it possible, same spirit as the
+    "Three-Way Match Coverage" query's own hand-written 1:1-linkage caveat.
+    """
+    if not query_edges:
+        return []
+    try:
+        statements = sqlglot.parse(sql_text, dialect=FINGERPRINT_DIALECT)
+    except Exception:
+        return []
+
+    # A relationship is fan-out-relevant regardless of which side the
+    # canonical (alphabetically-sorted) edge happens to put first — the same
+    # real-world "many rows on one side" fact classifies as "one_to_many" or
+    # "many_to_one" purely depending on table name ordering. Both count here.
+    one_to_many_edges = [
+        e for e in query_edges
+        if classify_edge_cardinality(e, pk_lookup) in ("one_to_many", "many_to_one")
+    ]
+    if len(one_to_many_edges) < 2:
+        return []
+
+    agg_tables: set = set()
+    for stmt in statements:
+        if stmt is None:
+            continue
+        cte_names = {c.alias.lower() for c in stmt.find_all(exp.CTE) if c.alias}
+        for select in stmt.find_all(exp.Select):
+            alias_map = _alias_to_table_map(select)
+            for table, _col in _aggregate_columns(select, alias_map, cte_names):
+                agg_tables.add(table)
+
+    if len(agg_tables) < 2:
+        # A single aggregated table can still fan out through chained
+        # one-to-many hops, but scaffolding stays conservative: only flag
+        # the unambiguous "aggregates diverge across branches" shape for now.
+        return []
+
+    return [{
+        "reason": "fan_out_trap",
+        "one_to_many_edges": [edge_to_dict(e) for e in sorted(one_to_many_edges)],
+        "aggregated_tables": sorted(agg_tables),
+        "detail": (
+            f"Query aggregates columns from {len(agg_tables)} different tables "
+            f"({', '.join(f'`{t}`' for t in sorted(agg_tables))}) across "
+            f"{len(one_to_many_edges)} one-to-many join(s) — verify each branch "
+            "is pre-aggregated/deduplicated before the join, or the SUM/COUNT/AVG "
+            "may double-count rows fanned out by the other branch."
+        ),
+    }]

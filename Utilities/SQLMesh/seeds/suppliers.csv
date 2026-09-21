@@ -1,17 +1,17 @@
 supplier_id,supplier_name,contact_email,phone,address,performance_rating,certification_level,category,payment_terms,lead_time_days,outside_service,active,created_date
-S-001,Precision Aero Metals Inc,,,,3.0,AS9100D,material,Net30,21,0,1,2026-07-05 10:36:28
-S-002,Skyline Fastener Supply,,,,5.0,ISO9001,hardware,Net30,7,0,1,2026-07-05 10:36:28
-S-003,Advanced Heat Treat LLC,,,,3.0,NADCAP/HT,outside_service,Net45,5,1,1,2026-07-05 10:36:28
-S-004,Pacific Anodize Corp,,,,3.0,NADCAP/CHEM,outside_service,Net30,4,1,1,2026-07-05 10:36:28
-S-005,Composite Structures Ltd,,,,3.0,AS9100D,material,Net60,60,0,1,2026-07-05 10:36:28
-S-006,Tri-State Metals Warehouse,,,,3.0,ISO9001,material,Net30,14,0,1,2026-07-05 10:36:28
-S-007,FlightCraft NDT Services,,,,3.0,NADCAP/NDT,outside_service,Net30,3,1,1,2026-07-05 10:36:28
-S-008,Titanium International Inc,,,,3.0,AS9100D,material,Net45,28,0,1,2026-07-05 10:36:28
-S-009,West Coast Bearing Supply,,,,4.31,ISO9001,hardware,Net30,10,0,1,2026-07-05 10:36:28
-S-010,Aerospace Seal Solutions,,,,5.0,AS9100D,hardware,Net30,14,0,1,2026-07-05 10:36:28
-S-011,Summit Machining Partners,,,,3.0,AS9100D,outside_service,Net45,21,1,1,2026-07-05 10:36:28
-S-012,Global Avionics Distribution,,,,3.0,AS9100D,material,Net60,45,0,1,2026-07-05 10:36:28
-S-013,High Desert Welding LLC,,,,5.0,AWS/AS9100D,outside_service,Net30,10,1,1,2026-07-05 10:36:28
-S-014,Eagle Composites Corp,,,,5.0,AS9100D,material,Net60,60,0,1,2026-07-05 10:36:28
-S-015,Continental Chemical Proc,,,,3.0,NADCAP/CHEM,outside_service,Net30,4,1,1,2026-07-05 10:36:28
-S-027,Industrial Tooling Supply Co,orders@indtoolsupply.example,555-0127,"4410 Commerce Dr, Wichita, KS",3.0,ISO 9001,MRO Supplies,Net 30,5,0,1,2026-07-05 10:36:34
+S-001,Precision Aero Metals Inc,,,,3.63,AS9100D,material,Net30,21,0,1,2026-09-21 14:37:59
+S-002,Skyline Fastener Supply,,,,5.0,ISO9001,hardware,Net30,7,0,1,2026-09-21 14:37:59
+S-003,Advanced Heat Treat LLC,,,,1.69,NADCAP/HT,outside_service,Net45,5,1,1,2026-09-21 14:37:59
+S-004,Pacific Anodize Corp,,,,3.0,NADCAP/CHEM,outside_service,Net30,4,1,1,2026-09-21 14:37:59
+S-005,Composite Structures Ltd,,,,3.0,AS9100D,material,Net60,60,0,1,2026-09-21 14:37:59
+S-006,Tri-State Metals Warehouse,,,,3.0,ISO9001,material,Net30,14,0,1,2026-09-21 14:37:59
+S-007,FlightCraft NDT Services,,,,3.0,NADCAP/NDT,outside_service,Net30,3,1,1,2026-09-21 14:37:59
+S-008,Titanium International Inc,,,,3.0,AS9100D,material,Net45,28,0,1,2026-09-21 14:37:59
+S-009,West Coast Bearing Supply,,,,2.16,ISO9001,hardware,Net30,10,0,1,2026-09-21 14:37:59
+S-010,Aerospace Seal Solutions,,,,5.0,AS9100D,hardware,Net30,14,0,1,2026-09-21 14:37:59
+S-011,Summit Machining Partners,,,,3.0,AS9100D,outside_service,Net45,21,1,1,2026-09-21 14:37:59
+S-012,Global Avionics Distribution,,,,3.0,AS9100D,material,Net60,45,0,1,2026-09-21 14:37:59
+S-013,High Desert Welding LLC,,,,5.0,AWS/AS9100D,outside_service,Net30,10,1,1,2026-09-21 14:37:59
+S-014,Eagle Composites Corp,,,,2.66,AS9100D,material,Net60,60,0,1,2026-09-21 14:37:59
+S-015,Continental Chemical Proc,,,,3.63,NADCAP/CHEM,outside_service,Net30,4,1,1,2026-09-21 14:37:59
+S-027,Industrial Tooling Supply Co,orders@indtoolsupply.example,555-0127,"4410 Commerce Dr, Wichita, KS",3.0,ISO 9001,MRO Supplies,Net 30,5,0,1,2026-09-21 14:38:00

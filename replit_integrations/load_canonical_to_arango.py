@@ -9,6 +9,16 @@ It is idempotent (truncate-then-load keyed on ``_key``) and only ever touches
 the two canonical collections -- it never alters the legacy named graph
 (intents/concepts/contains/elevates) that shares the database.
 
+WARNING -- do not run this file directly against the live instance: a real
+extract from an external SQL Server (1,106+ ``table_x5F_Live_x2E_dbo_x2E_*``
+nodes, referenced by the ``ATOMIC_FK`` edge collection) physically coexists
+INSIDE ``manufacturing_graph_node`` / ``manufacturing_graph_edge`` themselves --
+the two collections this script truncates. That data is not derived from
+anything in this repo and cannot be regenerated if lost. Use
+``safe_load_canonical_to_arango.py`` instead, which backs up both collections,
+runs this same truncate-then-load, then additively restores every non-canonical
+doc the truncate would otherwise destroy.
+
 Connection note: ``ARANGO_HOST`` points at the managed web endpoint (port 443,
 serves the HTML UI). The arangod HTTP API lives on port 8529, so we rewrite the
 URL to that port here.

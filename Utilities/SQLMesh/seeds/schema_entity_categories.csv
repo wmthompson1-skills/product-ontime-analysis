@@ -1,12 +1,12 @@
 category_id,category_name,display_order,description,created_at
-1,Customer_Order,1,"Customer orders, fulfilment, and delivery",2026-07-05 10:36:27
-2,Demand_Forecast,2,Demand planning and forecast accuracy,2026-07-05 10:36:27
-3,Engineering,3,Engineering change orders and BOM management,2026-07-05 10:36:27
-4,General_Ledger,4,"GL accounts, cost centres, and financial postings",2026-07-05 10:36:27
-5,Inventory_Transactions,5,"Stock movements, receipts, and adjustments",2026-07-05 10:36:27
-6,Manufacturing,6,"Production orders, routing, and WIP",2026-07-05 10:36:27
-7,Parts,7,"Part master, revisions, and classifications",2026-07-05 10:36:27
-8,Payables,8,Supplier invoices and payments,2026-07-05 10:36:27
-9,Receivables,9,Customer invoices and collections,2026-07-05 10:36:27
-10,Visual_Admin,10,UI configuration and admin metadata,2026-07-05 10:36:27
-11,Work_Orders,11,Maintenance and shop-floor work orders,2026-07-05 10:36:27
+1,Customer_Order,1,"Customer orders, fulfilment, and delivery",2026-09-21 14:37:59
+2,Demand_Forecast,2,Demand planning and forecast accuracy,2026-09-21 14:37:59
+3,Engineering,3,Engineering change orders and BOM management,2026-09-21 14:37:59
+4,General_Ledger,4,"GL accounts, cost centres, and financial postings",2026-09-21 14:37:59
+5,Inventory_Transactions,5,"Stock movements, receipts, and adjustments",2026-09-21 14:37:59
+6,Manufacturing,6,"Production orders, routing, and WIP",2026-09-21 14:37:59
+7,Parts,7,"Part master, revisions, and classifications",2026-09-21 14:37:59
+8,Payables,8,Supplier invoices and payments,2026-09-21 14:37:59
+9,Receivables,9,Customer invoices and collections,2026-09-21 14:37:59
+10,Visual_Admin,10,UI configuration and admin metadata,2026-09-21 14:37:59
+11,Work_Orders,11,Maintenance and shop-floor work orders,2026-09-21 14:37:59

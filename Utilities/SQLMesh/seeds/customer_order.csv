@@ -1,14 +1,22 @@
 order_id,customer_name,order_date,site_id,status,created_at,completed_date
-CO-00002,Gulfstream Aerospace,2025-09-22,SITE-3,Closed,2026-07-05 10:36:28,2025-11-21
-CO-00009,Gulfstream Aerospace,2025-07-23,SITE-1,Shipped,2026-07-05 10:36:28,2025-10-21
-CO-00011,Spirit AeroSystems,2025-07-22,SITE-1,Closed,2026-07-05 10:36:28,2025-09-20
-CO-00012,Spirit AeroSystems,2025-04-03,SITE-1,Open,2026-07-05 10:36:28,
-CO-00013,Raytheon Technologies,2025-02-18,SITE-3,Shipped,2026-07-05 10:36:28,2025-03-04
-CO-MRP-001,Meridian Aerostructures,2025-11-17,SITE-1,Open,2026-07-05 20:40:11,
-CO-MRP-002,Pacific Turbine Systems,2025-12-02,SITE-1,Open,2026-07-05 20:40:11,
-CO-00016,Bell Textron,2026-01-08,SITE-1,Open,2026-07-06 04:55:44,
-CO-00017,Collins Aerospace,2026-01-12,SITE-2,Open,2026-07-06 04:55:44,
-CO-00018,Embraer Defense,2026-01-15,SITE-3,Open,2026-07-06 04:55:44,
-CO-JUL-01,Aerostructures Daily Demand Program,2026-07-01,SITE-1,Open,2026-07-19 05:09:40,
-CO-00014,Gulfstream Aerospace,2025-05-27,SITE-1,Shipped,2026-07-26 01:06:57,2025-07-26
-CO-00015,Lockheed Martin Aeronautics,2025-10-02,SITE-2,Closed,2026-07-26 01:06:57,2025-11-16
+CO-00001,Textron Aviation,2025-12-09,SITE-1,Shipped,2026-09-21 14:37:59,2026-03-09
+CO-00002,GE Aviation,2025-01-12,SITE-2,Closed,2026-09-21 14:37:59,2025-02-26
+CO-00003,Bombardier Aviation,2025-03-11,SITE-3,Closed,2026-09-21 14:37:59,2025-05-10
+CO-00004,Bombardier Aviation,2025-12-20,SITE-2,Shipped,2026-09-21 14:37:59,2026-02-18
+CO-00005,Gulfstream Aerospace,2024-08-24,SITE-1,Closed,2026-09-21 14:37:59,2024-09-07
+CO-00006,Bombardier Aviation,2024-05-02,SITE-3,Shipped,2026-09-21 14:37:59,2024-07-01
+CO-00007,Northrop Grumman,2024-07-15,SITE-1,Closed,2026-09-21 14:37:59,2024-09-13
+CO-00008,Gulfstream Aerospace,2025-08-26,SITE-3,Closed,2026-09-21 14:37:59,2025-09-25
+CO-00009,Lockheed Martin Aeronautics,2024-07-17,SITE-2,Shipped,2026-09-21 14:37:59,2024-10-15
+CO-00010,Northrop Grumman,2024-11-05,SITE-1,Closed,2026-09-21 14:37:59,2024-11-26
+CO-00011,Northrop Grumman,2024-10-07,SITE-1,Cancelled,2026-09-21 14:37:59,
+CO-00012,Collins Aerospace,2024-10-26,SITE-3,Cancelled,2026-09-21 14:37:59,
+CO-00013,Spirit AeroSystems,2024-04-15,SITE-1,Closed,2026-09-21 14:37:59,2024-05-15
+CO-00014,Spirit AeroSystems,2025-05-05,SITE-2,Shipped,2026-09-21 14:37:59,2025-05-19
+CO-00015,Boeing Commercial Airplanes,2024-09-15,SITE-2,Open,2026-09-21 14:37:59,
+CO-MRP-001,Meridian Aerostructures,2025-11-17,SITE-1,Open,2026-09-21 14:38:00,
+CO-MRP-002,Pacific Turbine Systems,2025-12-02,SITE-1,Open,2026-09-21 14:38:00,
+CO-00016,Bell Textron,2026-01-08,SITE-1,Open,2026-09-21 14:38:00,
+CO-00017,Collins Aerospace,2026-01-12,SITE-2,Open,2026-09-21 14:38:00,
+CO-00018,Embraer Defense,2026-01-15,SITE-3,Open,2026-09-21 14:38:00,
+CO-JUL-01,Aerostructures Daily Demand Program,2026-07-01,SITE-1,Open,2026-09-21 14:38:01,

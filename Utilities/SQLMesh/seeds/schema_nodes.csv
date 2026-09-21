@@ -1,35 +1,35 @@
 table_name,table_type,description,created_at
-EMPLOYEE,Table,Employee master records,2026-07-05 10:36:27
-part,Table,"Part / item master — description, class, UOM, cost, revision, material spec, CAGE code",2026-07-05 10:36:27
-suppliers,Table,"Supplier master — name, category, certification level, payment terms, lead time",2026-07-05 10:36:27
-shop_resource,Table,"Shop work centers and outside-service buckets (machine, labor, service types)",2026-07-05 10:36:27
-service,Table,"Outside service definitions (anodize, heat treat, NDT, plating, painting)",2026-07-05 10:36:27
-purchase_order,Table,Purchase order headers for material and outside-service buys,2026-07-05 10:36:27
-po_line,Table,"Purchase order line items (part, quantity, unit cost, line total)",2026-07-05 10:36:27
-receiving,Table,"Goods receipts against purchase orders — quantity ordered vs received, inspection status",2026-07-05 10:36:27
-payables,Table,Accounts-payable headers (acts as the invoice header) linked to purchase orders — three-way match and payment status,2026-07-05 10:36:27
-certification,Table,"Supplier certification records (CoC, FAI, PPAP, 8130-3, Material Test Report)",2026-07-05 10:36:27
-work_order,Table,"Work order master — part, quantity, status, routing template, accumulated actual costs",2026-07-05 10:36:27
-operation,Table,"Work order routing steps — sequence, resource, estimated vs actual hours and costs",2026-07-05 10:36:27
-material_issue,Table,"Raw material issues from stock to WIP work orders (quantity, unit cost, total cost)",2026-07-05 10:36:27
-labor_ticket,Table,"Labor time postings against work order operations (clock-in/out, hours, cost)",2026-07-05 10:36:27
-requirement,Table,"Resource requirements (labor / material / burden) per routing operation; component_type PART = as-designed routing standard (engineering, per-unit) vs WORK_ORDER = as-built actuals (manufacturing, batch)",2026-07-05 10:36:27
-site,Table,"Site dimension — physical plant / location anchoring inventory, orders, and work orders",2026-07-05 10:36:28
-inventory_transaction,Table,"Inventory movement ledger (CLASS R/A/I x TYPE I/O) — receipts, issues, adjustments",2026-07-05 10:36:28
-trace,Table,"Traced lot / serial record of a part — production and expiration dates, quantities",2026-07-05 10:36:28
-trace_inventory_trace,Table,Bridge linking a trace lot to an inventory transaction (qty-weighted) for genealogy,2026-07-05 10:36:28
-inv_trans_dist,Table,Inventory transaction distribution — links an IN movement to an OUT movement (lot genealogy),2026-07-05 10:36:28
-customer_order,Table,Customer order header — demand-side sales orders with site and status,2026-07-05 10:36:28
-customer_order_line,Table,"Customer order line items — part, quantity, unit price per order",2026-07-05 10:36:28
-payable_line,Table,"AP payable line detail extending payables — part, PO, quantity, amount",2026-07-05 10:36:28
-receiving_line,Table,"Line items on a goods receipt — one row per part received, linked to the PO line for line-level three-way match",2026-07-05 10:36:28
-warehouse,Table,Physical stocking location (warehouse) belonging to a site — anchors part on-hand,2026-07-05 10:36:29
-part_location,Table,On-hand quantity of a part at a warehouse location — physical inventory snapshot for reconciliation,2026-07-05 10:36:29
-receivable,Table,Accounts-receivable headers (customer invoice header) linked to customer orders — billing and payment status,2026-07-14 04:19:36
-receivable_line,Table,"AR receivable line detail extending receivable — part, order line, quantity, amount",2026-07-14 04:19:36
-gl_events,Table,"GL economic-event log — one row per posted costing event (material issue, labor, burden, job completion) with source-document provenance",2026-07-19 01:22:11
-gl_raw_materials_inventory,Table,"Raw-materials inventory ledger lines — signed dollar movements into (+) and out of (-) the RM account, hung off gl_events",2026-07-19 01:22:11
-gl_wip_inventory,Table,"Work-in-process inventory ledger lines — signed dollar movements into (+) and out of (-) the WIP account, hung off gl_events",2026-07-19 01:22:11
-gl_finished_goods_inventory,Table,"Finished-goods inventory ledger lines — signed dollar movements into (+) and out of (-) the FG account, hung off gl_events",2026-07-19 01:22:11
-gl_job_cost_detail,Table,Per-job cost-element detail lines (material / labor / burden) tying each posted dollar back to its work order,2026-07-19 01:22:11
-receivable_payment,Table,"AR installment payment records — one row per installment per invoice, linked to the cash-receipt GL event",2026-07-24 03:51:12
+EMPLOYEE,Table,Employee master records,2026-09-21 14:37:59
+part,Table,"Part / item master — description, class, UOM, cost, revision, material spec, CAGE code",2026-09-21 14:37:59
+suppliers,Table,"Supplier master — name, category, certification level, payment terms, lead time",2026-09-21 14:37:59
+shop_resource,Table,"Shop work centers and outside-service buckets (machine, labor, service types)",2026-09-21 14:37:59
+service,Table,"Outside service definitions (anodize, heat treat, NDT, plating, painting)",2026-09-21 14:37:59
+purchase_order,Table,Purchase order headers for material and outside-service buys,2026-09-21 14:37:59
+po_line,Table,"Purchase order line items (part, quantity, unit cost, line total)",2026-09-21 14:37:59
+receiving,Table,"Goods receipts against purchase orders — quantity ordered vs received, inspection status",2026-09-21 14:37:59
+payables,Table,Accounts-payable headers (acts as the invoice header) linked to purchase orders — three-way match and payment status,2026-09-21 14:37:59
+certification,Table,"Supplier certification records (CoC, FAI, PPAP, 8130-3, Material Test Report)",2026-09-21 14:37:59
+work_order,Table,"Work order master — part, quantity, status, routing template, accumulated actual costs",2026-09-21 14:37:59
+operation,Table,"Work order routing steps — sequence, resource, estimated vs actual hours and costs",2026-09-21 14:37:59
+material_issue,Table,"Raw material issues from stock to WIP work orders (quantity, unit cost, total cost)",2026-09-21 14:37:59
+labor_ticket,Table,"Labor time postings against work order operations (clock-in/out, hours, cost)",2026-09-21 14:37:59
+requirement,Table,"Resource requirements (labor / material / burden) per routing operation; component_type PART = as-designed routing standard (engineering, per-unit) vs WORK_ORDER = as-built actuals (manufacturing, batch)",2026-09-21 14:37:59
+site,Table,"Site dimension — physical plant / location anchoring inventory, orders, and work orders",2026-09-21 14:37:59
+inventory_transaction,Table,"Inventory movement ledger (CLASS R/A/I x TYPE I/O) — receipts, issues, adjustments",2026-09-21 14:37:59
+trace,Table,"Traced lot / serial record of a part — production and expiration dates, quantities",2026-09-21 14:37:59
+trace_inventory_trace,Table,Bridge linking a trace lot to an inventory transaction (qty-weighted) for genealogy,2026-09-21 14:37:59
+inv_trans_dist,Table,Inventory transaction distribution — links an IN movement to an OUT movement (lot genealogy),2026-09-21 14:37:59
+customer_order,Table,Customer order header — demand-side sales orders with site and status,2026-09-21 14:37:59
+customer_order_line,Table,"Customer order line items — part, quantity, unit price per order",2026-09-21 14:37:59
+payable_line,Table,"AP payable line detail extending payables — part, PO, quantity, amount",2026-09-21 14:37:59
+receiving_line,Table,"Line items on a goods receipt — one row per part received, linked to the PO line for line-level three-way match",2026-09-21 14:37:59
+warehouse,Table,Physical stocking location (warehouse) belonging to a site — anchors part on-hand,2026-09-21 14:37:59
+part_location,Table,On-hand quantity of a part at a warehouse location — physical inventory snapshot for reconciliation,2026-09-21 14:37:59
+receivable,Table,Accounts-receivable headers (customer invoice header) linked to customer orders — billing and payment status,2026-09-21 14:38:01
+receivable_line,Table,"AR receivable line detail extending receivable — part, order line, quantity, amount",2026-09-21 14:38:01
+gl_events,Table,"GL economic-event log — one row per posted costing event (material issue, labor, burden, job completion) with source-document provenance",2026-09-21 14:38:01
+gl_raw_materials_inventory,Table,"Raw-materials inventory ledger lines — signed dollar movements into (+) and out of (-) the RM account, hung off gl_events",2026-09-21 14:38:01
+gl_wip_inventory,Table,"Work-in-process inventory ledger lines — signed dollar movements into (+) and out of (-) the WIP account, hung off gl_events",2026-09-21 14:38:01
+gl_finished_goods_inventory,Table,"Finished-goods inventory ledger lines — signed dollar movements into (+) and out of (-) the FG account, hung off gl_events",2026-09-21 14:38:01
+gl_job_cost_detail,Table,Per-job cost-element detail lines (material / labor / burden) tying each posted dollar back to its work order,2026-09-21 14:38:01
+receivable_payment,Table,"AR installment payment records — one row per installment per invoice, linked to the cash-receipt GL event",2026-09-21 14:38:01

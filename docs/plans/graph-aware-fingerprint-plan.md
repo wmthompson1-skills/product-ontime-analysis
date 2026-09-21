@@ -201,18 +201,56 @@ attach as warnings on the served result, not as fail-closed conditions.
 ## Status
 Schema fully specified and locked. No open questions on the design.
 
-**Revised status (2026-09-21):** this plan is not starting from zero. §1's canonical
-join-edge extraction and LEFT/RIGHT normalization is **already implemented and
-confirmed live** (`structural_fingerprint.py`, exercised today via the Ontology
-Mosaic's SQL Semantics lens for both "Three-Way Match Exceptions" and "Three-Way Match
-Coverage") — the exporter's own comments call this "v22: fold graph-aware structural
-fingerprints in." What remains **not yet built**:
-- §2's `join_edges`/`unresolved_joins` fields on the manifest's `structural_fingerprint`
-  (today's snippets carry only `base_tables`).
-- §3's write-back of `sql_observed` edges into the structural graph layer.
-- §4's `validate_join_edges()` fail-closed gate, including the §4a topology checks
-  (missing bridging entity, fan-out trap) added in this revision.
-- §5's wiring into `assemble_query`/dispatch and §6's hard-cutover backfill migration.
+**Revised status (2026-09-21) — correcting the previous revision, which understated
+what exists:** §1 through §6 are **already implemented and live**, not merely
+"designed":
+- §1/§2: `structural_fingerprint.py` has the full v2 extractor
+  (`join_edges_from_sql()`, canonical `JoinEdge` tuples, LEFT/RIGHT normalization) and
+  the manifest already stores `join_edges`/`unresolved_joins`/`extractor:
+  "sqlglot-sqlite-base-tables+join-edges-v2"` per entry — confirmed **20 of 56**
+  approved snippets are join-aware today (the rest predate the backfill or were added
+  since).
+- §3: `SolderEngine._graph_join_edges()` (`solder_engine.py:181`) already reads
+  `fk_declared`-equivalent edges from `sql_graph_edges` for recognition, AND already
+  has a code path for `sql_observed` edges (an `origin`/`join_type` column pair) —
+  **but** the live `sql_graph_edges` table in this environment does not yet have those
+  columns (`sqlite3.OperationalError: no such column: origin`, checked directly). So
+  today recognition only checks against the 71 declared-FK edges from §3's verified
+  baseline; the write-back **migration** that would populate `sql_observed` rows is
+  the one piece of §3 not yet run/built as a script, even though the read side already
+  supports it.
+- §4: `validate_join_edges(sql_text, approved_join_edges, graph_join_edges)` is fully
+  implemented (`structural_fingerprint.py:346`) — both blocking checks (drift,
+  recognition) exactly as specified.
+- §5: wired into the real dispatch path — `solder_engine.py` calls
+  `validate_join_edges()` at two call sites (~line 464, ~line 935/1026), returning
+  `fail_condition: "join_validation_failed"` on failure, exactly matching the planned
+  `fail_closed_condition` extension.
+- §6: `migrations/backfill_structural_fingerprints.py` exists and has run (hence the
+  20/56 figure above) — though not against every snippet, so it is not yet the "hard
+  cutover, no v1/v2 coexistence" the plan called for; some snippets still serve without
+  join validation.
 
-Still ready to be turned into a build task on request (not auto-created, per user
-preference) — the scope above is what that task would need to cover.
+**§4a status (2026-09-21) — scaffolded and verified:** `structural_fingerprint.py`
+now has `load_pk_lookup()`, `classify_edge_cardinality()`, `_table_adjacency()`,
+`detect_missing_bridging_entities()`, and `detect_fan_out_traps()`. Per the "beyond
+single-edge membership" framing above, these are deliberately **not** merged into
+`validate_join_edges()` — they are standalone, warn-only functions an SME-review
+surface calls alongside it, exactly as §4a specifies ("Both checks are warn, never
+block... Promoting either to blocking is a follow-on decision, not part of this
+plan"). Verified against two cases:
+- The real "Three-Way Match Coverage" query (§3's baseline) — both checks return `[]`
+  (clean), confirming the check doesn't false-positive on approved, graph-recognized SQL.
+- Constructed bad queries — `po_line` joined directly to `payables` (skipping
+  `receiving_line`/`payable_line`) correctly classifies as `missing_bridging_entity`
+  with both real bridge tables listed as candidates; `work_order` joined to both
+  `labor_ticket` and `material_issue` with a `SUM()` on each correctly classifies as
+  `fan_out_trap`. The latter required one fix: `classify_edge_cardinality()`'s
+  `one_to_many` vs `many_to_one` label depends on which table name sorts first in the
+  canonical edge tuple, so `detect_fan_out_traps()` treats both labels as
+  fan-out-relevant (the underlying "many rows on one side" fact is identical either way).
+
+**Not yet done:** wiring §4a's output into an actual SME-facing surface (the Ontology
+Mosaic UI has no lens for these findings yet — today they're only reachable by calling
+the functions directly), closing the join-aware backfill gap (36 of 56 snippets predate
+v2), and the `sql_observed` write-back migration §3 already has a read path for.

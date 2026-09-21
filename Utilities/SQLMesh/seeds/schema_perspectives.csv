@@ -1,16 +1,15 @@
 perspective_id,perspective_name,description,stakeholder_role,priority_focus,created_at
-1,Quality,"Product conformance, defect prevention, and continuous improvement","Quality Engineer, QA Manager","Defect rates, NCM resolution, process capability",2026-07-05 10:36:28
-2,Payables,"Supplier invoices, purchase orders, vendor receipts, and payables aging.","AP Manager, Purchasing Manager","Invoice matching, payables aging, PO variance",2026-07-05 10:36:28
-3,Work_Orders,"Routing of resources in sequence on a work order (SEQUENCE_NO, RESOURCE_ID).","Production Planner, Shop Supervisor","Routing efficiency, operation sequence, outside-service cycle time",2026-07-05 10:36:28
-4,General_Ledger,"RM, WIP, FG, and COGS postings through the manufacturing cost flow.","Controller, Cost Accountant","Inventory valuation, COGS, variance analysis",2026-07-05 10:36:28
-5,Receivables,"Customer orders, sales billing, delivery commitments, and receivables exposure.","AR Manager, Sales Manager","Order fill rate, invoice aging, on-time delivery",2026-07-05 10:36:28
-6,CRM,"Customer relationship management: contacts, accounts, opportunities, and activity.","Sales Rep, Account Manager","Pipeline, customer lifetime value, contact coverage",2026-07-05 10:36:28
-7,Manufacturing,"Production execution, schedule adherence, equipment effectiveness, and WIP.","Production Manager, Plant Supervisor","OEE, schedule variance, WIP turns, cycle time, downtime",2026-07-05 10:36:28
-8,Inventory_Transactions,"Material movements, stock receipts, material issues to WIP, and on-hand accuracy.","Materials Manager, Warehouse Supervisor","Stock accuracy, receipt qty vs ordered, material cost postings",2026-07-05 10:36:28
-9,Customer_Order,"Order fulfillment, delivery commitments, and order-lifecycle tracking.","Sales Manager, Customer Success","On-time delivery, fill rate, order-to-ship cycle time",2026-07-05 10:36:28
-10,Demand_Forecast,"Demand planning, forecast accuracy, and inventory replenishment signals.","Supply Chain Planner, Demand Manager","Forecast error (MAPE), bias, planning horizon coverage",2026-07-05 10:36:28
-11,Engineering,"Engineering change orders, BOM management, and part revisions.","Design Engineer, Mfg Engineer","ECO cycle time, BOM accuracy, revision control",2026-07-05 10:36:28
-12,Parts,"Part master, revisions, classifications, and material specifications.","Materials Engineer, Config Manager","Part count, revision status, obsolescence rate",2026-07-05 10:36:28
-13,Visual_Admin,"UI configuration, admin metadata, and workspace layout settings.",System Administrator,"Config completeness, admin access, UI state",2026-07-05 10:36:28
-14,Finance,"Financial lens over operations: cost, penalty exposure, and capital effectiveness.","Controller, Finance Analyst","Cost variances, delivery penalty exposure, capital utilization (OEE strategic)",2026-07-05 20:06:48
-17,Customer,,,,2026-07-05 20:20:40
+1,Quality,"Product conformance, defect prevention, and continuous improvement","Quality Engineer, QA Manager","Defect rates, NCM resolution, process capability",2026-09-21 14:37:59
+2,Payables,"Supplier invoices, purchase orders, vendor receipts, and payables aging.","AP Manager, Purchasing Manager","Invoice matching, payables aging, PO variance",2026-09-21 14:37:59
+3,Work_Orders,"Routing of resources in sequence on a work order (SEQUENCE_NO, RESOURCE_ID).","Production Planner, Shop Supervisor","Routing efficiency, operation sequence, outside-service cycle time",2026-09-21 14:37:59
+4,General_Ledger,"RM, WIP, FG, and COGS postings through the manufacturing cost flow.","Controller, Cost Accountant","Inventory valuation, COGS, variance analysis",2026-09-21 14:37:59
+5,Receivables,"Customer orders, sales billing, delivery commitments, and receivables exposure.","AR Manager, Sales Manager","Order fill rate, invoice aging, on-time delivery",2026-09-21 14:37:59
+6,CRM,"Customer relationship management: contacts, accounts, opportunities, and activity.","Sales Rep, Account Manager","Pipeline, customer lifetime value, contact coverage",2026-09-21 14:37:59
+7,Manufacturing,"Production execution, schedule adherence, equipment effectiveness, and WIP.","Production Manager, Plant Supervisor","OEE, schedule variance, WIP turns, cycle time, downtime",2026-09-21 14:37:59
+8,Inventory_Transactions,"Material movements, stock receipts, material issues to WIP, and on-hand accuracy.","Materials Manager, Warehouse Supervisor","Stock accuracy, receipt qty vs ordered, material cost postings",2026-09-21 14:37:59
+9,Customer_Order,"Order fulfillment, delivery commitments, and order-lifecycle tracking.","Sales Manager, Customer Success","On-time delivery, fill rate, order-to-ship cycle time",2026-09-21 14:37:59
+10,Demand_Forecast,"Demand planning, forecast accuracy, and inventory replenishment signals.","Supply Chain Planner, Demand Manager","Forecast error (MAPE), bias, planning horizon coverage",2026-09-21 14:37:59
+11,Engineering,"Engineering change orders, BOM management, and part revisions.","Design Engineer, Mfg Engineer","ECO cycle time, BOM accuracy, revision control",2026-09-21 14:37:59
+12,Parts,"Part master, revisions, classifications, and material specifications.","Materials Engineer, Config Manager","Part count, revision status, obsolescence rate",2026-09-21 14:37:59
+13,Visual_Admin,"UI configuration, admin metadata, and workspace layout settings.",System Administrator,"Config completeness, admin access, UI state",2026-09-21 14:37:59
+14,Finance,"Financial lens over operations: cost, penalty exposure, and capital effectiveness.","Controller, Finance Analyst","Cost variances, delivery penalty exposure, capital utilization (OEE strategic)",2026-09-21 15:54:10
