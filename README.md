@@ -1,185 +1,112 @@
-# Product On-Time Analysis
+-- revised
+## Digital Twin 
 
-A comprehensive manufacturing analytics platform for tracking supplier performance, product quality, and on-time delivery metrics. Features an NPM-first embedded PostgreSQL setup, graph-based supply chain analysis, and AI-powered semantic layer for natural language queries.
 
-## Features
 
-- **Supply Chain Tracking**: Monitor suppliers, parts, assemblies, and products
-- **Delivery Performance**: Track on-time delivery rates and late shipments
-- **Quality Metrics**: Analyze production runs and defect rates
-- **Graph Analytics**: Visualize supply chain relationships using Graphology (Node.js) and NetworkX (Python)
-- **SQL Validation**: Pre-built queries for assemblies part counts and supplier exposure analysis
-- **Semantic Layer**: Natural language to SQL conversion using LangChain
+---
 
-## Quick Start
+# 📁 **Location of the Plan Files (Authoritative Path)**
 
-### Prerequisites
+All plan files live here:
 
-- Node.js 18+ and npm
-- Python 3.9+
-- PostgreSQL 14+
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/wmthompson1/product-ontime-analysis.git
-   cd product-ontime-analysis
-   ```
-
-2. **Install Node.js dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Install Python dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Configure environment variables**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your database credentials and API keys
-   ```
-
-5. **Initialize the database**
-   ```bash
-   # Create schema only
-   npm run db:init
-   
-   # Or create schema with sample data
-   npm run db:init:sample
-   ```
-
-## Database Management
-
-### Initialize Database
-```bash
-# Create schema
-npm run db:init
-
-# Create schema with sample data
-npm run db:init:sample
-
-# Reset database (drop and recreate with sample data)
-npm run db:reset
+```
+product-ontime-analysis/docs/plans/
 ```
 
-### Manual Database Operations
-```bash
-# Run schema creation directly
-psql -U postgres -d product_ontime -f sql/schema.sql
+This folder contains **~120 SME-authored planning documents**, grouped by conceptual domain.  
+These files are the *human intent layer* that your mapping contract must unify.
 
-# Load sample data
-psql -U postgres -d product_ontime -f sql/sample_data.sql
+---
 
-# Run validation queries
-psql -U postgres -d product_ontime -f sql/validation/01_assemblies_part_counts.sql
-psql -U postgres -d product_ontime -f sql/validation/02_supplier_exposure.sql
+# 🧩 **What’s inside `docs/plans/` (the exact categories we walked through)**
+
+### **1. Structural Metadata Contract**
+Files such as:
+
+```
+docs/plans/graph-metadata-extractor.md
+docs/plans/graph-metadata-palette.md
+docs/plans/sql-graph-source-tables.md
+docs/plans/sectioned-join-topology.md
+docs/plans/field-definition-graph-component.md
+docs/plans/fk-canonical-alignment.md
 ```
 
-## Graph Analysis
+These define how SQL structures become graph structures.
 
-### Build Supply Chain Graph (Node.js with Graphology)
-```bash
-# Build and analyze graph
-npm run graph:build
+---
 
-# Custom output
-node scripts/build_graph_node.js --output supply_chain.json --analyze
+### **2. Semantic Layer Contract (Ontology, SKOS, RDF)**
+Files such as:
+
+```
+docs/plans/semantic-concept-tags-design.md
+docs/plans/mrp-set-semantics-authoring.md
+docs/plans/mrp-graph-topology-blueprint.md
+docs/plans/ledger-03-skos-jsonld.md
+docs/plans/ledger-04-rdf-event-classes.md
+docs/plans/ledger-06-semantic-bindings.md
 ```
 
-### Build Supply Chain Graph (Python with NetworkX)
-```bash
-# Build and analyze graph
-npm run graph:build:python
+These define the semantic vocabulary and concept governance.
 
-# Or run directly with Python
-python scripts/networkx_build.py --analyze --visualize
+---
+
+### **3. Mapping Layer Contract (OBDA, Ontop, Mapping Rules)**
+Files such as:
+
+```
+docs/plans/ontop-autogenerate-obda-mapping.md
+docs/plans/ontop-mapping-drift-guard.md
+docs/plans/ontop-expand-graph-coverage.md
+docs/plans/replit-integrations-graph-metadata.md
 ```
 
-## Database Schema
+These define how SQL → RDF mappings are generated and validated.
 
-### Core Tables
+---
 
-- **suppliers**: Supplier information and contact details
-- **parts**: Part catalog with costs and lead times
-- **products**: Product definitions and families
-- **assemblies**: Bill of materials (BOM) linking parts to products
-- **deliveries**: Delivery records with on-time tracking
-- **production_runs**: Production history with quality metrics
-- **quality_metrics**: Detailed quality measurements
+### **4. Temporal Semantics Contract**
+Files such as:
 
-### Views
-
-- **supplier_performance**: Aggregated supplier on-time delivery rates
-- **product_quality**: Product-level defect rates
-- **daily_delivery_summary**: Daily delivery statistics
-
-## SQL Validation Queries
-
-### 01: Assemblies Part Counts
-Analyzes bill of materials complexity:
-- Unique parts per product
-- Total parts required
-- Supplier exposure per product
-
-```bash
-psql -U postgres -d product_ontime -f sql/validation/01_assemblies_part_counts.sql
+```
+docs/plans/temporal-parameter-contract.md
+docs/plans/demand-linkage-and-horizon-extension.md
+docs/plans/mrp-demand-supply-grid.md
 ```
 
-### 02: Supplier Exposure Analysis
-Identifies supply chain risks:
-- Parts supplied per supplier
-- Products affected by supplier issues
-- On-time delivery performance
-- Single-source dependencies
+These define horizon, netting, and time‑phased semantics.
 
-```bash
-psql -U postgres -d product_ontime -f sql/validation/02_supplier_exposure.sql
+---
+
+### **5. Governed Business Logic Contract**
+Files such as:
+
+```
+docs/plans/customer-order-demand-kb.md
+docs/plans/job-costing-ledger.md
+docs/plans/gl-perspective-ground-truth.md
+docs/plans/procurement-gl-posting.md
+docs/plans/three-way-match-completion.md
+docs/plans/twm-spine-consolidation-finish.md
+docs/plans/wo-close-wip-relief.md
 ```
 
-## Development
+These encode the SME logic behind the SQL views.
 
-### Project Structure
-```
-product-ontime-analysis/
-├── sql/
-│   ├── schema.sql              # Database schema
-│   ├── sample_data.sql         # Sample data
-│   └── validation/
-│       ├── 01_assemblies_part_counts.sql
-│       └── 02_supplier_exposure.sql
-├── scripts/
-│   ├── init_db.js              # Database initialization (Node.js)
-│   ├── build_graph_node.js     # Graph builder (Graphology)
-│   └── networkx_build.py       # Graph builder (NetworkX)
-├── app/                        # Flask application
-├── templates/                  # HTML templates
-├── package.json                # Node.js dependencies
-├── requirements.txt            # Python dependencies
-├── .env.example                # Environment variables template
-└── README.md                   # This file
-```
+---
 
-### Environment Variables
+# 🎯 **Why this matters for the coding agent**
 
-See `.env.example` for all available configuration options. Key variables:
+Your coding agent needs this directory because:
 
-- `PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, `PGPASSWORD`: Database connection
-- `FLASK_SECRET_KEY`: Flask session secret
-- `OPENAI_API_KEY`: OpenAI API key for semantic layer
-- `TAVILY_API_KEY`: Tavily API key for research capabilities
+- It is the **source of human intent** behind every mapping.  
+- It is the **semantic grounding** for the synthetic repo.  
+- It is the **reference set** for the ontology mosaic.  
+- It is the **governance layer** for the new template registry.  
+- It is the **context** for the Validation & Expansion Pipe (VEP).
 
-## Contributing
+When the coding agent restores the repo, this folder must be preserved exactly as‑is.
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+---
 
-## License
-
-ISC
-
-## Version
-
-API 2.1.1
