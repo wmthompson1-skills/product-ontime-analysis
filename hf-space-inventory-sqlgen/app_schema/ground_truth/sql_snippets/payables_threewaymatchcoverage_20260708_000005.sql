@@ -112,7 +112,7 @@ SELECT
         WHEN rl.receipt_line_id IS NULL THEN 'Not Received'
         WHEN pyl.payable_line_id IS NULL
           OR pay.status = 'Cancelled'
-          OR (:end_date IS NOT NULL AND pay.invoice_date > :end_date)
+          OR NOT (:end_date IS NULL OR pay.invoice_date <= :end_date)
             THEN 'Received-Uninvoiced'
         WHEN ABS(pyl.qty) < rl.quantity_received THEN 'Partially Invoiced'
         WHEN ABS(pyl.qty) = rl.quantity_received THEN 'Matched'
